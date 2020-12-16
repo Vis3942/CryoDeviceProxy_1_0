@@ -1,4 +1,4 @@
-﻿# CrypServer
+﻿# CryoServer
 
 Socket server that allows connections between the device and user interface.
 
