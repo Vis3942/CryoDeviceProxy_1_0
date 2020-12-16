@@ -1,0 +1,10 @@
+﻿# lines starting with # are comments ignored by applcation
+#format
+# firs valid data line gives UI connection port number
+# second valid data line gives device connection port number
+# third valid data line domain name => mapped to certificate name (wihtout the ".pfx") 
+#      eg if domainname is "www.plscentral.com, certificate name will be www.plscentral.com.pfx"
+9189
+9090
+#certificate from rapidssl
+www.plscentral.com
