@@ -28,8 +28,7 @@ namespace CryoDeviceProxy
             {
                 return -1;
             }
-            int pp_ser_num;
-            bool succ = int.TryParse(recv_ping_str.Substring(first_idx + 1, second_idx - first_idx - 1), out pp_ser_num);
+            bool succ = int.TryParse(recv_ping_str.Substring(first_idx + 1, second_idx - first_idx - 1), out int pp_ser_num);
             if (succ)
             {
                 return pp_ser_num;
@@ -42,16 +41,17 @@ namespace CryoDeviceProxy
         #endregion // static_funcs
 
         #region vars
-        private byte[] _imei_number = new byte[8];
+        private readonly byte[] _imei_number = new byte[8];
         private string _imei_number_str = string.Empty;
         private string _serial_number_str = "none";
-        private byte _firmware_version = 0;
+        private string _firmware_version_str = "0";
         private ushort _new_usage_statistics = 0;
-        private ushort _num_stored_lang_packs = 0;
+        private int _num_stored_lang_packs = 0;
         private string _ip_addr_device = "0.0.0.0";
-        private byte[] _recv_str_as_bytes = null;
+        private readonly byte[] _recv_str_as_bytes = null;
         private bool _valid_pkt = false;
         private int _error_count = 0;
+        private readonly string _recv_str;
         #endregion // vars
 
         #region property
@@ -94,9 +94,9 @@ namespace CryoDeviceProxy
             get { return _serial_number_str; }
         }
 
-        public byte FirmwareVersion
+        public string FirmwareVersion
         {
-            get { return _firmware_version; }
+            get { return _firmware_version_str; }
         }
 
         public ushort NewUsageStatistics
@@ -104,7 +104,7 @@ namespace CryoDeviceProxy
             get { return _new_usage_statistics; }
         }
 
-        public ushort NumStoredLanguagePacks
+        public int NumStoredLanguagePacks
         {
             get { return _num_stored_lang_packs; }
         }
@@ -125,47 +125,156 @@ namespace CryoDeviceProxy
         }
         #endregion // property
 
-        public PingPacket(byte[] recv_data, int recv_len)
+        public PingPacket(byte[] recv_data, int start_idx, int recv_len)
         {
             _recv_str_as_bytes = new byte[recv_len];
-            System.Array.Copy(recv_data, 0, _recv_str_as_bytes, 0, recv_len);
-            ProcessDataAsString(recv_data);
+            System.Array.Copy(recv_data, start_idx, _recv_str_as_bytes, 0, recv_len);
+            _recv_str = System.Text.ASCIIEncoding.ASCII.GetString(recv_data);
+            ProcessData();
             //ProcessReceivedPacketBytes(recv_data);
         }
 
-        private void ProcessDataAsString(byte[] recv_data)
+        public PingPacket(string recv_str)
         {
-            string mod_str = System.Text.ASCIIEncoding.ASCII.GetString(recv_data);
-            string[] pp_arr = mod_str.Split(';');
-            if (pp_arr.Length >= 4 )
+            _recv_str = recv_str;
+            ProcessData();
+        }
+        private void ProcessData()
+        {
+            /* v10 format
+            Receive ping string data packets with a ‘;’ separator from a connected unit(ping interval 5 minutes) with the following format:
+            a.String 0: IMEI number string[always 15 characters];
+            b.String 1: unit serial number string[up to 10 characters];
+            c.String 2: new usage statistics available[up to 10 characters];
+            d.String 3: new error count available
+            delimiter[0x0D]
+            */
+
+            /*
+            v11 format
+            A;B;C;D;E;F;G;H1;...Hn\r
+            where 
+            [0] A = IMEI 
+            [1] B = serial number
+            [2] C = stats counts
+            [3] D = error count
+            [4] E = firmware version
+            [5] F = PPU grace treatments left
+            [6] G = total number of language packs
+            [7.. 7 + item[6] - 1]Hi  = each language pack name with version number and i = 0...G-1 
+            */
+
+            //string mod_str = System.Text.ASCIIEncoding.ASCII.GetString(recv_data);
+            string[] pp_arr = _recv_str.Split(';', StringSplitOptions.RemoveEmptyEntries);
+            bool sts;
+            if (pp_arr.Length == 4 )
             {
-                _imei_number_str = pp_arr[0];
-                _serial_number_str = pp_arr[1];
-                _new_usage_statistics = ushort.Parse(pp_arr[2]);
-                _firmware_version = 0;
-                _error_count = int.Parse(pp_arr[3]);
-                _valid_pkt = true;
+                // old packet format
+                sts = GetUsageCountUshort(pp_arr[2], out _new_usage_statistics);
+                if (sts)
+                {
+                    sts = GetIntValue(pp_arr[3], out _error_count);
+                }
+
+                if (sts)
+                {
+                    // _new_usage_statistics and _error_count has already been populated
+                    _imei_number_str = pp_arr[0];
+                    _serial_number_str = pp_arr[1];
+                    _firmware_version_str = "0";
+                    _valid_pkt = true;
+                }
+                else
+                {
+                    _imei_number_str = string.Empty;
+                    _serial_number_str = "none";
+                    _new_usage_statistics = 0;
+                    _firmware_version_str = "0";
+                    _error_count = 0;
+                    _valid_pkt = false;
+                }
             }
             else
             {
-                _serial_number_str = "invalid";
-                _imei_number_str = "invalid";
-                _new_usage_statistics = 0;
-                _num_stored_lang_packs = 0;
-                _ip_addr_device = "None.None.None.None";
-                _valid_pkt = false;
+                // check if it is new format
+                // must have a minimum of 7 or more elements
+                bool is_valid_new_format = false;
+                if (pp_arr.Length >= 7)
+                {
+                    bool succ = GetIntValue(pp_arr[6], out int lang_pack_count);
+                    if (succ)
+                    {
+                        if (pp_arr.Length == 7 + lang_pack_count)
+                        {
+                            sts = GetUsageCountUshort(pp_arr[2], out _new_usage_statistics);
+                            if (sts)
+                            {
+                                sts = GetIntValue(pp_arr[3], out _error_count);
+                            }
+
+                            if (sts)
+                            {
+                                // valid packet
+                                //_new_usage_statistics and _error_count has already been populated
+                                _imei_number_str = pp_arr[0];
+                                _serial_number_str = pp_arr[1];
+                                _firmware_version_str = pp_arr[4];
+                                _valid_pkt = true;
+                                is_valid_new_format = true;
+                            }
+                        }
+                    }
+                }
+                if (!is_valid_new_format)
+                {
+                    _serial_number_str = "invalid";
+                    _imei_number_str = "invalid";
+                    _new_usage_statistics = 0;
+                    _num_stored_lang_packs = 0;
+                    _ip_addr_device = "None.None.None.None";
+                    _valid_pkt = false;
+                }
             }
         }
 
+        private bool GetUsageCountUshort(string usage_count_str, out ushort usage_count)
+        {
+            bool ret_sts = ushort.TryParse(usage_count_str, out ushort tmp_val);
+            if (ret_sts)
+            {
+                usage_count = tmp_val;
+            }
+            else
+            {
+                usage_count = 0;
+            }
+            return ret_sts;
+        }
+
+        private bool GetIntValue(string value_str, out int value)
+        {
+            bool ret_sts = int.TryParse(value_str, out int tmp_val);
+            if (ret_sts)
+            {
+                value = tmp_val;
+            }
+            else
+            {
+                value = 0;
+            }
+            return ret_sts;
+        }
+
+
         //private void ProcessReceivedPacketBytes(byte[] data)
         //{
-            //System.Array.Copy(data, 0, _imei_number, 0, 8);
-            //_serial_number = BitConverter.ToUInt16(data, 8);
-            //_firmware_version = data[10];
-            //_new_usage_statistics = BitConverter.ToUInt16(data, 11);
-            //_num_stored_lang_packs = BitConverter.ToUInt16(data, 13);
-            //_ip_addr_device = string.Format("%d.%d.%d.%d", data[15], data[16], data[17], data[18]);
-            //GenerateIMEINumberString();
+        //System.Array.Copy(data, 0, _imei_number, 0, 8);
+        //_serial_number = BitConverter.ToUInt16(data, 8);
+        //_firmware_version = data[10];
+        //_new_usage_statistics = BitConverter.ToUInt16(data, 11);
+        //_num_stored_lang_packs = BitConverter.ToUInt16(data, 13);
+        //_ip_addr_device = string.Format("%d.%d.%d.%d", data[15], data[16], data[17], data[18]);
+        //GenerateIMEINumberString();
         //}
 
         //private void GenerateIMEINumberString()

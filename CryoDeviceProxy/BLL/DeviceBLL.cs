@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CryoDeviceProxy.Logs;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
@@ -47,7 +48,7 @@ namespace CryoDeviceProxy.BLL
             using (var client = new HttpClient())
             {
                 Uri uri = new Uri(string.Format("http://{0}{1}", "127.0.0.1:3000", "/api/devices/ping"));
-                //Console.WriteLine(uri);
+                CDPLogger.Verbose(uri.ToString());
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var prj = new PingRequestJson();
@@ -66,8 +67,8 @@ namespace CryoDeviceProxy.BLL
                         var respjson = JsonSerializer.Deserialize<PingResponseJson>(responseBody);
                         //Console.WriteLine("finished deserializer");
                         // return service tag, response data 
-                        //Console.WriteLine("response");
-                        Console.WriteLine(result.IsSuccessStatusCode);
+                        CDPLogger.Debug("response");
+                        CDPLogger.Debug(string.Format($"response succ: {result.IsSuccessStatusCode}"));
                         if (result.IsSuccessStatusCode)
                         {
                             if ((pp_recv.SerialNumber.Equals(respjson.data.serial_number)) &&
@@ -89,7 +90,7 @@ namespace CryoDeviceProxy.BLL
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(string.Format("Ping: {0}", e.Message));
+                    CDPLogger.Error(string.Format("Ping: {0}", e.Message));
                     ret_str_a = null;
                 }
                 return ret_str_a;
@@ -194,7 +195,7 @@ namespace CryoDeviceProxy.BLL
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(string.Format("GetDeviceData: {0}", e.Message));
+                    CDPLogger.Error(string.Format("GetDeviceData: {0}", e.Message));
                     ret_str_a = null;
                 }
                 return ret_str_a;
@@ -246,7 +247,7 @@ namespace CryoDeviceProxy.BLL
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(string.Format("VerifyConnect: {0}", e.Message));
+                    CDPLogger.Error(e, "VerifyConnect");   //Conxole.WriteLine(string.Format("VerifyConnect: {0}", e.Message));
                     toret_bool = false;
                 }
                 return toret_bool;
@@ -295,7 +296,7 @@ namespace CryoDeviceProxy.BLL
                     HttpResponseMessage result = await client.SendAsync(req_msg);
 
                     string responseBody = await result.Content.ReadAsStringAsync();
-                    //Console.WriteLine(responseBody);
+                    CDPLogger.Verbose(responseBody);
                     if ((result.IsSuccessStatusCode) &&
                         (result.Content.Headers.GetValues("Content-Type").ToArray()[0].Equals("application/json"))
                         )
@@ -311,7 +312,7 @@ namespace CryoDeviceProxy.BLL
                 catch (Exception e)
                 {
                     // Debug
-                    Console.WriteLine(string.Format("UpdateErrList: {0}", e.Message));
+                    CDPLogger.Error(string.Format("UpdateErrList: {0}", e.Message));
                     toret_bool = false;
                 }
                 return toret_bool;
@@ -447,7 +448,7 @@ namespace CryoDeviceProxy.BLL
                     HttpResponseMessage result = await client.SendAsync(req_msg);
 
                     string responseBody = await result.Content.ReadAsStringAsync();
-                    Console.WriteLine(responseBody);
+                    CDPLogger.Verbose(responseBody);
                     if ((result.IsSuccessStatusCode) &&
                         (result.Content.Headers.GetValues("Content-Type").ToArray()[0].Equals("application/json"))
                         )
@@ -467,7 +468,7 @@ namespace CryoDeviceProxy.BLL
                 catch (Exception e)
                 {
                     // Debug
-                    Console.WriteLine(string.Format("UpdateUsageStatsList: {0}", e.Message));
+                    CDPLogger.Error(string.Format("UpdateUsageStatsList: {0}", e.Message));
                     toret_bool = false;
                 }
                 return toret_bool;
@@ -533,7 +534,7 @@ namespace CryoDeviceProxy.BLL
                     HttpResponseMessage result = await client.SendAsync(req_msg);
 
                     string responseBody = await result.Content.ReadAsStringAsync();
-                    Console.WriteLine(responseBody);
+                    CDPLogger.Verbose(responseBody);
                     if ((result.IsSuccessStatusCode) &&
                         (result.Content.Headers.GetValues("Content-Type").ToArray()[0].Equals("application/json"))
                         )
@@ -553,7 +554,7 @@ namespace CryoDeviceProxy.BLL
                 catch (Exception e)
                 {
                     // Debug
-                    Console.WriteLine(string.Format("UpdateUsageStatsList: {0}", e.Message));
+                    CDPLogger.Error(string.Format("UpdateUsageStatsList: {0}", e.Message));
                     toret_bool = false;
                 }
                 return toret_bool;

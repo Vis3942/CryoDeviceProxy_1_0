@@ -69,7 +69,7 @@ namespace CryoDeviceProxy
             else
             {
                 to_ret_str[0] = to_parse_str.Substring(0, index).Trim();
-                to_ret_str[1] = to_parse_str.Substring(index + 1).Trim();
+                to_ret_str[1] = to_parse_str[(index + 1)..].Trim();
             }
             return to_ret_str;
         }
@@ -88,7 +88,7 @@ namespace CryoDeviceProxy
             }
             else
             {
-                return to_parse_str.Substring(index + 1).Trim();
+                return to_parse_str[(index + 1)..].Trim();
             }
 
         }

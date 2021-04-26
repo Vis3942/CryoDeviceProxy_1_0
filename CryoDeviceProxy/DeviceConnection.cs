@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CryoDeviceProxy.Logs;
+using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
@@ -120,12 +121,12 @@ namespace CryoDeviceProxy
                 while (loc_dev_client == null)
                 {
                     SendToUIClientString(ui_stream, "Waiting for Connection.\n");
-                    Console.WriteLine("sent waiting for connect string.");
+                    CDPLogger.Information("sent waiting for connect string.");
                     System.Threading.Thread.Sleep(_ui_message_interval_secs * 1000);
                     loc_dev_client = DeviceClient;
                 }
                 SendToUIClientString(ui_stream, "connected\n");
-                Console.WriteLine("Sent Connected string");
+                CDPLogger.Information("Sent Connected string");
                 using (var device_stream = loc_dev_client.GetStream())
                 {
                     while (true)
@@ -134,7 +135,7 @@ namespace CryoDeviceProxy
                         // read from device client; write to ui client
                         // the above 2 steps can happen in any sequence, so best keep it async
                         // if error in ui client/device client, close both clients
-                        Console.WriteLine("in exchange while loop");
+                        //CDPLogger.Verbose("in exchange while loop");
                         var uiReadTask = ui_stream.ReadAsync(read_ui_b, 0, read_ui_b.Length);
                         var devReadTask = device_stream.ReadAsync(read_dev_b, 0, read_dev_b.Length);
                         var doneTask = await Task.WhenAny(new Task[] { devReadTask, uiReadTask }).ConfigureAwait(false);
@@ -154,12 +155,12 @@ namespace CryoDeviceProxy
                             }
                             else
                             {
-                                Console.WriteLine(string.Format("sending to ui: byte len {0}", dev_bytes_read));
+                                CDPLogger.Verbose(string.Format("sending to ui: byte len {0}", dev_bytes_read));
                                 await ui_stream.WriteAsync(read_dev_b, 0, dev_bytes_read);
                             }
                             if (Utils.BytesEqual(end_b, 0, read_dev_b, 0, dev_bytes_read))
                             {
-                                Console.WriteLine("device sent end command. Exiting device ui connection.");
+                                CDPLogger.Information("device sent end command. Exiting device ui connection.");
                                 break;
                             }
 
@@ -181,18 +182,18 @@ namespace CryoDeviceProxy
                             }
                             else
                             {
-                                Console.WriteLine(string.Format("sending to device: byte len {0}", ui_bytes_read));
+                                CDPLogger.Verbose(string.Format("sending to device: byte len {0}", ui_bytes_read));
                                 await device_stream.WriteAsync(read_ui_b, 0, ui_bytes_read);
                             }
                             if (Utils.BytesEqual(end_b, 0, read_ui_b, 0, ui_bytes_read))
                             {
-                                Console.WriteLine("ui sent end command. Exiting device ui connection.");
+                                CDPLogger.Information("ui sent end command. Exiting device ui connection.");
                                 break;
                             }
                         }
                         uiReadTask = null;
                         devReadTask = null;
-                        Console.WriteLine("end of exchange while loop");
+                        //CDPLogger.Verbose("end of exchange while loop");
                     }
 
                 }

@@ -1,4 +1,5 @@
 ﻿using CryoDeviceProxy.BLL;
+using CryoDeviceProxy.Logs;
 using System;
 using System.Net;
 
@@ -76,19 +77,38 @@ namespace CryoDeviceProxy
             }
 
 
-            Console.WriteLine("Starting CryoConcepts Device Highway / Control.");
-            Console.WriteLine(string.Format("[isproduction {0}], ErrorList: read -> {1}, clear -> {2}, UsageList: read-> {3}, clear -> {4}",
-                isProduction, readErrors, clearErrors, readUsage, clearUsage));
-            CryoServer cs = new CryoServer();
-            cs.IsProduction = isProduction;
-            cs.ReadError = readErrors;
-            cs.ClearError = clearErrors;
-            cs.ReadUsage = readUsage;
-            cs.ClearUsageStats = clearUsage;
-            //CryoServer cs = new CryoServer(IPAddress.Any.ToString());
-            cs.StartAllServers();
-            System.Threading.Thread.Sleep(System.Threading.Timeout.Infinite);
-            //Console.ReadLine();
+
+            try
+            {
+                AppOptions.LoadOptions();
+                CDPLogger.InitLogger(
+                    log_to: AppOptions.GetAppOptions.LogTo,
+                    log_level: AppOptions.GetAppOptions.LogLevel,
+                    max_file_count: AppOptions.GetAppOptions.MaxCountFiles,
+                    max_file_size_mb: AppOptions.GetAppOptions.MaxLogFileSizeMB,
+                    log_file_name: AppOptions.GetAppOptions.LogFileName);
+
+                Console.WriteLine("Starting CryoConcepts Device Highway / Control.");
+                Console.WriteLine(string.Format("[isproduction {0}], ErrorList: read -> {1}, clear -> {2}, UsageList: read-> {3}, clear -> {4}",
+                    isProduction, readErrors, clearErrors, readUsage, clearUsage));
+                CryoServer cs = new CryoServer
+                {
+                    IsProduction = isProduction,
+                    ReadError = readErrors,
+                    ClearError = clearErrors,
+                    ReadUsage = readUsage,
+                    ClearUsageStats = clearUsage
+                };
+                //CryoServer cs = new CryoServer(IPAddress.Any.ToString());
+                cs.StartAllServers();
+                System.Threading.Thread.Sleep(System.Threading.Timeout.Infinite);
+                //Console.ReadLine();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine("Cryo Socket Server Exited.");
+            }
         }
     }
 }

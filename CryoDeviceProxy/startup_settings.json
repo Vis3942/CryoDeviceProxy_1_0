@@ -1,0 +1,7 @@
+{
+  "LogTo": "console",
+  "LogLevel": "information",
+  "MaxLogFileSizeMB": 1,
+  "MaxCountFiles": 5,
+  "LogFileName": "sock_server_log.txt"
+}
