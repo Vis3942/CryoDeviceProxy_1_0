@@ -54,7 +54,7 @@ namespace CryoDeviceProxy.BLL
                 var prj = new PingRequestJson();
                 prj.serial_number = pp_recv.SerialNumber;
                 prj.imei_number = pp_recv.IMEINumberString;
-                prj.ping_data = System.Text.ASCIIEncoding.ASCII.GetString(pp_recv.ReceivePacket);
+                prj.ping_data = pp_recv.ReceivePacketStr; // System.Text.ASCIIEncoding.ASCII.GetString(pp_recv.ReceivePacket);
                 string jsonstr = JsonSerializer.Serialize(prj);
                 var content = new StringContent(jsonstr, Encoding.UTF8, "application/json");
                 string[] ret_str_a = null;

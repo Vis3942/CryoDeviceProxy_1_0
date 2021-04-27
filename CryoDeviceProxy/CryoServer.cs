@@ -1057,7 +1057,8 @@ namespace CryoDeviceProxy
                                 //d.String 3: new error count available
                                 //d.String 4: delimiter[0x0D]
                             */
-                            var pp = new PingPacket(buf_dev, 0, amountRead);
+                            //var pp = new PingPacket(buf_dev, 0, amountRead);
+                            var pp = new PingPacket(recv_pkt_str);
                             devState = DeviceStates.NORMAL;
                             if (pp.IsPacketValid)
                             {
@@ -1133,7 +1134,7 @@ namespace CryoDeviceProxy
                             }
                             else
                             {
-                                CDPLogger.Error("Invalid Packet received. {recv_pkt_str}");
+                                CDPLogger.Error($"Invalid Packet received. {recv_pkt_str}");
                             }
                         }
                     }

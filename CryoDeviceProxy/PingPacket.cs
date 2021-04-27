@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CryoDeviceProxy.Logs;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -76,6 +77,13 @@ namespace CryoDeviceProxy
             get
             {
                 return _recv_str_as_bytes;
+            }
+        }
+        public string ReceivePacketStr
+        {
+            get
+            {
+                return _recv_str;
             }
         }
 
@@ -165,7 +173,12 @@ namespace CryoDeviceProxy
             */
 
             //string mod_str = System.Text.ASCIIEncoding.ASCII.GetString(recv_data);
-            string[] pp_arr = _recv_str.Split(';', StringSplitOptions.RemoveEmptyEntries);
+            CDPLogger.Verbose(_recv_str.Length.ToString());
+            string[] pp_arr = _recv_str.Trim().Split(';', StringSplitOptions.RemoveEmptyEntries);
+            foreach (var tstr in pp_arr)
+            {
+                CDPLogger.Verbose($"{tstr.Length} => [{tstr}]");
+            }
             bool sts;
             if (pp_arr.Length == 4 )
             {
