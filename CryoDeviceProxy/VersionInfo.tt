@@ -2,12 +2,12 @@
 <#@ output extension=".txt" #>
 <#
     int major    = 1;
-    int minor    = 2; // Official == even, Preview == odd; 1.0 original release (no versionsing data in app)
+    int minor    = 3; // Official == even, Preview == odd; 1.0 original release (no versionsing data in app)
     int build    = 0;
- 
+    bool previewMode = false; 
     string version = String.Format("{0}.{1}.{2}", major, minor, build);
  
-    if (minor % 2 == 1) // Preview build
+    if (previewMode) // Preview build
     {
         // Auto-generate the build
         DateTime ProjectStartedDate = new DateTime(year: 2021, month: 3, day: 3);

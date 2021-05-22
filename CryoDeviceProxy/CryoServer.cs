@@ -342,7 +342,8 @@ namespace CryoDeviceProxy
                          */
                         string recv_str = System.Text.ASCIIEncoding.ASCII.GetString(buf_ui, 0, amountRead);
                         string[] cmds_data = recv_str.Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
-                        if ((cmds_data[0].Trim().ToLower().Equals("getinfo")) &&
+                        cmds_data[0] = cmds_data[0].Trim().ToLower();
+                        if ((cmds_data[0].Equals("getinfo")) &&
                              (cmds_data.Length >= 4)
                            )
                         {
@@ -369,14 +370,34 @@ namespace CryoDeviceProxy
                                 await uiSslStream.WriteAsync(tosend_b, 0, tosend_b.Length).ConfigureAwait(false);
                             }
                         }
-                        else if ((cmds_data[0].Trim().ToLower().Equals("connect")) &&
+                        else if (  ( (cmds_data[0].Equals("connect")) ||
+                                     (cmds_data[0].Equals("advconnectserial")) ||
+                                     (cmds_data[0].Equals("advconnectimei")) ||
+                                     (cmds_data[0].Equals("advconnectid"))
+                                    ) &&
                                   (cmds_data.Length >= 4)
                                 )
                         {
                             //ushort device_serial_number = ushort.Parse(cmds_data[1]);
                             BLL.DeviceBLL devbll = Program.GetDeviceBLL();
-                            string service_tag = cmds_data[1].Trim();
-                            if (!devbll.VerifyConnectRequest(service_tag, cmds_data[2].Trim(), cmds_data[3].Trim())) // service_tag, email, token
+                            string service_tag = string.Empty;
+                            switch (cmds_data[0])
+                            {
+                                case "connect":
+                                    service_tag = cmds_data[1].Trim();
+                                    break;
+                                case "advconnectserial":
+                                    service_tag = "bdser" + cmds_data[1].Trim(); // bdser => back door "ser"ial 
+                                    break;
+                                case "advconnectimei":
+                                    service_tag = "bdimei" + cmds_data[1].Trim(); // bdimei => back door imei 
+                                    break;
+                                case "advconnectid":
+                                    service_tag = "bdid" + cmds_data[1].Trim(); // bdid => back door id 
+                                    break;
+                            }
+                            //string service_tag = cmds_data[1].Trim();
+                            if ( (cmds_data[0].Equals("connect") ) && (!devbll.VerifyConnectRequest(service_tag, cmds_data[2].Trim(), cmds_data[3].Trim()) ) ) // service_tag, email, token
                             {
                                 byte[] no_dev_b = System.Text.ASCIIEncoding.ASCII.GetBytes(string.Format("Connect request for {0} failed Authorization\xd", service_tag));
                                 await uiSslStream.WriteAsync(no_dev_b, 0, no_dev_b.Length).ConfigureAwait(false);
@@ -485,7 +506,7 @@ namespace CryoDeviceProxy
                                                 byte[] tmp_dev_b = task1.Result;
                                                 if (tmp_dev_b != null)
                                                 {
-                                                    CDPLogger.Verbose("sent to ui");
+                                                    CDPLogger.Verbose($"sent to ui {System.Text.ASCIIEncoding.ASCII.GetString(tmp_dev_b)}");
                                                     if (Utils.BytesEqual(tmp_dev_b, 0, end_b, 0, end_b.Length))
                                                     {
                                                         uiSslStream.WriteAsync(disconnected_b).ConfigureAwait(false);
@@ -909,7 +930,8 @@ namespace CryoDeviceProxy
                         {
                             CDPLogger.Error("devReadTask faulted");
                             //device_client_error = true;
-                            await uibufblk.SendAsync(disconnected_b).ConfigureAwait(false);
+                            //await uibufblk.SendAsync(disconnected_b).ConfigureAwait(false);
+                            await uibufblk.SendAsync(end_b).ConfigureAwait(false);
                             devbufblk.Complete();
                             break;
                         }
@@ -920,7 +942,8 @@ namespace CryoDeviceProxy
                             //Console.WriteLine(string.Format("devRead bytes{0} ", dev_bytes_read));
                             //break;
                             CDPLogger.Error("devReadTask read zero bytes");
-                            await uibufblk.SendAsync(disconnected_b).ConfigureAwait(false);
+                            //await uibufblk.SendAsync(disconnected_b).ConfigureAwait(false);
+                            await uibufblk.SendAsync(end_b).ConfigureAwait(false);
                             devbufblk.Complete();
                             break;
                         }
@@ -1019,7 +1042,7 @@ namespace CryoDeviceProxy
             var buf_dev = new byte[4096];
             //var rem_recv_bytes = new byte[4096];
             //var rem_recv_count = 0;
-
+            bool pkt_invalid = false;
             var devStream = deviceClient.GetStream();
             SslStream sslStream = new SslStream(
                 devStream, false);
@@ -1047,6 +1070,7 @@ namespace CryoDeviceProxy
                         // Process recv_pkt_str_list
                         foreach (string recv_pkt_str in recv_pkt_strList)
                         {
+                            pkt_invalid = false;
                             CDPLogger.Debug(string.Format("[dbg]: recv [{1}]= {0}", recv_pkt_str, recv_pkt_str.Length));
                             // receive ping packet; device sent ping packet
                             /*
@@ -1060,10 +1084,10 @@ namespace CryoDeviceProxy
                             //var pp = new PingPacket(buf_dev, 0, amountRead);
                             var pp = new PingPacket(recv_pkt_str);
                             devState = DeviceStates.NORMAL;
+                            BLL.DeviceBLL devbll = Program.GetDeviceBLL();
                             if (pp.IsPacketValid)
                             {
                                 CDPLogger.Information(string.Format("serial num recv {0}, imei num {1}", pp.SerialNumber, pp.IMEINumberString));
-                                BLL.DeviceBLL devbll = Program.GetDeviceBLL();
                                 string[] response_datastrarr = devbll.SendDevicePingData(pp);
                                 if (response_datastrarr != null)
                                 {
@@ -1129,12 +1153,55 @@ namespace CryoDeviceProxy
                                 else
                                 {
                                     // do nothing close connection
+                                    pkt_invalid = true;
                                 }
                                 // otherwise the system exits
                             }
                             else
                             {
+                                pkt_invalid = true;
+                            }
+                            if (pkt_invalid)
+                            {
+                                //check to see if a ui needs connection to this device
                                 CDPLogger.Error($"Invalid Packet received. {recv_pkt_str}");
+                                string [] inv_pkt_rsp = devbll.SetInvalidPingData(recv_pkt_str.Trim());
+                                if (inv_pkt_rsp == null)
+                                {
+                                    return; // cannot do anything; wait for next ping
+                                }
+                                string[] pp_arr = recv_pkt_str.Trim().Split(';', StringSplitOptions.RemoveEmptyEntries);
+                                // pp_arr[0] is imei number, pp_arr[1] is serial number
+                                // servicetag values are bdser<serial number> or bdimei<imei number>
+                                string bd_servicetag = string.Empty;
+                                string bd_dev_resp = string.Empty;
+                                string bdid_search_tag = "bdid" + inv_pkt_rsp[1].Trim();
+                                if ( (inv_pkt_rsp[0].ToLower().Equals("success")) && (uiClientDict.ContainsKey(bdid_search_tag) ) )
+                                {
+                                    bd_servicetag = bdid_search_tag;
+                                    bd_dev_resp = "0;0;0;0;0;0;1;0";
+                                }
+                                else if (uiClientDict.ContainsKey("bdimei" + pp_arr[0].Trim()))
+                                {
+                                    bd_servicetag = "bdimei" + pp_arr[0].Trim();
+                                    bd_dev_resp = "0;0;0;0;0;0;1;0";
+                                }
+                                else if (uiClientDict.ContainsKey("bdser" + pp_arr[1].Trim()))
+                                {
+                                    bd_servicetag = "bdser" + pp_arr[1].Trim();
+                                    bd_dev_resp = "0;0;0;0;0;0;1;0";
+                                }
+                                else
+                                {
+                                    // do nothing
+                                }
+                                if ((bd_servicetag != string.Empty) && (bd_dev_resp != string.Empty))
+                                {
+                                    // send response
+                                    CDPLogger.Information(string.Format("[invalid pkt recv]: sent to device: <{0}>", bd_dev_resp));
+                                    SendToClientString(sslStream, bd_dev_resp);
+                                    await DoUIConnection(deviceClient, sslStream, bd_servicetag);
+                                }
                             }
                         }
                     }
@@ -1311,6 +1378,7 @@ namespace CryoDeviceProxy
             {
                 if (net_stream.CanWrite)
                 {
+                    CDPLogger.Verbose("canwrite succ: sent data to device");
                     await net_stream.WriteAsync(data_send).ConfigureAwait(false);
                 }
             }

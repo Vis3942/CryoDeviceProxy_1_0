@@ -15,7 +15,7 @@ namespace CryoDeviceProxy.BLL
     public class DeviceBLL
     {
 
-        private ConcurrentDictionary<string, PingPacket> device_db_cache_data = new ConcurrentDictionary<string, PingPacket>(); // local cache for database; to remove this after db connection
+        //private ConcurrentDictionary<string, PingPacket> device_db_cache_data = new ConcurrentDictionary<string, PingPacket>(); // local cache for database; to remove this after db connection
 
 
         public string[] SendDevicePingData(PingPacket pp_recv)
@@ -560,6 +560,63 @@ namespace CryoDeviceProxy.BLL
                 return toret_bool;
             }
         }
+
+        public string[] SetInvalidPingData(string recv_pkt_str)
+        {
+            // send to db
+            Task<string[]> task = Task.Run(() => InvalidPingData(recv_pkt_str));
+            task.Wait();
+            return task.Result;
+        }
+
+        private async Task<string[]> InvalidPingData(string recv_pkt_str)
+        {
+            using (var client = new HttpClient())
+            {
+                Uri uri = new Uri(string.Format("http://{0}{1}", "127.0.0.1:3000", "/api/devices/invalid-ping"));
+                CDPLogger.Verbose(uri.ToString());
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var prj = new InvalidPingJson();
+                prj.invalid_ping_data = recv_pkt_str;
+                string jsonstr = JsonSerializer.Serialize(prj);
+                var content = new StringContent(jsonstr, Encoding.UTF8, "application/json");
+                string[] ret_str_a = null;
+                try
+                {
+                    HttpResponseMessage result = await client.PostAsync(uri, content);
+                    string responseBody = await result.Content.ReadAsStringAsync();
+                    CDPLogger.Verbose(responseBody);
+                    if (result.Content.Headers.GetValues("Content-Type").ToArray()[0].Equals("application/json"))
+                    {
+                        var respjson = JsonSerializer.Deserialize<PingResponseJson>(responseBody);
+                        //Console.WriteLine("finished deserializer");
+                        // return service tag, response data 
+                        CDPLogger.Debug("response");
+                        CDPLogger.Debug(string.Format($"response succ: {result.IsSuccessStatusCode}"));
+                        if (result.IsSuccessStatusCode)
+                        {
+                            ret_str_a = new string[2];
+                            ret_str_a[0] = "success";
+                            ret_str_a[1] = respjson.data.response;
+                        }
+                    }
+                    else
+                    {
+                        ret_str_a = new string[2];
+                        ret_str_a[0] = "failed";
+                        ret_str_a[1] = "did not get json resp from server.";
+                    }
+                }
+                catch (Exception e)
+                {
+                    CDPLogger.Error(string.Format("InvalidPing: {0}", e.Message));
+                    ret_str_a = null;
+                }
+                return ret_str_a;
+            }
+        }
+
 
 
     }
