@@ -230,10 +230,10 @@ namespace CryoDeviceProxy.Logs
                         }
                         // move remaining rolled files
                         for (int i = rolledLogFileList.Length; i > 0; --i)
-                            File.Move(rolledLogFileList[i - 1], bareLogFilePath + "." + i + Path.GetExtension(currentFileWithPath));
+                            File.Move(rolledLogFileList[i - 1], bareLogFilePath + "." + i + Path.GetExtension(currentFileWithPath), true);
                         var targetPath = bareLogFilePath + ".0" + Path.GetExtension(currentFileWithPath);
                         // move original file
-                        File.Move(currentFileWithPath, targetPath);
+                        File.Move(currentFileWithPath, targetPath, true);
                     }
                 }
             }

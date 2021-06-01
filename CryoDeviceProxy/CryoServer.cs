@@ -13,6 +13,7 @@ using System.Net.Security;
 using System.Security.Authentication;
 using System.Text.RegularExpressions;
 using CryoDeviceProxy.Logs;
+using System.Linq;
 
 namespace CryoDeviceProxy
 {
@@ -1065,6 +1066,11 @@ namespace CryoDeviceProxy
                 {
                     recv_pkt_strList.Clear();
                     ProcessRecvByteRegex(strFromDev, recv_pkt_strList, remaining_sb);
+                    recv_pkt_strList = recv_pkt_strList 
+                        .GroupBy(i => i.Substring(0, 15))
+                        .Select(g => g.Last())
+                        .ToList();
+
                     if (recv_pkt_strList.Count > 0)
                     {
                         // Process recv_pkt_str_list
