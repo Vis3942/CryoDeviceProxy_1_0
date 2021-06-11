@@ -34,7 +34,7 @@ namespace CryoDeviceProxy
         TcpListener uiServer = null;
         // Thread _server_thread = null;
         private readonly object lock_list = new object();
-        private readonly List<string> devicesPinged = new List<string>();
+        //private readonly List<string> devicesPinged = new List<string>();
         private AutoResetEvent device_ui_connection_completed = new AutoResetEvent(false);
         private int _ui_wait_message_interval_secs = 15;
         private int _ui_connect_wait_max_count = 9;
@@ -125,7 +125,23 @@ namespace CryoDeviceProxy
             this.IpAddressStr = ipaddr;
             LoadConfig();
         }
-
+        /// <summary>
+        /// Loads the application configuration from file cryodevproxy_params.txt
+        /// The parameters file contains the following parameters
+        /// <list type="bullet">
+        /// <item>
+        /// <description>Line 1: User Interface socket connection port.</description>
+        /// </item>
+        /// <item>
+        /// <description>Line 2: Device Interface socket connection port</description>
+        /// </item>
+        /// <item>
+        /// <description>Line 3: Certificate name for server without the ".pfx" extension. 
+        /// App expects the file to be in the same directory as the application executable. 
+        /// If the app does not find the file, the app logs an error and exits.</description>
+        /// </item>
+        /// </list>        
+        /// </summary>
         public void LoadConfig()
         {
             int ii = 0;
@@ -180,6 +196,10 @@ namespace CryoDeviceProxy
             }
         }
 
+        /// <summary>
+        /// Loads the X509 Certificate for TLS communications 
+        /// </summary>
+        /// <param name="cert_name">Name of certificate file (extension: .pfx) </param>
         private void LoadCertificate(string cert_name)
         {
             try
@@ -195,13 +215,26 @@ namespace CryoDeviceProxy
             }
         }
 
-
+        /// <summary>
+        /// This function starts the following 2 servers:
+        /// <list type="bullet">
+        /// <item>
+        /// <description>Device Connection Listener: Server listening for connections from devices.</description>
+        /// </item>
+        /// <item>
+        /// <description>User Interface Connection Listener: Server listening for connections from User Interface.</description>
+        /// </item>
+        /// </list>        
+        /// </summary>
         public void StartAllServers()
         {
             StartDeviceServerAsync();
             StartUIServerAsync();
         }
 
+        /// <summary>
+        /// This function starts the user interface server listening for connections from user interface as a separate task.
+        /// </summary>
         public void StartUIServerAsync()
         {
             uiServer = new TcpListener(IPAddress.Parse(_ipv4_addr), UIConnectionPort);
@@ -234,6 +267,9 @@ namespace CryoDeviceProxy
             //}
         }
 
+        /// <summary>
+        /// This function starts the device server listening for connections from devices as a separate task.
+        /// </summary>
         public void StartDeviceServerAsync()
         {
             deviceServer = new TcpListener(IPAddress.Parse(_ipv4_addr), DeviceConnectionPort);
@@ -267,6 +303,13 @@ namespace CryoDeviceProxy
             //}
         }
 
+        /// <summary>
+        /// This function is the entry point of User Interface connection
+        /// that is, any connection initiated by the user interface code will trigger an accept connections.
+        /// This function then launches a separate task to handle the protocol between the socket server and the user interface.
+        /// </summary>
+        /// <param name="uiListener">the server object listening for connections from user interface</param>
+        /// <returns></returns>
         async Task AcceptUIClientsAsync(TcpListener uiListener)
         {
             while (true)
@@ -284,6 +327,47 @@ namespace CryoDeviceProxy
             }
         }
 
+        /// <summary>
+        /// This function normally runs in its own task, and handles all protocols (that is commands and responses) to a single user interface 
+        /// Firstly the tls based communications is initiated with the user interface. 
+        /// If this tls negotiation fails, the connection to the user interface is closed.
+        /// All connections to this socket server require an authentication token served by the backend server.
+        /// Supported commands with user interface are:
+        /// <list type="bullet">
+        /// <item>
+        /// <description>getinfo\n[service tag]\n[email]\n[token]
+        /// <para>The socket server queries the backend server and after authenticating the token
+        /// returns [ping data];[utc time it was received]0x0d</para></description>
+        /// </item>
+        /// <item>
+        /// <description>connect\n[service tag]\n[email]\n[token]0x0d
+        /// <para>The socket server queries the backend server and after authenticating the token
+        /// waits for device to ping data and establish a connection. This function on receiving the connect command
+        /// waits for period of 15*9 seconds for a ping packet from device. If the device has not sent the 
+        /// ping packet, the function will end the connection to the user interface.</para>
+        /// <para>If the device pings within the timeout, the function initializes the connected (Y1) command to the device, and 
+        /// setups up BufferedBlocks that enable reading any data received from user interface and sends it to the device (through a buffer block),
+        /// and conversely any data from device (through a buffer block) is sent to the user interface. If the user interface sends the "end" data 
+        /// or closes the connection, the above bufferblocks are closed and the connection to the user interface ends. This could also be triggered by an 
+        /// end command from the device (received through a BufferBlock) </para></description>
+        /// </item>
+        /// <item>
+        /// <description> Advanced Feature
+        /// <para>In case of error in the ping data were the packet received is mal-formed the device will never get a response, and remote debuggging
+        /// will not be possible. To support this special case, advacned connection options are supported. All these functions behave exactly as the connect 
+        /// command above but have different set of data in the command payload. The are
+        /// <list>
+        /// <item><description>advconnectserial\n[serial number]\n[email]\n[token]0x0d</description></item>
+        /// <item><description>advconnectimei\n[imei]\n[email]\n[token]0x0d</description></item>
+        /// <item><description>advconnectid\n[id in InvalidPingPacket table]\n[email]\n[token]0x0d</description></item>
+        /// </list>
+        /// </para>
+        /// </description>
+        /// </item>
+        /// </list>        
+        /// </summary>
+        /// <param name="uiClient">Object representing connection to the User Interface</param>
+        /// <returns></returns>
         async Task UIProtocolAsync(TcpClient uiClient)
         {
             var ip = uiClient.Client.RemoteEndPoint.ToString();
@@ -594,7 +678,13 @@ namespace CryoDeviceProxy
             }
         }
 
-
+        /// <summary>
+        /// This function is the entry point of device connection
+        /// that is, any connection initiated by the device will trigger an accept connections.
+        /// This function then launches a separate task to handle the protocol between the socket server and the device.
+        /// </summary>
+        /// <param name="deviceListener">The server object that listens for connections from device</param>
+        /// <returns></returns>
         async Task AcceptDeviceClientsAsync(TcpListener deviceListener)
 
         {
@@ -614,6 +704,15 @@ namespace CryoDeviceProxy
             }
         }
 
+        /// <summary>
+        /// This function performs a single read operation from an sslStream (first parameter), and copies the data to the buffer (second parameter).
+        /// It allows the calling function to set a timeout, and the function will wait for data within that timeout.
+        /// </summary>
+        /// <param name="readStream">SSlstream to read from</param>
+        /// <param name="readBuf">buffer to write the bytes read to</param>
+        /// <param name="withTimeOut">true: apply timeout, false: wait till ssltream read call returns</param>
+        /// <param name="timeout_secs">The timeout to wait for data if the "withTimeOut" parameter is true</param>
+        /// <returns>0 if error or timeout, else the number of byes read from sslstream before the timeout expired</returns>
         private async Task<int> ReadFromStream(SslStream readStream, byte[] readBuf, bool withTimeOut, int timeout_secs = 3 * 60)
         {
             /*
@@ -643,7 +742,19 @@ namespace CryoDeviceProxy
                 return amountRead;
             }
         }
-
+        
+        /// <summary>
+        /// This function handles the protocol to download errors stored in the device.
+        /// Once the data is uploaded successfully to the backend server, the error data clear command is sent to the device
+        /// <para>
+        /// The error data download is initiated with 
+        /// Error data download command. The function will read data between 'boe' and 'eoe' as the error data.
+        /// </para>
+        /// </summary>
+        /// <param name="deviceClient">Client object representing connection to the device</param>
+        /// <param name="devSslStream">Secure tls connection for data exchange</param>
+        /// <param name="servicetag_str">Identification of the device to store the error data related to this device.</param>
+        /// <returns></returns>
         private async Task DoErrorDownload(TcpClient deviceClient, SslStream devSslStream, string servicetag_str)
         {
             BufferBlock<string> devbufblk = new BufferBlock<string>(
@@ -758,12 +869,24 @@ namespace CryoDeviceProxy
                     CDPLogger.Verbose(BitConverter.ToString(tmpend_b4).Replace("-", " "));
                     await devSslStream.WriteAsync(tmpend_b4).ConfigureAwait(false);
                     devSslStream.Flush();
-                    ReadAckFromDeviceWithTimeout(devSslStream, 3);
+                    sts = await ReadAckFromDeviceWithTimeout(devSslStream, 3);
 
                 }
             }
         }
 
+        /// <summary>
+        /// This function handles the protocol to download usage statistics from the device.
+        /// Once the data is uploaded successfully to the backend server, the Usage Stat clear command is sent to the device
+        /// <para>
+        /// The usage statistics data download is initiated with 
+        /// Usage Stats download command. The function will read data between 'bos' and 'eos' as the usage statistics data.
+        /// </para>
+        /// </summary>
+        /// <param name="deviceClient">Client object representing connection to the device</param>
+        /// <param name="devSslStream">Secure tls connection for data exchange</param>
+        /// <param name="servicetag_str">Identification of the device to store the usage statistics data related to this device</param>
+        /// <returns></returns>
         private async Task DoUsageStatsDownload(TcpClient deviceClient, SslStream devSslStream, string servicetag_str)
         {
             BufferBlock<string> devbufblk = new BufferBlock<string>(
@@ -868,17 +991,25 @@ namespace CryoDeviceProxy
                     // command for clear stats ????
                     Thread.Sleep(5000);
                     byte[] tmpend_b4 = System.Text.ASCIIEncoding.ASCII.GetBytes("SC\xd");
-                    CDPLogger.Information("Sent SC command: Error data clear");
+                    CDPLogger.Information("Sent SC command: Usage Stat clear");
                     CDPLogger.Verbose(BitConverter.ToString(tmpend_b4).Replace("-", " "));
                     await devSslStream.WriteAsync(tmpend_b4).ConfigureAwait(false);
                     devSslStream.Flush();
-                    ReadAckFromDeviceWithTimeout(devSslStream, 3);
+                    sts = await ReadAckFromDeviceWithTimeout(devSslStream, 3);
 
                 }
             }
         }
 
-        private async void ReadAckFromDeviceWithTimeout(SslStream dev_stream, int timeout_secs)
+        /// <summary>
+        /// This function reads an ACK from device with timeout. 
+        /// It is mainly used in the cases of clear usage statistics or error data, which do not provide a response,
+        /// but will generally respond with an ACK. Therefore, this application will knows exacly the when the command is done
+        /// on the device before closing the connection to the device. 
+        /// </summary>
+        /// <param name="dev_stream">The TLS connection to read the ack from</param>
+        /// <param name="timeout_secs">Timeout in seconds the function needs to wait for receiving an ACK</param>
+        private async Task<bool> ReadAckFromDeviceWithTimeout(SslStream dev_stream, int timeout_secs)
         {
             byte[] buf_recv = new byte[5];
             var timeoutTask = Task.Delay(TimeSpan.FromSeconds(timeout_secs)); // 3 minutes
@@ -888,15 +1019,27 @@ namespace CryoDeviceProxy
             if (completedTask == timeoutTask)
             {
                 CDPLogger.Error("timed out waiting for acknowledgement from Device.");
+                return false;
             }
             else
             {
                 CDPLogger.Verbose(string.Format("Received [{0}] for acknowledgmeent",
                     System.Text.ASCIIEncoding.ASCII.GetString(buf_recv, 0, amountReadTask.Result)));
+                return true;
             }
 
         }
 
+        /// <summary>
+        /// This function is responsible for performing the glue code between the user interface and device.
+        /// This is executed as part of the device protocol. It sets up BufferedBlocks to read from the device 
+        /// and send that data to the user interface (through a buffer block), and another BufferedBlock to receive
+        /// data from the user interface and then send it to the device. 
+        /// </summary>
+        /// <param name="deviceClient">Client object representing connection to the device</param>
+        /// <param name="devSslStream">Secure tls connection for data exchange<</param>
+        /// <param name="servicetag_str">Identification to establish the glue logic between user interface connection and device connection.</param>
+        /// <returns></returns>
         private async Task DoUIConnection(TcpClient deviceClient, SslStream devSslStream, string servicetag_str)
         {
             BufferBlock<byte[]> devbufblk = new BufferBlock<byte[]>(
@@ -1035,7 +1178,64 @@ namespace CryoDeviceProxy
         }
 
 
-
+        /// <summary>
+        /// This function normally runs in its own task, and handles all protocols (that is commands and responses) to a single device 
+        /// Firstly the tls based communications is initiated with the device. 
+        /// If this tls negotiation fails, the connection to the device is closed.
+        /// The device periodically sends a ping packet. Two versions of the ping packet are supported in this function
+        /// <para>
+        /// Version 1.0 ping packet format is "A;B;C;D;\r" where
+        /// <list type="bullet">
+        /// <item><description>A: IMEI number</description></item>
+        /// <item><description>B: Serial number</description></item>
+        /// <item><description>C: Usage Statistics Count</description></item>
+        /// <item><description>D: Error log count</description></item>
+        /// </list>
+        /// </para>
+        /// <para>
+        /// Version 1.1 ping packet format is "A;B;C;D;E;F;G;H1;...Hn\r" where
+        /// <list type="bullet">
+        /// <item><description>A: IMEI number</description></item>
+        /// <item><description>B: Serial number</description></item>
+        /// <item><description>C: Usage Statistics Count</description></item>
+        /// <item><description>D: Error log count</description></item>
+        /// <item><description>E: Firmware Version</description></item>
+        /// <item><description>F: PPU Grace treatments left</description></item>
+        /// <item><description>G: Number of language packs in device</description></item>
+        /// <item><description>Hi: Each language pack name with version number and values of i are 0...G-1</description></item>
+        /// </list>
+        /// </para>
+        /// <para>
+        /// The basic functionality implemented in this function on receiving a ping packet from device is:
+        /// <list type="number">
+        /// <item><description>Establish a TLS connection: if fails or exception, close connection to device</description></item>
+        /// <item><description>Read data from stream: if error or zero bytes read, close connection to device</description></item>
+        /// <item><description>Parse the read data into packets in the above format using Regex, remove duplicates and process each packet in a loop.</description></item>
+        /// <item><description>Create instance of PingPacket with packet string received. If packet is not valid, write to InvalidPingData table, and close connection to device</description></item>
+        /// <item><description>Packet Valid Actions:
+        /// <para>
+        /// <c>devbll.SendDevicePingData</c> function is used to send the ping packet to the backend server. If updated successfully, 
+        /// the function will send a ping response appropriate for the following actions: "Ui Connection", "Error Data Download", "Usage Statistics Downlaod",
+        /// or a ping response. The ping response packet contains information from the backend server and the connection status. 
+        /// Then this function will check to see if a connection to device is requested from user interface, if yes, establish a channel with the user 
+        /// interface connection object using Buffered blocks and device connection object. This setup for the device
+        /// is done in the function <c>DoUIConnection</c>, and the corresponding setup for the User Interface happens in the function 
+        /// <c>UIProtocolAsync</c>. Once the channel exits, connection to device and user interface are closed.
+        /// If a connection is not pending, the function checks to see if there are any error data available in the device. If yes, all the 
+        /// error logs from the device are downloaded and written to the backend server using the function <c>DoErrorDownload</c>. Once the error 
+        /// logs have been downloaded, the connection to device is closed. 
+        /// If there are no error data available in device, this function will check to see if there are any usage statistics in the device. 
+        /// If usage statistics are available, the function will download the usage statistics from device and write it to the backend server 
+        /// using the function <c>DoUsageStatsDownload</c>. Once data is downloaded, the connection to the device is closed. 
+        /// If there is no pending usage statistics in the device, ping response is sent to the device and the connection is closed. 
+        /// </para></description></item>
+        /// <item><description>Packet Invalid Actions:
+        /// <para>
+        /// </para></description></item>
+        /// </list></para>
+        /// </summary>
+        /// <param name="deviceClient"></param>
+        /// <returns></returns>
         async Task DeviceProtocolAsync(TcpClient deviceClient)
         {
             var ip = deviceClient.Client.RemoteEndPoint.ToString();
@@ -1242,6 +1442,13 @@ namespace CryoDeviceProxy
         }
 
         #region protocol_funcs
+        /// <summary>
+        /// This function is used by the function <c>ProcessRecvByteRegex</c> to collect data between multiple 
+        /// segments during processing of received packet.
+        /// It adds data to the StringBuilder that is the second argument to the function.
+        /// </summary>
+        /// <param name="add_rem">Add this string to the existing data in the StringBuilder instance</param>
+        /// <param name="sb_rem">The StringBuilder instance that is used to append the data</param>
         private static void AddToRemaining(string add_rem, StringBuilder sb_rem)
         {
             CDPLogger.Verbose($"Remaining: {add_rem}");
@@ -1249,6 +1456,15 @@ namespace CryoDeviceProxy
         }
 
 
+        /// <summary>
+        /// This function parses received data based on the known basic format.
+        /// It assumes start of the valid packet in data as an IMEI number which could be 15 digits or 17 digits long.
+        /// and looks for end of packet as 0x0D or the "\r" character.
+        /// This function handles partitioned data packets and appends them to provide a valid packet for post processing.
+        /// </summary>
+        /// <param name="recvstr">raw string data read from device connection</param>
+        /// <param name="recvd_msgs">list of parsed string</param>
+        /// <param name="sb_rem">object that contains data not processed in the current step. </param>
         private static void ProcessRecvByteRegex(string recvstr, List<string> recvd_msgs, StringBuilder sb_rem)
         {
             var regex_pattern_start = @"\d{17}|\d{15}";
@@ -1339,45 +1555,50 @@ namespace CryoDeviceProxy
         //    }
         //}
 
-        private string GetAvailableDevices()
-        {
-            StringBuilder sb = new StringBuilder();
-            lock(lock_list)
-            {
-                foreach (string devs in devicesPinged)
-                {
-                    sb.Append(string.Format("{0}\n", devs));
-                }
-            }
-            return sb.ToString();
-        }
+        //private string GetAvailableDevices()
+        //{
+        //    StringBuilder sb = new StringBuilder();
+        //    lock(lock_list)
+        //    {
+        //        foreach (string devs in devicesPinged)
+        //        {
+        //            sb.Append(string.Format("{0}\n", devs));
+        //        }
+        //    }
+        //    return sb.ToString();
+        //}
 
-        private byte[] GetAvailableDevicesAsBytes()
-        {
-            MemoryStream ms = new MemoryStream();
-            lock (lock_list)
-            {
-                foreach (string devs in devicesPinged)
-                {
-                    ms.Write(System.Text.ASCIIEncoding.ASCII.GetBytes(string.Format("{0}\n", devs)));
-                }
-            }
-            return ms.ToArray();
-        }
+        //private byte[] GetAvailableDevicesAsBytes()
+        //{
+        //    MemoryStream ms = new MemoryStream();
+        //    lock (lock_list)
+        //    {
+        //        foreach (string devs in devicesPinged)
+        //        {
+        //            ms.Write(System.Text.ASCIIEncoding.ASCII.GetBytes(string.Format("{0}\n", devs)));
+        //        }
+        //    }
+        //    return ms.ToArray();
+        //}
 
-        private bool IsDeviceAvaialble(string dev_ser_num_str)
-        {
-            bool found = false;
-            lock(lock_list)
-            {
-                found = devicesPinged.Contains(dev_ser_num_str);
-            }
-            return found;
-        }
+        //private bool IsDeviceAvaialble(string dev_ser_num_str)
+        //{
+        //    bool found = false;
+        //    lock(lock_list)
+        //    {
+        //        found = devicesPinged.Contains(dev_ser_num_str);
+        //    }
+        //    return found;
+        //}
 
         #endregion // list_funcs
 
         #region util_funcs
+        /// <summary>
+        /// This function is used to confirm writability and then write bytes to the underlying sslstream
+        /// </summary>
+        /// <param name="net_stream">the stream to write to</param>
+        /// <param name="data_send">data to be written to the stream</param>
         public async void SendToClient(SslStream net_stream, byte[] data_send)
         {
             if (available_sslstreams.Contains(net_stream))
@@ -1390,6 +1611,11 @@ namespace CryoDeviceProxy
             }
         }
 
+        /// <summary>
+        /// This function is used to write string to the underlying sslstream
+        /// </summary>
+        /// <param name="net_stream">The stream to write to</param>
+        /// <param name="send_str">The string data to be written to the stream</param>
         public void SendToClientString(SslStream net_stream, string send_str)
         {
             byte[] send_b = System.Text.ASCIIEncoding.ASCII.GetBytes(send_str);
@@ -1400,73 +1626,73 @@ namespace CryoDeviceProxy
 
     }
 
-    class ClientUnit
-    {
-        TcpClient _client;
-        readonly bool _ownsClient;
+    //class ClientUnit
+    //{
+    //    TcpClient _client;
+    //    readonly bool _ownsClient;
 
-        public ClientUnit(TcpClient client, bool ownsClient)
-        {
-            _client = client;
-            _ownsClient = ownsClient;
-        }
+    //    public ClientUnit(TcpClient client, bool ownsClient)
+    //    {
+    //        _client = client;
+    //        _ownsClient = ownsClient;
+    //    }
 
-        public async Task ProtocolAsync()
-        {
-            try
-            {
-                using (var stream = _client.GetStream())
-                {
-                    byte[] data = new byte[2048] ;
-                    int bytes_rd;
-                    while (true)
-                    {
-                        bytes_rd = await stream.ReadAsync(data, 0, 2048);
-                        if (bytes_rd > 0)
-                        {
-                            int current_index = 0;
-                            current_index += bytes_rd;
-                            // process data and create response here TODO
-                            CDPLogger.Verbose("Received bytes len => " + bytes_rd.ToString());
-                            byte[] send_data = new byte[bytes_rd + current_index.ToString().Length + 1];
-                            System.Array.Copy(data, 0, send_data, 0, current_index);
-                            byte[] tmp_b = System.Text.ASCIIEncoding.ASCII.GetBytes(current_index.ToString());
-                            System.Array.Copy(tmp_b, 0, send_data, current_index, tmp_b.Length);;
-                            send_data[current_index + tmp_b.Length] = 10;
-                            CDPLogger.Verbose(string.Format("transmitting bytes len {0} \n sent {1}", send_data.Length,
-                                BitConverter.ToString(send_data)));
-                            await stream.WriteAsync(send_data, 0, send_data.Length).ConfigureAwait(false);
-                            await stream.FlushAsync().ConfigureAwait(false);
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-                    //while (!((data = await sr.ReadAsync().ConfigureAwait(false)).Equals("exit", StringComparison.OrdinalIgnoreCase)))
-                    //{
-                    //    await sw.WriteLineAsync(data).ConfigureAwait(false);
-                    //    await sw.FlushAsync().ConfigureAwait(false);
-                    //}
-                    //await sw.WriteLineAsync("Hi. This is x2 TCP/IP easy-to-use server").ConfigureAwait(false);
-                    //await sw.FlushAsync().ConfigureAwait(false);
-                    //var data = default(string);
-                }
-            }
-            finally
-            {
-                if (_ownsClient && _client != null)
-                {
-                    if (_client.Connected)
-                    {
-                        _client.Close();
-                    }
-                    (_client as IDisposable).Dispose();
-                    _client = null;
-                }
-            }
-        }
-    }
+    //    public async Task ProtocolAsync()
+    //    {
+    //        try
+    //        {
+    //            using (var stream = _client.GetStream())
+    //            {
+    //                byte[] data = new byte[2048] ;
+    //                int bytes_rd;
+    //                while (true)
+    //                {
+    //                    bytes_rd = await stream.ReadAsync(data, 0, 2048);
+    //                    if (bytes_rd > 0)
+    //                    {
+    //                        int current_index = 0;
+    //                        current_index += bytes_rd;
+    //                        // process data and create response here TODO
+    //                        CDPLogger.Verbose("Received bytes len => " + bytes_rd.ToString());
+    //                        byte[] send_data = new byte[bytes_rd + current_index.ToString().Length + 1];
+    //                        System.Array.Copy(data, 0, send_data, 0, current_index);
+    //                        byte[] tmp_b = System.Text.ASCIIEncoding.ASCII.GetBytes(current_index.ToString());
+    //                        System.Array.Copy(tmp_b, 0, send_data, current_index, tmp_b.Length);;
+    //                        send_data[current_index + tmp_b.Length] = 10;
+    //                        CDPLogger.Verbose(string.Format("transmitting bytes len {0} \n sent {1}", send_data.Length,
+    //                            BitConverter.ToString(send_data)));
+    //                        await stream.WriteAsync(send_data, 0, send_data.Length).ConfigureAwait(false);
+    //                        await stream.FlushAsync().ConfigureAwait(false);
+    //                    }
+    //                    else
+    //                    {
+    //                        break;
+    //                    }
+    //                }
+    //                //while (!((data = await sr.ReadAsync().ConfigureAwait(false)).Equals("exit", StringComparison.OrdinalIgnoreCase)))
+    //                //{
+    //                //    await sw.WriteLineAsync(data).ConfigureAwait(false);
+    //                //    await sw.FlushAsync().ConfigureAwait(false);
+    //                //}
+    //                //await sw.WriteLineAsync("Hi. This is x2 TCP/IP easy-to-use server").ConfigureAwait(false);
+    //                //await sw.FlushAsync().ConfigureAwait(false);
+    //                //var data = default(string);
+    //            }
+    //        }
+    //        finally
+    //        {
+    //            if (_ownsClient && _client != null)
+    //            {
+    //                if (_client.Connected)
+    //                {
+    //                    _client.Close();
+    //                }
+    //                (_client as IDisposable).Dispose();
+    //                _client = null;
+    //            }
+    //        }
+    //    }
+    //}
 
 
 }

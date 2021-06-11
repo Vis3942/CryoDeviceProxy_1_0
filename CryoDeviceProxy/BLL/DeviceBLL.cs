@@ -12,16 +12,23 @@ using System.Threading.Tasks;
 
 namespace CryoDeviceProxy.BLL
 {
+    /// <summary>
+    /// The class <c>DeviceBLL</c> handles all communications with the backend server.
+    /// </summary>
     public class DeviceBLL
     {
 
         //private ConcurrentDictionary<string, PingPacket> device_db_cache_data = new ConcurrentDictionary<string, PingPacket>(); // local cache for database; to remove this after db connection
 
 
+        /// <summary>
+        /// Wrapper function that initiates a separate task to post the ping packet received from device to the backend server. 
+        /// </summary>
+        /// <param name="pp_recv">The <c>PingPacket</c> object that contains the details of the ping packet received.</param>
+        /// <returns>String array obtained as a result of task execution</returns>
         public string[] SendDevicePingData(PingPacket pp_recv)
         {
             // send query to ROR server and ensure that serial_number eand imei_number_str exists in system
-            // TODO: code to send query to ROR server and get the response
             // response byte format 
             /*
             a.Bit 7: 0 = ack, 1 = re - send
@@ -43,6 +50,30 @@ namespace CryoDeviceProxy.BLL
             return task.Result;
         }
 
+        /// <summary>
+        /// This function implements an asynchronous call to the backend server with device ping data, and returns the response
+        /// received in a string array, or a null string array if error or exception. 
+        /// If the device was found in the backend server, the response array returned from this function contains
+        /// <list type="bullet">
+        /// <item><description>Index 0: service_tag</description></item>
+        /// <item><description>Index 1: respone string</description></item>
+        /// </list>
+        /// <para>
+        /// Response string obtained from server is a semicolon separated values, "x0;x1;x2;x3;x4;x5;x6;x7" where <c>x</c>'s can take values
+        /// "1" or "0". The interpretation for the device is: </para>
+        /// <list type="bullet">
+        /// <item><description>x0: "0" => ack for ping data, "1" => retransmit ping packet </description></item>
+        /// <item><description>x1: "0" => no firmware available, "1" => firmware for device is available </description></item>
+        /// <item><description>x2: "0" => no language pack available, "1" => language pack for device is available </description></item>
+        /// <item><description>x3: "0" => not approved for pay-per-use, "1" => approved as a pay-per-use device </description></item>
+        /// <item><description>x4: "0" => unit is free device, "1" => unit is a pay-per-use device </description></item>
+        /// <item><description>x5: "0" => allowed all operations, "1" => unit is decommissioned </description></item>
+        /// <item><description>x6: "0" => no user interface connection request, "1" => user interface connection pending </description></item>
+        /// <item><description>x7: reserved, default is always "0"</description></item>
+        /// </list>
+        /// </summary>
+        /// <param name="pp_recv">The <c>PingPacket</c> object containing the information about the ping data received from the device.</param>
+        /// <returns>String array based on the response of the server or error or exception</returns>
         private async Task<string[]> PingDataAsync(PingPacket pp_recv)
         {
             using (var client = new HttpClient())
@@ -117,41 +148,61 @@ namespace CryoDeviceProxy.BLL
         //    }
         //}
 
-        public string DeviceExistsInDB(string serial_number_str, string imei_number_str)
-        {
-            DeviceBLL devbll = Program.GetDeviceBLL();
-            if (devbll == null)
-            {
-                return string.Empty;
-            }
+        //public string DeviceExistsInDB(string serial_number_str, string imei_number_str)
+        //{
+        //    DeviceBLL devbll = Program.GetDeviceBLL();
+        //    if (devbll == null)
+        //    {
+        //        return string.Empty;
+        //    }
 
-            // send query to ROR server and ensure that serial_number eand imei_number_str exists in system
-            // TODO: code to send query to ROR server and get the response
-            // response byte format 
-            /*
-                Send Ack data packet 7 strings delimited by ‘;’ back to unit consisting of one byte with the following bit fields:
-                a. string0: 0 = ack, 1 = re-send
-                b. string1: from database id 9: 0 = none, 1 = firmware available
-                c. String2: from database id 12: 0 = none, 1 = new language pack available
-                d. String3: from database id 19: 0 = no approval, 1 = unit approved for pay-per-use
-                e. String4: from database id 20: 0 = unit is free, 1 = unit is pay-per-use
-                f. String5: from database id 21: 0 = unit ops normal, 1 = de-commission unit
-                g. String6: 1: UI waiting for connection
-                h. String7: reserved
-                i. String8: 0x0D
-                each bit   "1" or "0" for each "x;x;x;x;x;x;x;x"
-            */
-            return "0;0;0;0;0;0;0;0\xd";
+        //    // send query to ROR server and ensure that serial_number eand imei_number_str exists in system
+        //    // TODO: code to send query to ROR server and get the response
+        //    // response byte format 
+        //    /*
+        //        Send Ack data packet 7 strings delimited by ‘;’ back to unit consisting of one byte with the following bit fields:
+        //        a. string0: 0 = ack, 1 = re-send
+        //        b. string1: from database id 9: 0 = none, 1 = firmware available
+        //        c. String2: from database id 12: 0 = none, 1 = new language pack available
+        //        d. String3: from database id 19: 0 = no approval, 1 = unit approved for pay-per-use
+        //        e. String4: from database id 20: 0 = unit is free, 1 = unit is pay-per-use
+        //        f. String5: from database id 21: 0 = unit ops normal, 1 = de-commission unit
+        //        g. String6: 1: UI waiting for connection
+        //        h. String7: reserved
+        //        i. String8: 0x0D
+        //        each bit   "1" or "0" for each "x;x;x;x;x;x;x;x"
+        //    */
+        //    return "0;0;0;0;0;0;0;0\xd";
+        //}
 
-
-        }
-
+        /// <summary>
+        /// Wrapper function that initiates a separate task to read specific device information from the backend server.
+        /// This request is usually sent from the user interface.
+        /// </summary>
+        /// <param name="service_tag">service_tag of the device whose information is requested</param>
+        /// <param name="email">email of the user logged in the user interface for verification</param>
+        /// <param name="token">Authentication token of the user logged in the user interface</param>
+        /// <returns>String array obtained as a result of task execution</returns>
         public string[] GetDeviceInfo(string service_tag, string email, string token)
         {
             Task<string[]> task = Task.Run(() => GetDeviceDataAsync(service_tag, email, token));
             task.Wait();
             return task.Result;
         }
+
+        /// <summary>
+        /// This function implements an asynchronous call to the backend server to read the device information, and returns the response
+        /// received in a string array, or a null string array if error or exception. 
+        /// If the device was found in the backend server, the response array returned from this function contains
+        /// <list type="bullet">
+        /// <item><description>Index 0: ping data received</description></item>
+        /// <item><description>Index 1: date and time when the ping data was received</description></item>
+        /// </list>
+        /// </summary>
+        /// <param name="service_tag">service_tag of the device whose information is requested</param>
+        /// <param name="email">email of the user logged in the user interface for verification</param>
+        /// <param name="token">Authentication token of the user logged in the user interface</param>
+        /// <returns>String array based on the information received from the backend server or null if error</returns>
         private async Task<string[]> GetDeviceDataAsync(string service_tag, string email, string token)
         {
             using (var client = new HttpClient())
@@ -204,6 +255,15 @@ namespace CryoDeviceProxy.BLL
         }
 
 
+        /// <summary>
+        /// Wrapper function that initiates a separate task to verify a connection request from user in user interface at the backend server. 
+        /// This is usually executed when the user interface requests a connection to a device. If the user is authenticated correctly
+        /// the response is true, else it is false
+        /// </summary>
+        /// <param name="service_tag">service_tag of the device whose information is requested</param>
+        /// <param name="email">email of the user logged in the user interface for verification</param>
+        /// <param name="token">Authentication token of the user logged in the user interface</param>
+        /// <returns></returns>
         public bool VerifyConnectRequest(string service_tag, string email, string token)
         {
             Task<bool> task = Task.Run(() => VerifyConnectRequestAsync(service_tag, email, token));
@@ -211,6 +271,15 @@ namespace CryoDeviceProxy.BLL
             return task.Result;
         }
 
+        /// <summary>
+        /// This function implements an asynchronous call to the backend server to verify the connection request user logged in
+        /// at the user interface, and returns the response received as a boolean.
+        /// If authentication is successful, it returns true, else false
+        /// </summary>
+        /// <param name="service_tag">service_tag of the device whose information is requested</param>
+        /// <param name="email">email of the user logged in the user interface for verification</param>
+        /// <param name="token">Authentication token of the user logged in the user interface</param>
+        /// <returns></returns>
         private async Task<bool> VerifyConnectRequestAsync(string service_tag, string email, string token)
         {
             using (var client = new HttpClient())
@@ -255,6 +324,12 @@ namespace CryoDeviceProxy.BLL
         }
 
 
+        /// <summary>
+        /// Wrapper function that initiates a separate task that update the error list from device. 
+        /// </summary>
+        /// <param name="service_tag">The device from which the error list was read</param>
+        /// <param name="err_list">Array of error list strings</param>
+        /// <returns></returns>
         public bool UpdateDeviceErrors(string service_tag, string[] err_list)
         {
             Task<bool> task = Task.Run(() => UpdateDeviceErrorsAsync(service_tag, err_list));
@@ -262,6 +337,12 @@ namespace CryoDeviceProxy.BLL
             return task.Result;
         }
 
+        /// <summary>
+        /// This function implements an asynchronous call to the backend server with error list
+        /// </summary>
+        /// <param name="service_tag">The device from which the error list was read</param>
+        /// <param name="err_list">Array of error list strings</param>
+        /// <returns>true if successfully updated or false otherwise</returns>
         private static async Task<bool> UpdateDeviceErrorsAsync(string service_tag, string[] err_list)
         {
             using (var client = new HttpClient())
@@ -320,7 +401,12 @@ namespace CryoDeviceProxy.BLL
         }
 
 
-        // UpdateUsageStats
+        /// <summary>
+        /// Wrapper function that initiates a separate task to update usage statistics read from the device 
+        /// </summary>
+        /// <param name="service_tag"></param>
+        /// <param name="usagestats_list"></param>
+        /// <returns>Boolean value returned by the task execution</returns>
         public bool UpdateUsageStats(string service_tag, string[] usagestats_list)
         {
             Task<bool> task = Task.Run(() => UpdateUsageStatsAsync(service_tag, usagestats_list));
@@ -328,7 +414,28 @@ namespace CryoDeviceProxy.BLL
             return task.Result;
         }
 
-
+        /// <summary>
+        /// This function implements an asynchronous call to the backend server with device usage statistics
+        /// The database column name and corresponding data in the usage statistics payload is shown below
+        /// <list type="table">
+        /// <item><description>DB column name => data received from device</description></item>
+        /// <item><description>cartridge_tag_id => ID:E004010802ACDB4D</description></item>
+        /// <item><description>serum_name => Name:Form1</description></item>
+        /// <item><description>serum_part_number => PartNumber: 893215614</description></item>
+        /// <item><description>serum_lot_number => LotNumber: 1234565</description></item>
+        /// <item><description>treatment_time => Treatment Time: 241</description></item>
+        /// <item><description>datetime_used => Used on:10/08/20/ 03:55</description></item>
+        /// <item><description>board_temp => Average Board temperature: 30.60</description></item>
+        /// <item><description>min_co2_temp => Min Exit temperature: -10.60</description></item>
+        /// <item><description>max_co2_temp => Max Exit temperature: 29.10</description></item>
+        /// <item><description>avg_co2_temp =>  Average CO2 temperature: -2.50</description></item>
+        /// <item><description>tank_tag_id => Tank ID:E004010801C764C5</description></item>
+        /// <item><description>tank_time_remaining => Tank Time Remaining: 59213</description></item>
+        /// </list>
+        /// </summary>
+        /// <param name="service_tag">service_tag of the device whose information is requested</param>
+        /// <param name="usagestats_list">usage statitistics read from the device</param>
+        /// <returns>True if usage statistics was successfully uploaded to server, else false</returns>
         private static async Task<bool> UpdateUsageStatsAsync(string service_tag, string[] usagestats_list)
         {
 
@@ -475,92 +582,98 @@ namespace CryoDeviceProxy.BLL
             }
         }
 
-        private static async Task<bool> UpdateUsageStatsAsyncOld(string service_tag, string[] usagestats_list)
-        {
-            /*
-             *  eleven (11) consecutive elements belong to one usage stats
-             *  db column name          ->  data as received from device
-                cartridge_tag_id		-> Cartridge: 8
-                serum_lot_number		-> ID:E004010802ACDB4D
-                serum_name				-> Name:Form1
-                treatment_time			-> Treatment Time: 241
-                datetime_used			-> Used on:10/08/20/ 03:55
-                board_temp  			-> Average Board temperature: 30.60
-                min_co2_temp			-> Min Exit temperature: -10.60
-                max_co2_temp			-> Max Exit temperature: 29.10
-                avg_co2_temp			-> Average CO2 temperature: -2.50
-                tank_tag_id				-> Tank ID:E004010801C764C5
-                tank_time_remaining		-> Tank Time Remaining: 59213
-             * 
-             */
-            if (usagestats_list.Length % 12 != 0)
-            {
-                return false;
-            }
-            using (var client = new HttpClient())
-            {
-                Uri uri = new Uri(string.Format("http://{0}{1}", "127.0.0.1:3000", "/api/devices/update-device-usagestats"));
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                int tmp_len = usagestats_list.Length / 11;
-                DeviceUsageStats[] dev_usagestats = new DeviceUsageStats[tmp_len];
-                for (int kk = 0; kk < tmp_len; kk++)
-                {
-                    DeviceUsageStats dus = new DeviceUsageStats();
-                    dus.cartridge_tag_id = Utils.GetValueAfterColon(usagestats_list[11 * kk]);
-                    dus.serum_part_number = Utils.GetValueAfterColon(usagestats_list[11 * kk + 1]);
-                    dus.serum_name = Utils.GetValueAfterColon(usagestats_list[11 * kk + 2]);
-                    dus.treatment_time = Utils.GetValueAfterColon(usagestats_list[11 * kk + 3]);
-                    dus.datetime_used = Utils.GetValueAfterColon(usagestats_list[11 * kk + 4]);
-                    dus.board_temperature = Utils.GetValueAfterColon(usagestats_list[11 * kk + 5]);
-                    dus.min_co2_temperature = Utils.GetValueAfterColon(usagestats_list[11 * kk + 6]);
-                    dus.max_co2_temperature = Utils.GetValueAfterColon(usagestats_list[11 * kk + 7]);
-                    dus.average_co2_temperature = Utils.GetValueAfterColon(usagestats_list[11 * kk + 8]);
-                    dus.tank_tag_id = Utils.GetValueAfterColon(usagestats_list[11 * kk + 9]);
-                    dus.tank_time_remaining = Utils.GetValueAfterColon(usagestats_list[11 * kk + 10]);
-                    dev_usagestats[kk] = dus;
-                }
-                UpdateUsageStatsListRequestJson uuslrj = new UpdateUsageStatsListRequestJson();
-                uuslrj.device = service_tag;
-                uuslrj.usagestats_list = dev_usagestats;
-                string jsonstr = JsonSerializer.Serialize(uuslrj);
+        //private static async Task<bool> UpdateUsageStatsAsyncOld(string service_tag, string[] usagestats_list)
+        //{
+        //    /*
+        //     *  eleven (11) consecutive elements belong to one usage stats
+        //     *  db column name          ->  data as received from device
+        //        cartridge_tag_id		-> Cartridge: 8
+        //        serum_lot_number		-> ID:E004010802ACDB4D
+        //        serum_name				-> Name:Form1
+        //        treatment_time			-> Treatment Time: 241
+        //        datetime_used			-> Used on:10/08/20/ 03:55
+        //        board_temp  			-> Average Board temperature: 30.60
+        //        min_co2_temp			-> Min Exit temperature: -10.60
+        //        max_co2_temp			-> Max Exit temperature: 29.10
+        //        avg_co2_temp			-> Average CO2 temperature: -2.50
+        //        tank_tag_id				-> Tank ID:E004010801C764C5
+        //        tank_time_remaining		-> Tank Time Remaining: 59213
+        //     * 
+        //     */
+        //    if (usagestats_list.Length % 12 != 0)
+        //    {
+        //        return false;
+        //    }
+        //    using (var client = new HttpClient())
+        //    {
+        //        Uri uri = new Uri(string.Format("http://{0}{1}", "127.0.0.1:3000", "/api/devices/update-device-usagestats"));
+        //        client.DefaultRequestHeaders.Accept.Clear();
+        //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        //        int tmp_len = usagestats_list.Length / 11;
+        //        DeviceUsageStats[] dev_usagestats = new DeviceUsageStats[tmp_len];
+        //        for (int kk = 0; kk < tmp_len; kk++)
+        //        {
+        //            DeviceUsageStats dus = new DeviceUsageStats();
+        //            dus.cartridge_tag_id = Utils.GetValueAfterColon(usagestats_list[11 * kk]);
+        //            dus.serum_part_number = Utils.GetValueAfterColon(usagestats_list[11 * kk + 1]);
+        //            dus.serum_name = Utils.GetValueAfterColon(usagestats_list[11 * kk + 2]);
+        //            dus.treatment_time = Utils.GetValueAfterColon(usagestats_list[11 * kk + 3]);
+        //            dus.datetime_used = Utils.GetValueAfterColon(usagestats_list[11 * kk + 4]);
+        //            dus.board_temperature = Utils.GetValueAfterColon(usagestats_list[11 * kk + 5]);
+        //            dus.min_co2_temperature = Utils.GetValueAfterColon(usagestats_list[11 * kk + 6]);
+        //            dus.max_co2_temperature = Utils.GetValueAfterColon(usagestats_list[11 * kk + 7]);
+        //            dus.average_co2_temperature = Utils.GetValueAfterColon(usagestats_list[11 * kk + 8]);
+        //            dus.tank_tag_id = Utils.GetValueAfterColon(usagestats_list[11 * kk + 9]);
+        //            dus.tank_time_remaining = Utils.GetValueAfterColon(usagestats_list[11 * kk + 10]);
+        //            dev_usagestats[kk] = dus;
+        //        }
+        //        UpdateUsageStatsListRequestJson uuslrj = new UpdateUsageStatsListRequestJson();
+        //        uuslrj.device = service_tag;
+        //        uuslrj.usagestats_list = dev_usagestats;
+        //        string jsonstr = JsonSerializer.Serialize(uuslrj);
 
-                HttpRequestMessage req_msg = new HttpRequestMessage(HttpMethod.Post, uri);
-                req_msg.Content = new StringContent(jsonstr, Encoding.UTF8, "application/json");
+        //        HttpRequestMessage req_msg = new HttpRequestMessage(HttpMethod.Post, uri);
+        //        req_msg.Content = new StringContent(jsonstr, Encoding.UTF8, "application/json");
 
-                bool toret_bool = false;
-                try
-                {
-                    HttpResponseMessage result = await client.SendAsync(req_msg);
+        //        bool toret_bool = false;
+        //        try
+        //        {
+        //            HttpResponseMessage result = await client.SendAsync(req_msg);
 
-                    string responseBody = await result.Content.ReadAsStringAsync();
-                    CDPLogger.Verbose(responseBody);
-                    if ((result.IsSuccessStatusCode) &&
-                        (result.Content.Headers.GetValues("Content-Type").ToArray()[0].Equals("application/json"))
-                        )
-                    {
-                        var respjson = JsonSerializer.Deserialize<UiProxyResponseJson>(responseBody);
-                        if ((respjson.data.response != null) && (respjson.data.response.Equals("true")))
-                        {
-                            toret_bool = true;
-                        }
-                        else
-                        {
-                            toret_bool = false;
-                        }
-                    }
+        //            string responseBody = await result.Content.ReadAsStringAsync();
+        //            CDPLogger.Verbose(responseBody);
+        //            if ((result.IsSuccessStatusCode) &&
+        //                (result.Content.Headers.GetValues("Content-Type").ToArray()[0].Equals("application/json"))
+        //                )
+        //            {
+        //                var respjson = JsonSerializer.Deserialize<UiProxyResponseJson>(responseBody);
+        //                if ((respjson.data.response != null) && (respjson.data.response.Equals("true")))
+        //                {
+        //                    toret_bool = true;
+        //                }
+        //                else
+        //                {
+        //                    toret_bool = false;
+        //                }
+        //            }
 
-                }
-                catch (Exception e)
-                {
-                    // Debug
-                    CDPLogger.Error(string.Format("UpdateUsageStatsList: {0}", e.Message));
-                    toret_bool = false;
-                }
-                return toret_bool;
-            }
-        }
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            // Debug
+        //            CDPLogger.Error(string.Format("UpdateUsageStatsList: {0}", e.Message));
+        //            toret_bool = false;
+        //        }
+        //        return toret_bool;
+        //    }
+        //}
 
+        /// <summary>
+        /// Wrapper function that initiates a separate task to update the Invalid Ping Data received from device. 
+        /// Invalid ping data occurs if the data format is incorrect, or the device is not found in the Device table.
+        /// </summary>
+        /// <param name="recv_pkt_str">The string received from Device which was incorrect.</param>
+        /// <returns>String array that is generated in the task code.</returns>
         public string[] SetInvalidPingData(string recv_pkt_str)
         {
             // send to db
@@ -569,6 +682,18 @@ namespace CryoDeviceProxy.BLL
             return task.Result;
         }
 
+
+        /// <summary>
+        /// This function implements an asynchronous call to with invalid device ping data, and returns the response
+        /// received in a string array, or a null string array if error or exception. 
+        /// The response array returned from this function contains
+        /// <list type="bullet">
+        /// <item><description>Index 0: "success" or "failure"</description></item>
+        /// <item><description>Index 1: respone string from server</description></item>
+        /// </list>
+        /// </summary>
+        /// <param name="recv_pkt_str">The string received from Device which was incorrect.</param>
+        /// <returns>String array</returns>
         private async Task<string[]> InvalidPingData(string recv_pkt_str)
         {
             using (var client = new HttpClient())
@@ -616,8 +741,6 @@ namespace CryoDeviceProxy.BLL
                 return ret_str_a;
             }
         }
-
-
 
     }
 

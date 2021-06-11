@@ -4,6 +4,9 @@ using System.Text;
 
 namespace CryoDeviceProxy.BLL
 {
+    /// <summary>
+    /// The class <c>DeviceUsageStats</c> encapsulates the usage statistics information received from device
+    /// </summary>
     public class DeviceUsageStats
     {
 

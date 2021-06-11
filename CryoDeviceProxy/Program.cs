@@ -8,6 +8,11 @@ namespace CryoDeviceProxy
     class Program
     {
         private static DeviceBLL devbll = null;
+
+        /// <summary>
+        /// This static function provides the singleton interface that allows communication to the backend server
+        /// </summary>
+        /// <returns></returns>
         public static DeviceBLL GetDeviceBLL()
         {
             if (devbll == null)
@@ -17,6 +22,20 @@ namespace CryoDeviceProxy
             return devbll;
         }
 
+
+        /// <summary>
+        /// This is entry point of the application.
+        /// For debugging, (that is not in production), application can be executed
+        /// to control specific features, which could be true/false. True allows execution, false prevents execution of feature. They are:
+        /// <list type="bullet">
+        /// <item><description>Read Errors from device if available</description></item>
+        /// <item><description>Clear errors on successful read</description></item>
+        /// <item><description>Read Usage Statistics from device if available</description></item>
+        /// <item><description>Clear Usage statistics from device if successfully read from device</description></item>
+        /// </list>
+        /// This main function also setups the logging framework, and starts the application.
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             bool isProduction = true;

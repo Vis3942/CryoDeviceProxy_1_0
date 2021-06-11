@@ -53,6 +53,22 @@ namespace CryoDeviceProxy.Logs
         private static LogEventLevel minimumLevel = LogEventLevel.Debug;
         private static string currentExecDirectory = null;
         private static string currentFileWithPath = null;
+
+
+        /// <summary>
+        /// Initiates a logging instance. This function must be called before any logging can be performed.
+        /// It sets up the log output. Supported values are "console" or "file". Default is "console".
+        /// It sets up the log level. Supported values are Fatal, Error, Warning, Information, Debug, Verbose
+        /// The Logger will rotate log files based on the maximum size specified. So, the oldest file will be deleted 
+        /// after creating a new backup of the current log file. A backup of current log file is created when 
+        /// the maximum file size (in MB) is reached. This function also allows initialization of the actual log name.
+        /// If log file name is "app_log.txt", then the backup files are named as app_log.0.txt, app_log.1.txt...
+        /// </summary>
+        /// <param name="log_to">Destination for logged data.</param>
+        /// <param name="log_level">The log level controlling the amount of logged data.</param>
+        /// <param name="max_file_count">If logging to file, the maximum number of backup logs maintained.</param>
+        /// <param name="max_file_size_mb">The maximum size in megabytes of each log file.</param>
+        /// <param name="log_file_name">The name of the log file to use to store logging data.</param>
         public static void InitLogger(string log_to = "console", string log_level = "information",
             int max_file_count = 5, float max_file_size_mb = 1.0f, string log_file_name = "app_log.txt")
         {
@@ -84,6 +100,15 @@ namespace CryoDeviceProxy.Logs
             logFileName = log_file_name;
         }
 
+        /// <summary>
+        /// This function controls the actual data that gets written based on the setup log level.
+        /// If the log level is set to "Information", any data written to function <c>Verbose</c> will not be logged to destination.
+        /// Thus the log output could be varied without recompiling the application. This is called by each of the log functions 
+        /// before writing data to the destination. If the function log level is greater than the set level, then the function 
+        /// returns enabled as true, or false otherwise.
+        /// </summary>
+        /// <param name="curr_level">The </param>
+        /// <returns>true or false</returns>
         private static bool IsEnabled(LogEventLevel curr_level)
         {
             if ((int)curr_level >= (int)minimumLevel)
@@ -95,6 +120,12 @@ namespace CryoDeviceProxy.Logs
                 return false;
             }
         }
+        /// <summary>
+        /// Writes fatal messages to the logging destination.
+        /// First checks to see if this level is allowed to write to destination.
+        /// If yes, writes the logged message to the destination.
+        /// </summary>
+        /// <param name="msg">Data to be logged as fatal.</param>
         public static void Fatal(string msg)
         {
             if (!IsEnabled(LogEventLevel.Fatal))
@@ -103,6 +134,14 @@ namespace CryoDeviceProxy.Logs
             }
             Write("[FTL]: ", msg);
         }
+
+        /// <summary>
+        /// Writes fatal messages to the logging destination.
+        /// First checks to see if this level is allowed to write to destination.
+        /// If yes, writes the logged message to the destination.
+        /// </summary>
+        /// <param name="e">Exception that occured when this data was generated.</param>
+        /// <param name="msg">Data to be logged as fatal.</param>
         public static void Fatal(Exception e, string msg)
         {
             if (!IsEnabled(LogEventLevel.Fatal))
@@ -112,6 +151,12 @@ namespace CryoDeviceProxy.Logs
             Write("[FTL]: ", msg + System.Environment.NewLine + e.Message);
         }
 
+        /// <summary>
+        /// Writes error messages to the logging destination.
+        /// First checks to see if this level is allowed to write to destination.
+        /// If yes, writes the logged message to the destination.
+        /// </summary>
+        /// <param name="msg">Message to be logged as Error</param>
         public static void Error(string msg)
         {
             if (!IsEnabled(LogEventLevel.Error))
@@ -121,6 +166,13 @@ namespace CryoDeviceProxy.Logs
             Write("[ERR]: ", msg);
         }
 
+        /// <summary>
+        /// Writes error messages to the logging destination.
+        /// First checks to see if this level is allowed to write to destination.
+        /// If yes, writes the logged message to the destination.
+        /// </summary>
+        /// <param name="e">Exceptiont that occured triggering this error log</param>
+        /// <param name="msg">Message to be logged as Error</param>
         public static void Error(Exception e, string msg)
         {
             if (!IsEnabled(LogEventLevel.Error))
@@ -138,6 +190,12 @@ namespace CryoDeviceProxy.Logs
             }
         }
 
+        /// <summary>
+        /// Writes Warning messages to the logging destination.
+        /// First checks to see if this level is allowed to write to destination.
+        /// If yes, writes the logged message to the destination.
+        /// </summary>
+        /// <param name="msg">Message to be logged as Warning</param>
         public static void Warning(string msg)
         {
             if (!IsEnabled(LogEventLevel.Warning))
@@ -147,6 +205,12 @@ namespace CryoDeviceProxy.Logs
             Write("[WRN]: ", msg);
         }
 
+        /// <summary>
+        /// Writes information messages to the logging destination.
+        /// First checks to see if this level is allowed to write to destination.
+        /// If yes, writes the logged message to the destination.
+        /// </summary>
+        /// <param name="msg">Message to be logged as Information.</param>
         public static void Information(string msg)
         {
             if (!IsEnabled(LogEventLevel.Information))
@@ -156,6 +220,12 @@ namespace CryoDeviceProxy.Logs
             Write("[INF]: ", msg);
         }
 
+        /// <summary>
+        /// Writes debug messages to the logging destination.
+        /// First checks to see if this level is allowed to write to destination.
+        /// If yes, writes the logged message to the destination.
+        /// </summary>
+        /// <param name="msg">Message to be logged as Debug</param>
         public static void Debug(string msg)
         {
             if (!IsEnabled(LogEventLevel.Debug))
@@ -165,6 +235,12 @@ namespace CryoDeviceProxy.Logs
             Write("[DBG]: ", msg);
         }
 
+        /// <summary>
+        /// Writes Verbose messages to the logging destination.
+        /// First checks to see if this level is allowed to write to destination.
+        /// If yes, writes the logged message to the destination.
+        /// </summary>
+        /// <param name="msg">Message to be logged as Verbose</param>
         public static void Verbose(string msg)
         {
             if (!IsEnabled(LogEventLevel.Verbose))
@@ -175,7 +251,12 @@ namespace CryoDeviceProxy.Logs
         }
 
 
-
+        /// <summary>
+        /// This function actually writes data to the destination based on the 
+        /// initial setup
+        /// </summary>
+        /// <param name="loglevelstr">String indicating type of logged message</param>
+        /// <param name="msg">Message to be logged</param>
         public static void Write(string loglevelstr, string msg)
         {
             string logDateTimeStr = DateTime.Now.ToString();
@@ -193,6 +274,10 @@ namespace CryoDeviceProxy.Logs
             }
         }
 
+        /// <summary>
+        /// This function is responsible for ensuring that the number of log files do not exceed the limit setup,
+        /// and ensure that the oldest log file is removed and the other files renamed appropriately.
+        /// </summary>
         private static void RollLogs()
         {
             try

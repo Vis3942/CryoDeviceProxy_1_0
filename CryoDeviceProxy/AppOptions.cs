@@ -12,6 +12,9 @@ namespace CryoDeviceProxy
         private static StartupOptions startOptions = null;
         #endregion //var
 
+        /// <summary>
+        /// This function provides access to the options for the application through an instance of <c>StartupOption</c> class.
+        /// </summary>
         public static StartupOptions GetAppOptions
         {
             get
@@ -24,6 +27,9 @@ namespace CryoDeviceProxy
             }
         }
 
+        /// <summary>
+        /// This function reads the options file "startup_settings.json", parses and populates and static instance of StartupOptions.
+        /// </summary>
         public static void LoadOptions()
         {
             if (!OptionsLoaded)

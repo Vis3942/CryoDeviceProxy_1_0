@@ -9,13 +9,19 @@ namespace CryoDeviceProxy
     {
 
         #region static_funcs
-        /**
-         * returns the serial number in the ping packet 
-         * assumed format "<imei number>;<ser num>; ...." 
-         *   => integer between first and second semicolon 
-         */
+        /// <summary>
+        /// Based on the format "imei number;serial number; ...", this function 
+        /// extracts the serial number from ping packet and returns the serial number as an integer
+        /// </summary>
+        /// <param name="recv_ping_str">The ping packet to parse</param>
+        /// <returns>serial number as integer else -1 if error</returns>
         public int GetSerialNumber(string recv_ping_str)
         {
+            /**
+             * returns the serial number in the ping packet 
+             * assumed format "<imei number>;<ser num>; ...." 
+             *   => integer between first and second semicolon 
+             */
 
             // serial number is "<imei number>;<ser num>; ...." 
             // => integer between first and second serial number
@@ -56,7 +62,9 @@ namespace CryoDeviceProxy
         #endregion // vars
 
         #region property
-
+        /// <summary>
+        /// This property returns the length of ping packet stored in this instance
+        /// </summary>
         public int ReceivePacketLength
         {
             get
@@ -72,6 +80,9 @@ namespace CryoDeviceProxy
             }
         }
 
+        /// <summary>
+        /// This property returns the byte array of the ping packet stored in this instance
+        /// </summary>
         public byte[] ReceivePacket
         {
             get
@@ -87,52 +98,87 @@ namespace CryoDeviceProxy
             }
         }
 
+        /// <summary>
+        /// This property returns the IMEI number as a utf-8 byte array
+        /// </summary>
         public byte[] IMEINumber
         {
             get { return _imei_number; }
         }
 
+        /// <summary>
+        /// This property returns the IMEI number as string extracted from the ping packet stored in this instance
+        /// </summary>
         public string IMEINumberString
         {
             get { return _imei_number_str; }
         }
 
+        /// <summary>
+        /// This property returns the serial number as string extracted from the ping packet stored in this instance
+        /// </summary>
         public string SerialNumber
         {
             get { return _serial_number_str; }
         }
 
+        /// <summary>
+        /// This property returns the firmware version string extracted from the ping packet stored in this instance
+        /// </summary>
         public string FirmwareVersion
         {
             get { return _firmware_version_str; }
         }
 
+        /// <summary>
+        /// This property returns the count of usage statistics extracted from the ping packet stored in this instance
+        /// </summary>
         public ushort NewUsageStatistics
         {
             get { return _new_usage_statistics; }
         }
 
+        /// <summary>
+        /// This property returns the number of language packs extracted from the ping packet stored in this instance
+        /// </summary>
         public int NumStoredLanguagePacks
         {
             get { return _num_stored_lang_packs; }
         }
 
+        /// <summary>
+        /// This property to return the ip address of device extracted from ping packet stored in this instance. 
+        /// Please note the latest format does not publish the ip address of device. Therefore it is not used in this version.
+        /// </summary>
         public string DeviceIpAddressStr
         {
             get { return _ip_addr_device; }
         }
 
+        /// <summary>
+        /// This property indicates whether the ping packet instance is well-formed with the required number of fields.
+        /// If well formed, it is true, else it is false.
+        /// </summary>
         public bool IsPacketValid
         {
             get { return _valid_pkt; }
         }
 
+        /// <summary>
+        /// This property returns the number of error statistics extracted from the ping packet stored in this instance
+        /// </summary>
         public int ErrorCount
         {
             get { return _error_count; }
         }
         #endregion // property
 
+        /// <summary>
+        /// This constructor can be used to initialize a new PingPacket. Required data are in the parameters.
+        /// </summary>
+        /// <param name="recv_data">Byte array of ping packet string as UTF-8 bytes</param>
+        /// <param name="start_idx">The start index of the ping packet in the array</param>
+        /// <param name="recv_len">The length of bytes to process in the array for the ping packet</param>
         public PingPacket(byte[] recv_data, int start_idx, int recv_len)
         {
             _recv_str_as_bytes = new byte[recv_len];
@@ -142,11 +188,23 @@ namespace CryoDeviceProxy
             //ProcessReceivedPacketBytes(recv_data);
         }
 
+
+        /// <summary>
+        /// This constructor is used to instantiate a new PingPacket based on the ping packet sent from the device. 
+        /// This constructor delegates parsing and verification to the function <c>ProcessData</c>
+        /// </summary>
+        /// <param name="recv_str"></param>
         public PingPacket(string recv_str)
         {
             _recv_str = recv_str;
             ProcessData();
         }
+
+        /// <summary>
+        /// This function parses the ping packet string to extract the various parameters in the ping packet and assign them to 
+        /// appropriate fields of the class <c>PingPacket</c>. After parsing, the function will set the validated flag, which is read
+        /// by other functions to ascertain the integrity of the ping packet. 
+        /// </summary>
         private void ProcessData()
         {
             /* v10 format
@@ -250,6 +308,13 @@ namespace CryoDeviceProxy
             }
         }
 
+        /// <summary>
+        /// The <c>GetUsageCountUshort</c> function is a wrapper for ushort conversion which parses the usage count string as a ushort variable, and returns
+        /// true if successfully converted else false
+        /// </summary>
+        /// <param name="usage_count_str">String to convert</param>
+        /// <param name="usage_count">Out variable that contains the converted value on successfuly conversion</param>
+        /// <returns>true if conversion successful else false</returns>
         private bool GetUsageCountUshort(string usage_count_str, out ushort usage_count)
         {
             bool ret_sts = ushort.TryParse(usage_count_str, out ushort tmp_val);
@@ -264,6 +329,12 @@ namespace CryoDeviceProxy
             return ret_sts;
         }
 
+        /// <summary>
+        /// The <c>GetIntValue</c> is a wrapper for converting string to integer, and returns true if conversion is successful, else false
+        /// </summary>
+        /// <param name="value_str">the string to convert to int</param>
+        /// <param name="value">Out param that contains the converted value on successful conversion</param>
+        /// <returns>True if conversion is successful else returns false</returns>
         private bool GetIntValue(string value_str, out int value)
         {
             bool ret_sts = int.TryParse(value_str, out int tmp_val);

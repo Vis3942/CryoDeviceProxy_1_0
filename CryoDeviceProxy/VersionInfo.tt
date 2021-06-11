@@ -3,7 +3,7 @@
 <#
     int major    = 1;
     int minor    = 3; // Official == even, Preview == odd; 1.0 original release (no versionsing data in app)
-    int build    = 1;
+    int build    = 2;
     bool previewMode = false; 
     string version = String.Format("{0}.{1}.{2}", major, minor, build);
  
