@@ -126,13 +126,13 @@ namespace CryoDeviceProxy.Logs
         /// If yes, writes the logged message to the destination.
         /// </summary>
         /// <param name="msg">Data to be logged as fatal.</param>
-        public static void Fatal(string msg)
+        public static void Fatal(string msg, string contextid = "")
         {
             if (!IsEnabled(LogEventLevel.Fatal))
             {
                 return;
             }
-            Write("[FTL]: ", msg);
+            Write("[FTL]: ", msg, contextid);
         }
 
         /// <summary>
@@ -142,13 +142,13 @@ namespace CryoDeviceProxy.Logs
         /// </summary>
         /// <param name="e">Exception that occured when this data was generated.</param>
         /// <param name="msg">Data to be logged as fatal.</param>
-        public static void Fatal(Exception e, string msg)
+        public static void Fatal(Exception e, string msg, string contextid = "")
         {
             if (!IsEnabled(LogEventLevel.Fatal))
             {
                 return;
             }
-            Write("[FTL]: ", msg + System.Environment.NewLine + e.Message);
+            Write("[FTL]: ", msg + System.Environment.NewLine + e.Message, contextid);
         }
 
         /// <summary>
@@ -157,13 +157,13 @@ namespace CryoDeviceProxy.Logs
         /// If yes, writes the logged message to the destination.
         /// </summary>
         /// <param name="msg">Message to be logged as Error</param>
-        public static void Error(string msg)
+        public static void Error(string msg, string contextid = "")
         {
             if (!IsEnabled(LogEventLevel.Error))
             {
                 return;
             }
-            Write("[ERR]: ", msg);
+            Write("[ERR]: ", msg, contextid);
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace CryoDeviceProxy.Logs
         /// </summary>
         /// <param name="e">Exceptiont that occured triggering this error log</param>
         /// <param name="msg">Message to be logged as Error</param>
-        public static void Error(Exception e, string msg)
+        public static void Error(Exception e, string msg, string contextid = "")
         {
             if (!IsEnabled(LogEventLevel.Error))
             {
@@ -182,11 +182,11 @@ namespace CryoDeviceProxy.Logs
             if (e != null)
             {
                 // Todo: Write additional exception info along with message
-                Write("[ERR]: ", msg + System.Environment.NewLine + e.Message);
+                Write("[ERR]: ", msg + System.Environment.NewLine + e.Message, contextid);
             }
             else
             {
-                Write("[ERR]: ", msg);
+                Write("[ERR]: ", msg, contextid);
             }
         }
 
@@ -196,13 +196,13 @@ namespace CryoDeviceProxy.Logs
         /// If yes, writes the logged message to the destination.
         /// </summary>
         /// <param name="msg">Message to be logged as Warning</param>
-        public static void Warning(string msg)
+        public static void Warning(string msg, string contextid = "")
         {
             if (!IsEnabled(LogEventLevel.Warning))
             {
                 return;
             }
-            Write("[WRN]: ", msg);
+            Write("[WRN]: ", msg, contextid);
         }
 
         /// <summary>
@@ -211,13 +211,13 @@ namespace CryoDeviceProxy.Logs
         /// If yes, writes the logged message to the destination.
         /// </summary>
         /// <param name="msg">Message to be logged as Information.</param>
-        public static void Information(string msg)
+        public static void Information(string msg, string contextid = "")
         {
             if (!IsEnabled(LogEventLevel.Information))
             {
                 return;
             }
-            Write("[INF]: ", msg);
+            Write("[INF]: ", msg, contextid);
         }
 
         /// <summary>
@@ -226,13 +226,13 @@ namespace CryoDeviceProxy.Logs
         /// If yes, writes the logged message to the destination.
         /// </summary>
         /// <param name="msg">Message to be logged as Debug</param>
-        public static void Debug(string msg)
+        public static void Debug(string msg, string contextid = "")
         {
             if (!IsEnabled(LogEventLevel.Debug))
             {
                 return;
             }
-            Write("[DBG]: ", msg);
+            Write("[DBG]: ", msg, contextid);
         }
 
         /// <summary>
@@ -241,13 +241,13 @@ namespace CryoDeviceProxy.Logs
         /// If yes, writes the logged message to the destination.
         /// </summary>
         /// <param name="msg">Message to be logged as Verbose</param>
-        public static void Verbose(string msg)
+        public static void Verbose(string msg, string contextid = "")
         {
             if (!IsEnabled(LogEventLevel.Verbose))
             {
                 return;
             }
-            Write("[VRB]: ", msg);
+            Write("[VRB]: ", msg, contextid);
         }
 
 
@@ -257,7 +257,7 @@ namespace CryoDeviceProxy.Logs
         /// </summary>
         /// <param name="loglevelstr">String indicating type of logged message</param>
         /// <param name="msg">Message to be logged</param>
-        public static void Write(string loglevelstr, string msg)
+        public static void Write(string loglevelstr, string msg, string contextid)
         {
             string logDateTimeStr = DateTime.Now.ToString();
             if (logTo.ToLower().Equals("file"))
@@ -265,12 +265,26 @@ namespace CryoDeviceProxy.Logs
                 lock (logFileName) // multiple thread access control to file
                 {
                     RollLogs();
-                    File.AppendAllText(logFileName, logDateTimeStr + " " + loglevelstr + msg + Environment.NewLine, Encoding.UTF8);
+                    if (contextid.Length > 0)
+                    {
+                        File.AppendAllText(logFileName, logDateTimeStr + " " + loglevelstr + "[" + contextid + "]" + msg + Environment.NewLine, Encoding.UTF8);
+                    }
+                    else
+                    {
+                        File.AppendAllText(logFileName, logDateTimeStr + " " + loglevelstr + msg + Environment.NewLine, Encoding.UTF8);
+                    }
                 }
             }
             else
             {
-                System.Console.Write(logDateTimeStr + " " + loglevelstr + msg + Environment.NewLine);
+                if (contextid.Length > 0)
+                {
+                    System.Console.Write(logDateTimeStr + " " + loglevelstr + "[" + contextid + "]" + msg + Environment.NewLine);
+                }
+                else
+                {
+                    System.Console.Write(logDateTimeStr + " " + loglevelstr + msg + Environment.NewLine);
+                }
             }
         }
 

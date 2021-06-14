@@ -35,7 +35,7 @@ namespace CryoDeviceProxy
         // Thread _server_thread = null;
         private readonly object lock_list = new object();
         //private readonly List<string> devicesPinged = new List<string>();
-        private AutoResetEvent device_ui_connection_completed = new AutoResetEvent(false);
+        //private AutoResetEvent device_ui_connection_completed = new AutoResetEvent(false);
         private int _ui_wait_message_interval_secs = 15;
         private int _ui_connect_wait_max_count = 9;
         private readonly ConcurrentDictionary<string, TcpClient> uiClientDict = new ConcurrentDictionary<string, TcpClient>();
@@ -371,7 +371,8 @@ namespace CryoDeviceProxy
         async Task UIProtocolAsync(TcpClient uiClient)
         {
             var ip = uiClient.Client.RemoteEndPoint.ToString();
-            CDPLogger.Information($"UI client ({ip}) connected");
+            string contextstr = "ui-" + ip.Trim().Replace(".", "-").Replace(":", "-");
+            CDPLogger.Information($"UI client ({ip}) connected", contextstr);
             var buf_dev = new byte[4096];
             var buf_ui = new byte[4096];
             //var close_client = false;
@@ -391,7 +392,7 @@ namespace CryoDeviceProxy
                 available_sslstreams.Add(uiSslStream);
                 while (true)
                 {
-                    CDPLogger.Verbose("start of ui protocol while true loop");
+                    CDPLogger.Verbose("start of ui protocol while true loop", contextstr);
                     var timeoutTask = Task.Delay(TimeSpan.FromSeconds(3 * 60)); // 3 minutes
                     var amountReadTask = uiSslStream.ReadAsync(buf_ui, 0, buf_ui.Length);
 
@@ -434,7 +435,7 @@ namespace CryoDeviceProxy
                         {
                             //byte[] list_b = GetAvailableDevicesAsBytes();
                             BLL.DeviceBLL devbll = Program.GetDeviceBLL();
-                            CDPLogger.Verbose("Device bll " + devbll.ToString());
+                            CDPLogger.Verbose("Device bll " + devbll.ToString(), contextstr);
                             // returned string array contains
                             //  index 0 => recent ping data; index 1 => utc time it was received
                             string[] response_data = devbll.GetDeviceInfo(cmds_data[1].Trim(),
@@ -504,7 +505,7 @@ namespace CryoDeviceProxy
                                 while ((!is_device_connected) && (conn_wait_count < _ui_connect_wait_max_count))
                                 {
                                     SendToClientString(uiSslStream, "Waiting for Connection.\xd");
-                                    CDPLogger.Information("sent waiting for connect string to UI");
+                                    CDPLogger.Information("sent waiting for connect string to UI", contextstr);
                                     System.Threading.Thread.Sleep(_ui_wait_message_interval_secs * 1000);
                                     is_device_connected = devClientDict.ContainsKey(service_tag);
                                     conn_wait_count++;
@@ -512,13 +513,13 @@ namespace CryoDeviceProxy
                                 if (is_device_connected)
                                 {
                                     SendToClientString(uiSslStream, "connected\xd");
-                                    CDPLogger.Information("UI: sent 'connected'.");
+                                    CDPLogger.Information("UI: sent 'connected'.", contextstr);
 
                                     devBufBlock.TryGetValue(service_tag, out BufferBlock<byte[]> tmpDevBlk);
                                     devClientDict.TryGetValue(service_tag, out TcpClient devClient);
                                     devStreamDict.TryGetValue(service_tag, out SslStream devSslStream_uip);
                                     SendToClientString(devSslStream_uip, "Y1\xd");
-                                    CDPLogger.Information("Device: sent 'connected'(Y1)");
+                                    CDPLogger.Information("Device: sent 'connected'(Y1)", contextstr);
                                     // read from ui client; write to device client
                                     // read from device client; write to ui client
                                     // the above 2 steps can happen in any sequence, so best keep it async
@@ -553,7 +554,7 @@ namespace CryoDeviceProxy
                                                     byte[] tmp_ui_b = new byte[ui_bytes_read];
                                                     System.Array.Copy(buf_ui, 0, tmp_ui_b, 0, ui_bytes_read);
                                                     CDPLogger.Verbose(string.Format("recv from UI: send to dev {0}",
-                                                        System.Text.ASCIIEncoding.ASCII.GetString(tmp_ui_b)));
+                                                        System.Text.ASCIIEncoding.ASCII.GetString(tmp_ui_b)), contextstr);
                                                     tmpDevBlk.SendAsync(tmp_ui_b);
                                                     if (Utils.BytesEqual(tmp_ui_b, 0, end_b, 0, end_b.Length))
                                                     {
@@ -567,7 +568,7 @@ namespace CryoDeviceProxy
                                             }
                                             catch (Exception e)
                                             {
-                                                CDPLogger.Error(e, "UI Pipe to Device");
+                                                CDPLogger.Error(e, "UI Pipe to Device", contextstr);
                                                 tmpDevBlk.SendAsync(end_b);
                                                 tmpUiBlk.Complete();
                                                 break;
@@ -591,7 +592,7 @@ namespace CryoDeviceProxy
                                                 byte[] tmp_dev_b = task1.Result;
                                                 if (tmp_dev_b != null)
                                                 {
-                                                    CDPLogger.Verbose($"sent to ui {System.Text.ASCIIEncoding.ASCII.GetString(tmp_dev_b)}");
+                                                    CDPLogger.Verbose($"sent to ui {System.Text.ASCIIEncoding.ASCII.GetString(tmp_dev_b)}", contextstr);
                                                     if (Utils.BytesEqual(tmp_dev_b, 0, end_b, 0, end_b.Length))
                                                     {
                                                         uiSslStream.WriteAsync(disconnected_b).ConfigureAwait(false);
@@ -616,22 +617,22 @@ namespace CryoDeviceProxy
                                     cts.Cancel();
                                     if (finishtask == tdevTask)
                                     {
-                                        CDPLogger.Verbose("finished reading buf block from dev");
+                                        CDPLogger.Verbose("finished reading buf block from dev", contextstr);
                                         await tuiTask;
                                     }
                                     else
                                     {
-                                        CDPLogger.Verbose("finished reading uiStream from UI");
+                                        CDPLogger.Verbose("finished reading uiStream from UI", contextstr);
                                         await tdevTask;
                                     }
                                 }
                                 else
                                 {
                                     SendToClientString(uiSslStream, "disconnected timeout\xd");
-                                    CDPLogger.Information("sent disocnnect string timeout waiting for connection.");
+                                    CDPLogger.Information("sent disocnnect string timeout waiting for connection.", contextstr);
                                 }
                             }
-                            CDPLogger.Information("UI: ui device connect completed event");
+                            CDPLogger.Information("UI: ui device connect completed event", contextstr);
                             uiClientDict.TryRemove(service_tag, out TcpClient tmp_client);
                             uiBufBlock.TryRemove(service_tag, out BufferBlock<byte[]> tmp_blk);
                             //close_client = true;
@@ -652,25 +653,25 @@ namespace CryoDeviceProxy
             }
             catch (AuthenticationException ae)
             {
-                CDPLogger.Error($"Exception: {ae.Message}");
+                CDPLogger.Error($"Exception: {ae.Message}", contextstr);
                 if (ae.InnerException != null)
                 {
-                    CDPLogger.Error($"Inner exception: {ae.InnerException.Message}");
+                    CDPLogger.Error($"Inner exception: {ae.InnerException.Message}", contextstr);
                 }
-                CDPLogger.Error("UIProtocolAsync: Authentication failed - closing the connection.");
+                CDPLogger.Error("UIProtocolAsync: Authentication failed - closing the connection.", contextstr);
                 //sslStream.Close();
                 //client.Close();
                 //return;
             }
             catch (Exception e)
             {
-                CDPLogger.Error(e, "UIProtocolAsync");
+                CDPLogger.Error(e, "UIProtocolAsync", contextstr);
             }
             finally
             {
                 available_sslstreams.Remove(uiSslStream);
                 uiSslStream.Close();
-                CDPLogger.Information("Closing UI Client");
+                CDPLogger.Information("Closing UI Client", contextstr);
                 uiClient.Close();
                 uiClient.Client.Close();
                 uiClient.Dispose();
@@ -698,7 +699,7 @@ namespace CryoDeviceProxy
                 }
                 catch (Exception e)
                 {
-                    CDPLogger.Error(e, "Device accept and protocol async");
+                    CDPLogger.Error(e, "Device accept async");
                     break;
                 }
             }
@@ -742,7 +743,7 @@ namespace CryoDeviceProxy
                 return amountRead;
             }
         }
-        
+
         /// <summary>
         /// This function handles the protocol to download errors stored in the device.
         /// Once the data is uploaded successfully to the backend server, the error data clear command is sent to the device
@@ -754,8 +755,9 @@ namespace CryoDeviceProxy
         /// <param name="deviceClient">Client object representing connection to the device</param>
         /// <param name="devSslStream">Secure tls connection for data exchange</param>
         /// <param name="servicetag_str">Identification of the device to store the error data related to this device.</param>
-        /// <returns></returns>
-        private async Task DoErrorDownload(TcpClient deviceClient, SslStream devSslStream, string servicetag_str)
+        /// <param name="contextstr">context for logging in multiple device tasks</param>
+        /// <returns>Task</returns>
+        private async Task DoErrorDownload(TcpClient deviceClient, SslStream devSslStream, string servicetag_str, string contextstr)
         {
             BufferBlock<string> devbufblk = new BufferBlock<string>(
                 new DataflowBlockOptions { BoundedCapacity = 1 });
@@ -767,8 +769,8 @@ namespace CryoDeviceProxy
 
             Thread.Sleep(10000);
             byte[] tmpend_b3 = System.Text.ASCIIEncoding.ASCII.GetBytes("EG\xd");
-            CDPLogger.Information("Sent EG command: Error data download");
-            CDPLogger.Verbose(BitConverter.ToString(tmpend_b3).Replace("-", " "));
+            CDPLogger.Information("Sent EG command: Error data download", contextstr);
+            CDPLogger.Verbose(BitConverter.ToString(tmpend_b3).Replace("-", " "), contextstr);
             await devSslStream.WriteAsync(tmpend_b3).ConfigureAwait(false);
             devSslStream.Flush();
             Thread.Sleep(5000);
@@ -791,8 +793,9 @@ namespace CryoDeviceProxy
                             await devbufblk.SendAsync(tmpstr);
                         }
                     }
-                    catch (Exception)
+                    catch (Exception excp)
                     {
+                        CDPLogger.Error(excp, "Downloading Error Stats", contextstr);
                         devbufblk.Complete();
                         break;
                     }
@@ -819,12 +822,13 @@ namespace CryoDeviceProxy
                         }
                         else
                         {
-                            CDPLogger.Error("recvasysn devbuf block timedout 5 seconds");
+                            CDPLogger.Error("recvasysn devbuf block timedout 5 seconds", contextstr);
                             break;
                         }
                     }
-                    catch (Exception)
+                    catch (Exception ee)
                     {
+                        CDPLogger.Error(ee, "Reading bufblock error stat download", contextstr);
                         break;
                     }
                 }
@@ -842,11 +846,11 @@ namespace CryoDeviceProxy
                 //Console.WriteLine("tuiTask completed");
                 await tdevTask;
             }
-            CDPLogger.Information("DEVICE: completed error list download event");
+            CDPLogger.Information("DEVICE: completed error list download event", contextstr);
             string[] tmparr = sb_recv.ToString().Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
             int boe_index = Array.FindIndex(tmparr, element => element.Trim().StartsWith("boe", StringComparison.Ordinal));
             int eoe_index = Array.FindIndex(tmparr, element => element.Trim().StartsWith("eoe", StringComparison.Ordinal));
-            CDPLogger.Verbose(string.Format("boe at {0}, eoe at {1}", boe_index, eoe_index));
+            CDPLogger.Verbose(string.Format("boe at {0}, eoe at {1}", boe_index, eoe_index), contextstr);
             //List<string> err_list = new List<string>();
             //for (int ii = boe_index + 1; ii < eoe_index; ii++)
             //{
@@ -860,13 +864,13 @@ namespace CryoDeviceProxy
                 Array.Copy(tmparr, boe_index + 1, err_arr, 0, err_arr.Length);
                 BLL.DeviceBLL devbll = CryoDeviceProxy.Program.GetDeviceBLL();
                 bool sts = devbll.UpdateDeviceErrors(servicetag_str, err_arr);
-                CDPLogger.Information(string.Format("sts from UpdateDevice Error call {0}", sts));
+                CDPLogger.Information(string.Format("sts from UpdateDevice Error call {0}", sts), contextstr);
                 if ((sts) && (ClearError))
                 {
                     Thread.Sleep(5000);
                     byte[] tmpend_b4 = System.Text.ASCIIEncoding.ASCII.GetBytes("EC\xd");
-                    CDPLogger.Information("Sent EC command: Error data clear");
-                    CDPLogger.Verbose(BitConverter.ToString(tmpend_b4).Replace("-", " "));
+                    CDPLogger.Information("Sent EC command: Error data clear", contextstr);
+                    CDPLogger.Verbose(BitConverter.ToString(tmpend_b4).Replace("-", " "), contextstr);
                     await devSslStream.WriteAsync(tmpend_b4).ConfigureAwait(false);
                     devSslStream.Flush();
                     sts = await ReadAckFromDeviceWithTimeout(devSslStream, 3);
@@ -886,8 +890,9 @@ namespace CryoDeviceProxy
         /// <param name="deviceClient">Client object representing connection to the device</param>
         /// <param name="devSslStream">Secure tls connection for data exchange</param>
         /// <param name="servicetag_str">Identification of the device to store the usage statistics data related to this device</param>
-        /// <returns></returns>
-        private async Task DoUsageStatsDownload(TcpClient deviceClient, SslStream devSslStream, string servicetag_str)
+        /// <param name="contextstr">context for logging in multiple device tasks</param>
+        /// <returns>Task</returns>
+        private async Task DoUsageStatsDownload(TcpClient deviceClient, SslStream devSslStream, string servicetag_str, string contextstr)
         {
             BufferBlock<string> devbufblk = new BufferBlock<string>(
                 new DataflowBlockOptions { BoundedCapacity = 1 });
@@ -899,8 +904,8 @@ namespace CryoDeviceProxy
 
             Thread.Sleep(10000);
             byte[] tmpend_b3 = System.Text.ASCIIEncoding.ASCII.GetBytes("SA\xd");
-            CDPLogger.Information("Sent SA command: Usage Stats download");
-            CDPLogger.Verbose(BitConverter.ToString(tmpend_b3).Replace("-", " "));
+            CDPLogger.Information("Sent SA command: Usage Stats download", contextstr);
+            CDPLogger.Verbose(BitConverter.ToString(tmpend_b3).Replace("-", " "), contextstr);
             await devSslStream.WriteAsync(tmpend_b3).ConfigureAwait(false);
             devSslStream.Flush();
             Thread.Sleep(5000);
@@ -941,7 +946,7 @@ namespace CryoDeviceProxy
                         if (recv_str != null)
                         {
                             //debug
-                            CDPLogger.Verbose(string.Format("recv from devbufblock: {0}", recv_str));
+                            CDPLogger.Verbose(string.Format("recv from devbufblock: {0}", recv_str), contextstr);
                             sb_recv.Append(recv_str);
                             if (recv_str.Contains("eos"))
                             {
@@ -951,12 +956,13 @@ namespace CryoDeviceProxy
                         }
                         else
                         {
-                            CDPLogger.Error("getusagestats: recvasync devbuf block timedout 5 seconds");
+                            CDPLogger.Error("getusagestats: recvasync devbuf block timedout 5 seconds", contextstr);
                             break;
                         }
                     }
-                    catch (Exception)
+                    catch (Exception excp)
                     {
+                        CDPLogger.Error(excp, "Reading buf block UsageStat download", contextstr);
                         break;
                     }
                 }
@@ -974,25 +980,25 @@ namespace CryoDeviceProxy
                 //Console.WriteLine("tuiTask completed");
                 await tdevTask;
             }
-            CDPLogger.Information("DEVICE: completed usage stats download event");
+            CDPLogger.Information("DEVICE: completed usage stats download event", contextstr);
             string[] tmparr = sb_recv.ToString().Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
             int bos_index = Array.FindIndex(tmparr, element => element.Trim().StartsWith("bos", StringComparison.Ordinal));
             int eos_index = Array.FindIndex(tmparr, element => element.Trim().StartsWith("eos", StringComparison.Ordinal));
-            CDPLogger.Verbose(string.Format("bos at {0}, eos at {1}", bos_index, eos_index));
+            CDPLogger.Verbose(string.Format("bos at {0}, eos at {1}", bos_index, eos_index), contextstr);
             if ( (bos_index >= 0) && (eos_index > 0)  && (eos_index > bos_index) )
             {
                 string[] usagestats_arr = new string[eos_index - (bos_index + 1)];
                 Array.Copy(tmparr, bos_index + 1, usagestats_arr, 0, usagestats_arr.Length);
                 BLL.DeviceBLL devbll = CryoDeviceProxy.Program.GetDeviceBLL();
                 bool sts = devbll.UpdateUsageStats(servicetag_str, usagestats_arr);
-                CDPLogger.Information(string.Format("sts from Update Usage Statistics call {0}", sts));
+                CDPLogger.Information(string.Format("sts from Update Usage Statistics call {0}", sts), contextstr);
                 if ((sts) && (ClearUsageStats))
                 {
                     // command for clear stats ????
                     Thread.Sleep(5000);
                     byte[] tmpend_b4 = System.Text.ASCIIEncoding.ASCII.GetBytes("SC\xd");
-                    CDPLogger.Information("Sent SC command: Usage Stat clear");
-                    CDPLogger.Verbose(BitConverter.ToString(tmpend_b4).Replace("-", " "));
+                    CDPLogger.Information("Sent SC command: Usage Stat clear", contextstr);
+                    CDPLogger.Verbose(BitConverter.ToString(tmpend_b4).Replace("-", " "), contextstr);
                     await devSslStream.WriteAsync(tmpend_b4).ConfigureAwait(false);
                     devSslStream.Flush();
                     sts = await ReadAckFromDeviceWithTimeout(devSslStream, 3);
@@ -1039,13 +1045,14 @@ namespace CryoDeviceProxy
         /// <param name="deviceClient">Client object representing connection to the device</param>
         /// <param name="devSslStream">Secure tls connection for data exchange<</param>
         /// <param name="servicetag_str">Identification to establish the glue logic between user interface connection and device connection.</param>
+        /// <param name="contextstr">context for logging in multiple device tasks</param>
         /// <returns></returns>
-        private async Task DoUIConnection(TcpClient deviceClient, SslStream devSslStream, string servicetag_str)
+        private async Task DoUIConnection(TcpClient deviceClient, SslStream devSslStream, string servicetag_str, string contextstr)
         {
             BufferBlock<byte[]> devbufblk = new BufferBlock<byte[]>(
                 new DataflowBlockOptions { BoundedCapacity = 1 });
             devBufBlock.TryAdd(servicetag_str, devbufblk);
-            CDPLogger.Debug(string.Format("dev sslstream is auth {0} adding to devStreamDict", devSslStream.IsAuthenticated));
+            CDPLogger.Debug(string.Format("dev sslstream is auth {0} adding to devStreamDict", devSslStream.IsAuthenticated), contextstr);
             devStreamDict.TryAdd(servicetag_str, devSslStream);
             uiClientDict.TryGetValue(servicetag_str, out TcpClient uiClient);
             uiBufBlock.TryGetValue(servicetag_str, out BufferBlock<byte[]> uibufblk);
@@ -1072,7 +1079,7 @@ namespace CryoDeviceProxy
                         var devReadTask = devSslStream.ReadAsync(buf_conn, 0, buf_conn.Length, cts.Token);
                         if (devReadTask.IsFaulted || devReadTask.IsCanceled)
                         {
-                            CDPLogger.Error("devReadTask faulted");
+                            CDPLogger.Error("devReadTask faulted", contextstr);
                             //device_client_error = true;
                             //await uibufblk.SendAsync(disconnected_b).ConfigureAwait(false);
                             await uibufblk.SendAsync(end_b).ConfigureAwait(false);
@@ -1085,7 +1092,7 @@ namespace CryoDeviceProxy
                         {
                             //Console.WriteLine(string.Format("devRead bytes{0} ", dev_bytes_read));
                             //break;
-                            CDPLogger.Error("devReadTask read zero bytes");
+                            CDPLogger.Error("devReadTask read zero bytes", contextstr);
                             //await uibufblk.SendAsync(disconnected_b).ConfigureAwait(false);
                             await uibufblk.SendAsync(end_b).ConfigureAwait(false);
                             devbufblk.Complete();
@@ -1096,7 +1103,7 @@ namespace CryoDeviceProxy
                             byte[] tmp_ui_b = new byte[dev_bytes_read];
                             System.Array.Copy(buf_conn, 0, tmp_ui_b, 0, dev_bytes_read);
                             CDPLogger.Verbose(string.Format("recv from dev: send to ui {0}",
-                                System.Text.ASCIIEncoding.ASCII.GetString(tmp_ui_b)));
+                                System.Text.ASCIIEncoding.ASCII.GetString(tmp_ui_b)), contextstr);
                             await uibufblk.SendAsync(tmp_ui_b);
                             if (Utils.BytesEqual(tmp_ui_b, 0, end_b, 0, end_b.Length))
                             {
@@ -1105,8 +1112,10 @@ namespace CryoDeviceProxy
                             }
                         }
                     }
-                    catch (Exception)
+                    catch (Exception excp)
                     {
+                        CDPLogger.Error(excp, "DevReadTask", contextstr);
+                        CDPLogger.Information("Closing UIConnection", contextstr);
                         byte[] to_send_end = System.Text.ASCIIEncoding.ASCII.GetBytes("end\xd");
                         await uibufblk.SendAsync(to_send_end);
                         devbufblk.Complete();
@@ -1132,11 +1141,11 @@ namespace CryoDeviceProxy
                         //byte[] tmp_dev_b = await devbufblk.ReceiveAsync(cts.Token);
                         if (tmp_dev_b != null)
                         {
-                            CDPLogger.Verbose($"recv from ui; sent to device {System.Text.ASCIIEncoding.ASCII.GetString(tmp_dev_b)}");
+                            CDPLogger.Verbose($"recv from ui; sent to device {System.Text.ASCIIEncoding.ASCII.GetString(tmp_dev_b)}", contextstr);
                             if (Utils.BytesEqual(tmp_dev_b, 0, end_b, 0, end_b.Length))
                             {
                                 byte[] tmpend_b = System.Text.ASCIIEncoding.ASCII.GetBytes("Y0\xd");
-                                CDPLogger.Information("sent disconnected (Y0) to device");
+                                CDPLogger.Information("sent disconnected (Y0) to device", contextstr);
                                 await devSslStream.WriteAsync(tmpend_b).ConfigureAwait(false);
                             }
                             else
@@ -1150,8 +1159,9 @@ namespace CryoDeviceProxy
                             }
                         }
                     }
-                    catch (Exception)
+                    catch (Exception ee)
                     {
+                        CDPLogger.Error(ee, "Device buf block read: Ui Connection", contextstr);
                         break;
                     }
                 }
@@ -1170,7 +1180,7 @@ namespace CryoDeviceProxy
                 //Console.WriteLine("tuiTask completed");
                 await tdevTask;
             }
-            CDPLogger.Information("DEVICE: device ui connect completed event");
+            CDPLogger.Information("DEVICE: device ui connect completed event", contextstr);
             devClientDict.TryRemove(servicetag_str, out TcpClient tmpDevClient);
             tmpDevClient.Close();
             tmpDevClient.Client.Close();
@@ -1239,7 +1249,8 @@ namespace CryoDeviceProxy
         async Task DeviceProtocolAsync(TcpClient deviceClient)
         {
             var ip = deviceClient.Client.RemoteEndPoint.ToString();
-            CDPLogger.Information($"Device ({ip}) connected");
+            string contextstr = "dev-" + ip.Trim().Replace(".", "-").Replace(":", "-");
+            CDPLogger.Information($"Device ({ip}) connected", contextstr);
             var buf_dev = new byte[4096];
             //var rem_recv_bytes = new byte[4096];
             //var rem_recv_count = 0;
@@ -1261,7 +1272,7 @@ namespace CryoDeviceProxy
                 //recv_buf.Clear();
                 var amountRead = await ReadFromStream(sslStream, buf_dev, true);
                 var strFromDev = System.Text.ASCIIEncoding.ASCII.GetString(buf_dev, 0, amountRead);
-                CDPLogger.Verbose(string.Format("read [{0}]: {1}", amountRead, strFromDev));
+                CDPLogger.Verbose(string.Format("read [{0}]: {1}", amountRead, strFromDev), contextstr);
                 if (amountRead > 0)
                 {
                     recv_pkt_strList.Clear();
@@ -1277,7 +1288,7 @@ namespace CryoDeviceProxy
                         foreach (string recv_pkt_str in recv_pkt_strList)
                         {
                             pkt_invalid = false;
-                            CDPLogger.Debug(string.Format("[dbg]: recv [{1}]= {0}", recv_pkt_str, recv_pkt_str.Length));
+                            CDPLogger.Debug(string.Format("[dbg]: recv [{1}]= {0}", recv_pkt_str, recv_pkt_str.Length), contextstr);
                             // receive ping packet; device sent ping packet
                             /*
                                 //Receive ping string data packets with a ‘;’ separator from a connected unit(ping interval 5 minutes) with the following format:
@@ -1293,7 +1304,7 @@ namespace CryoDeviceProxy
                             BLL.DeviceBLL devbll = Program.GetDeviceBLL();
                             if (pp.IsPacketValid)
                             {
-                                CDPLogger.Information(string.Format("serial num recv {0}, imei num {1}", pp.SerialNumber, pp.IMEINumberString));
+                                CDPLogger.Information(string.Format("serial num recv {0}, imei num {1}", pp.SerialNumber, pp.IMEINumberString), contextstr);
                                 string[] response_datastrarr = devbll.SendDevicePingData(pp);
                                 if (response_datastrarr != null)
                                 {
@@ -1317,26 +1328,26 @@ namespace CryoDeviceProxy
                                     tmp_sb.Append('\xd');
                                     response_datastrarr[1] = tmp_sb.ToString();
                                     // send response
-                                    CDPLogger.Information(string.Format(" sent to device: <{0}>", response_datastrarr[1]));
+                                    CDPLogger.Information(string.Format(" sent to device: <{0}>", response_datastrarr[1]), contextstr);
                                     SendToClientString(sslStream, response_datastrarr[1]);
-                                    CDPLogger.Information(devState.ToString());
+                                    CDPLogger.Information(devState.ToString(), contextstr);
                                     if (devState == DeviceStates.UI_CONNECTED)
                                     {
                                         //await DoUIConnection(deviceClient, sslStream, pp.SerialNumber);
-                                        await DoUIConnection(deviceClient, sslStream, service_tag);
+                                        await DoUIConnection(deviceClient, sslStream, service_tag, contextstr);
                                     }
                                     else if (devState == DeviceStates.ERROR_DOWNLOAD)
                                     {
                                         Thread.Sleep(2000);
                                         byte[] tmpend_b = System.Text.ASCIIEncoding.ASCII.GetBytes("Y1\xd");
-                                        CDPLogger.Information("sent connected (Y1) to device");
+                                        CDPLogger.Information("sent connected (Y1) to device", contextstr);
                                         await sslStream.WriteAsync(tmpend_b).ConfigureAwait(false);
                                         await sslStream.FlushAsync().ConfigureAwait(false);
 
-                                        await DoErrorDownload(deviceClient, sslStream, service_tag);
+                                        await DoErrorDownload(deviceClient, sslStream, service_tag, contextstr);
                                         Thread.Sleep(2000);
                                         byte[] tmpend_b2 = System.Text.ASCIIEncoding.ASCII.GetBytes("Y0\xd");
-                                        CDPLogger.Information("sent disconnected (Y0) to device");
+                                        CDPLogger.Information("sent disconnected (Y0) to device", contextstr);
                                         await sslStream.WriteAsync(tmpend_b2).ConfigureAwait(false);
                                         await sslStream.FlushAsync().ConfigureAwait(false);
                                     }
@@ -1344,14 +1355,14 @@ namespace CryoDeviceProxy
                                     {
                                         Thread.Sleep(2000);
                                         byte[] tmpend_b = System.Text.ASCIIEncoding.ASCII.GetBytes("Y1\xd");
-                                        CDPLogger.Information("sent connected (Y1) to device");
+                                        CDPLogger.Information("sent connected (Y1) to device", contextstr);
                                         await sslStream.WriteAsync(tmpend_b).ConfigureAwait(false);
                                         await sslStream.FlushAsync().ConfigureAwait(false);
 
-                                        await DoUsageStatsDownload(deviceClient, sslStream, service_tag);
+                                        await DoUsageStatsDownload(deviceClient, sslStream, service_tag, contextstr);
                                         Thread.Sleep(2000);
                                         byte[] tmpend_b2 = System.Text.ASCIIEncoding.ASCII.GetBytes("Y0\xd");
-                                        CDPLogger.Information("sent disconnected (Y0) to device");
+                                        CDPLogger.Information("sent disconnected (Y0) to device", contextstr);
                                         await sslStream.WriteAsync(tmpend_b2).ConfigureAwait(false);
                                         await sslStream.FlushAsync().ConfigureAwait(false);
                                     }
@@ -1370,7 +1381,7 @@ namespace CryoDeviceProxy
                             if (pkt_invalid)
                             {
                                 //check to see if a ui needs connection to this device
-                                CDPLogger.Error($"Invalid Packet received. {recv_pkt_str}");
+                                CDPLogger.Error($"Invalid Packet received. {recv_pkt_str}", contextstr);
                                 string [] inv_pkt_rsp = devbll.SetInvalidPingData(recv_pkt_str.Trim());
                                 if (inv_pkt_rsp == null)
                                 {
@@ -1404,9 +1415,9 @@ namespace CryoDeviceProxy
                                 if ((bd_servicetag != string.Empty) && (bd_dev_resp != string.Empty))
                                 {
                                     // send response
-                                    CDPLogger.Information(string.Format("[invalid pkt recv]: sent to device: <{0}>", bd_dev_resp));
+                                    CDPLogger.Information(string.Format("[invalid pkt recv]: sent to device: <{0}>", bd_dev_resp), contextstr);
                                     SendToClientString(sslStream, bd_dev_resp);
-                                    await DoUIConnection(deviceClient, sslStream, bd_servicetag);
+                                    await DoUIConnection(deviceClient, sslStream, bd_servicetag, contextstr);
                                 }
                             }
                         }
@@ -1415,25 +1426,25 @@ namespace CryoDeviceProxy
             }
             catch (AuthenticationException ae)
             {
-                CDPLogger.Error($"Exception: {ae.Message}");
+                CDPLogger.Error($"Exception: {ae.Message}", contextstr);
                 if (ae.InnerException != null)
                 {
-                    CDPLogger.Error($"Inner exception: {ae.InnerException.Message}");
+                    CDPLogger.Error($"Inner exception: {ae.InnerException.Message}", contextstr);
                 }
-                CDPLogger.Error("DeviceProtocolAsync: Authentication failed - closing the connection.");
+                CDPLogger.Error("DeviceProtocolAsync: Authentication failed - closing the connection.", contextstr);
                 //sslStream.Close();
                 //client.Close();
                 //return;
             }
             catch (Exception e)
             {
-                CDPLogger.Error(e, "DeviceProtocolAsync");
+                CDPLogger.Error(e, "DeviceProtocolAsync", contextstr);
             }
             finally
             {
                 available_sslstreams.Remove(sslStream);
                 sslStream.Close();
-                CDPLogger.Information("Device: closing device client");
+                CDPLogger.Information("Device: closing device client", contextstr);
                 deviceClient.Close();
                 deviceClient.Client.Close();
                 deviceClient.Dispose();
@@ -1599,14 +1610,15 @@ namespace CryoDeviceProxy
         /// </summary>
         /// <param name="net_stream">the stream to write to</param>
         /// <param name="data_send">data to be written to the stream</param>
-        public async void SendToClient(SslStream net_stream, byte[] data_send)
+        public void SendToClient(SslStream net_stream, byte[] data_send)
         {
             if (available_sslstreams.Contains(net_stream))
             {
                 if (net_stream.CanWrite)
                 {
                     CDPLogger.Verbose("canwrite succ: sent data to device");
-                    await net_stream.WriteAsync(data_send).ConfigureAwait(false);
+                    net_stream.Write(data_send);
+                    //await net_stream.WriteAsync(data_send).ConfigureAwait(false);
                 }
             }
         }
