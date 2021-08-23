@@ -17,16 +17,16 @@ namespace CryoDeviceProxy.BLL
     /// </summary>
     public class DeviceBLL
     {
-
+        private static HttpClient client = new HttpClient();
         //private ConcurrentDictionary<string, PingPacket> device_db_cache_data = new ConcurrentDictionary<string, PingPacket>(); // local cache for database; to remove this after db connection
-
 
         /// <summary>
         /// Wrapper function that initiates a separate task to post the ping packet received from device to the backend server. 
         /// </summary>
         /// <param name="pp_recv">The <c>PingPacket</c> object that contains the details of the ping packet received.</param>
+        /// <param name="context_str">The context string that contains the calling task information for metrics and tracing.</param>
         /// <returns>String array obtained as a result of task execution</returns>
-        public string[] SendDevicePingData(PingPacket pp_recv)
+        public static string[] SendDevicePingData(PingPacket pp_recv, string context_str)
         {
             // send query to ROR server and ensure that serial_number eand imei_number_str exists in system
             // response byte format 
@@ -45,7 +45,7 @@ namespace CryoDeviceProxy.BLL
             // if database contains pp.SerialNumber, then return approx respone, else return -1;
             //device_db_cache_data.AddOrUpdate(pp_recv.SerialNumber, pp_recv, (k, v) => v);
             // send to db
-            Task<string[]> task = Task.Run(() => PingDataAsync(pp_recv));
+            Task<string[]> task = Task.Run(() => PingDataAsync(pp_recv, context_str));
             task.Wait();
             return task.Result;
         }
@@ -73,107 +73,79 @@ namespace CryoDeviceProxy.BLL
         /// </list>
         /// </summary>
         /// <param name="pp_recv">The <c>PingPacket</c> object containing the information about the ping data received from the device.</param>
+        /// <param name="context_str">The context string that contains the calling task information for metrics and tracing.</param>
         /// <returns>String array based on the response of the server or error or exception</returns>
-        private async Task<string[]> PingDataAsync(PingPacket pp_recv)
+        private static async Task<string[]> PingDataAsync(PingPacket pp_recv, string context_str)
         {
-            using (var client = new HttpClient())
+            Uri uri = new Uri(string.Format("http://{0}{1}", "127.0.0.1:8001", "/api/devices/ping"));
+            CDPLogger.Verbose(uri.ToString(), context_str);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            var prj = new PingRequestJson
             {
-                Uri uri = new Uri(string.Format("http://{0}{1}", "127.0.0.1:3000", "/api/devices/ping"));
-                CDPLogger.Verbose(uri.ToString());
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var prj = new PingRequestJson();
-                prj.serial_number = pp_recv.SerialNumber;
-                prj.imei_number = pp_recv.IMEINumberString;
-                prj.ping_data = pp_recv.ReceivePacketStr; // System.Text.ASCIIEncoding.ASCII.GetString(pp_recv.ReceivePacket);
-                string jsonstr = JsonSerializer.Serialize(prj);
-                var content = new StringContent(jsonstr, Encoding.UTF8, "application/json");
-                string[] ret_str_a = null;
-                try
+                serial_number = pp_recv.SerialNumber,
+                imei_number = pp_recv.IMEINumberString,
+                ping_data = pp_recv.ReceivePacketStr // System.Text.ASCIIEncoding.ASCII.GetString(pp_recv.ReceivePacket);
+            };
+            string jsonstr = JsonSerializer.Serialize(prj);
+            var content = new StringContent(jsonstr, Encoding.UTF8, "application/json");
+            string[] ret_str_a = null;
+            try
+            {
+                HttpResponseMessage result = await client.PostAsync(uri, content);
+                if (result.IsSuccessStatusCode)
                 {
-                    HttpResponseMessage result = await client.PostAsync(uri, content);
-                    string responseBody = await result.Content.ReadAsStringAsync();
-                    if (result.Content.Headers.GetValues("Content-Type").ToArray()[0].Equals("application/json"))
+                    if (result.Content != null)
                     {
-                        var respjson = JsonSerializer.Deserialize<PingResponseJson>(responseBody);
-                        //Console.WriteLine("finished deserializer");
-                        // return service tag, response data 
-                        CDPLogger.Debug("response");
-                        CDPLogger.Debug(string.Format($"response succ: {result.IsSuccessStatusCode}"));
-                        if (result.IsSuccessStatusCode)
+                        string responseBody = await result.Content.ReadAsStringAsync();
+                        CDPLogger.Verbose(responseBody, context_str);
+                        if (result.Content.Headers.GetValues("Content-Type").ToArray()[0].Equals("application/json"))
                         {
-                            if ((pp_recv.SerialNumber.Equals(respjson.data.serial_number)) &&
-                                (pp_recv.IMEINumberString.Equals(respjson.data.imei_number))
-                                )
+                            var respjson = JsonSerializer.Deserialize<PingResponseJson>(responseBody);
+                            //Console.WriteLine("finished deserializer");
+                            // return service tag, response data 
+                            CDPLogger.Debug(string.Format($"response succ: {result.IsSuccessStatusCode}"), context_str);
+                            if (result.IsSuccessStatusCode)
                             {
-                                ret_str_a = new string[2];
-                                ret_str_a[0] = respjson.data.service_tag;
-                                ret_str_a[1] = respjson.data.response;
+                                if ((pp_recv.SerialNumber.Equals(respjson.data.serial_number)) &&
+                                    (pp_recv.IMEINumberString.Equals(respjson.data.imei_number))
+                                    )
+                                {
+                                    ret_str_a = new string[2];
+                                    ret_str_a[0] = respjson.data.service_tag;
+                                    ret_str_a[1] = respjson.data.response;
+                                }
                             }
+                        }
+                        else
+                        {
+                            ret_str_a = new string[2];
+                            ret_str_a[0] = "error";
+                            ret_str_a[1] = "did not get json resp from server.";
                         }
                     }
                     else
                     {
-                        ret_str_a = new string[2];
-                        ret_str_a[0] = "error";
-                        ret_str_a[1] = "did not get json resp from server.";
+                        throw new Exception("Received null content");
                     }
                 }
-                catch (Exception e)
+                else
                 {
-                    CDPLogger.Error(string.Format("Ping: {0}", e.Message));
-                    ret_str_a = null;
+                    throw new Exception($"Received Unsuccessful status code {result.StatusCode}");
                 }
-                return ret_str_a;
             }
+            catch (Exception e)
+            {
+                CDPLogger.Error(string.Format("Ping: {0}", e.Message), context_str);
+                if (e.InnerException != null)
+                {
+                    CDPLogger.Error(string.Format("Ping: {0}", e.InnerException.Message), context_str);
+                }
+                ret_str_a = null;
+            }
+            return ret_str_a;
         }
 
-
-        //public List<PingPacket> GetActiveDeviceList()
-        //{
-        //    List<PingPacket> to_ret_pps = new List<PingPacket>(device_db_cache_data.Values);
-        //    return to_ret_pps;
-        //}
-
-        //public byte[] GetDeviceInfo(string serial_number_str)
-        //{
-        //    if (device_db_cache_data.ContainsKey(serial_number_str) )
-        //    {
-        //        PingPacket pp = device_db_cache_data[serial_number_str];
-        //        return pp.ReceivePacket;
-        //    }
-        //    else
-        //    {
-        //        return null;
-        //    }
-        //}
-
-        //public string DeviceExistsInDB(string serial_number_str, string imei_number_str)
-        //{
-        //    DeviceBLL devbll = Program.GetDeviceBLL();
-        //    if (devbll == null)
-        //    {
-        //        return string.Empty;
-        //    }
-
-        //    // send query to ROR server and ensure that serial_number eand imei_number_str exists in system
-        //    // TODO: code to send query to ROR server and get the response
-        //    // response byte format 
-        //    /*
-        //        Send Ack data packet 7 strings delimited by ‘;’ back to unit consisting of one byte with the following bit fields:
-        //        a. string0: 0 = ack, 1 = re-send
-        //        b. string1: from database id 9: 0 = none, 1 = firmware available
-        //        c. String2: from database id 12: 0 = none, 1 = new language pack available
-        //        d. String3: from database id 19: 0 = no approval, 1 = unit approved for pay-per-use
-        //        e. String4: from database id 20: 0 = unit is free, 1 = unit is pay-per-use
-        //        f. String5: from database id 21: 0 = unit ops normal, 1 = de-commission unit
-        //        g. String6: 1: UI waiting for connection
-        //        h. String7: reserved
-        //        i. String8: 0x0D
-        //        each bit   "1" or "0" for each "x;x;x;x;x;x;x;x"
-        //    */
-        //    return "0;0;0;0;0;0;0;0\xd";
-        //}
 
         /// <summary>
         /// Wrapper function that initiates a separate task to read specific device information from the backend server.
@@ -182,10 +154,11 @@ namespace CryoDeviceProxy.BLL
         /// <param name="service_tag">service_tag of the device whose information is requested</param>
         /// <param name="email">email of the user logged in the user interface for verification</param>
         /// <param name="token">Authentication token of the user logged in the user interface</param>
+        /// <param name="context_str">The context string that contains the calling task information for metrics and tracing.</param>
         /// <returns>String array obtained as a result of task execution</returns>
-        public string[] GetDeviceInfo(string service_tag, string email, string token)
+        public static string[] GetDeviceInfo(string service_tag, string email, string token, string context_str)
         {
-            Task<string[]> task = Task.Run(() => GetDeviceDataAsync(service_tag, email, token));
+            Task<string[]> task = Task.Run(() => GetDeviceDataAsync(service_tag, email, token, context_str));
             task.Wait();
             return task.Result;
         }
@@ -202,56 +175,69 @@ namespace CryoDeviceProxy.BLL
         /// <param name="service_tag">service_tag of the device whose information is requested</param>
         /// <param name="email">email of the user logged in the user interface for verification</param>
         /// <param name="token">Authentication token of the user logged in the user interface</param>
+        /// <param name="context_str">The context string that contains the calling task information for metrics and tracing.</param>
         /// <returns>String array based on the information received from the backend server or null if error</returns>
-        private async Task<string[]> GetDeviceDataAsync(string service_tag, string email, string token)
+        private static async Task<string[]> GetDeviceDataAsync(string service_tag, string email, string token, string context_str)
         {
-            using (var client = new HttpClient())
+            Uri uri = new Uri(string.Format("http://{0}{1}", "127.0.0.1:8001", "/api/devices/get-device"));
+            CDPLogger.Verbose(uri.ToString(), context_str);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+            var upr = new UiProxyRequestJson();
+            upr.email = email;
+            upr.service_tag = service_tag;
+            string jsonstr = JsonSerializer.Serialize(upr);
+            HttpRequestMessage req_msg = new HttpRequestMessage(HttpMethod.Post, uri);
+            //req_msg.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            req_msg.Content = new StringContent(jsonstr, Encoding.UTF8, "application/json");
+
+            string[] ret_str_a = null;
+            try
             {
-                Uri uri = new Uri(string.Format("http://{0}{1}", "127.0.0.1:3000", "/api/devices/get-device"));
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
-                var upr = new UiProxyRequestJson();
-                upr.email = email;
-                upr.service_tag = service_tag;
-                string jsonstr = JsonSerializer.Serialize(upr);
-                HttpRequestMessage req_msg = new HttpRequestMessage(HttpMethod.Post, uri);
-                //req_msg.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                req_msg.Content = new StringContent(jsonstr, Encoding.UTF8, "application/json");
-
-                string[] ret_str_a = null;
-                try
+                HttpResponseMessage result = await client.SendAsync(req_msg);
+                if (result.IsSuccessStatusCode)
                 {
-                    HttpResponseMessage result = await client.SendAsync(req_msg);
-                    //var content = new StringContent(jsonstr, Encoding.UTF8, "application/json");
-                    //HttpResponseMessage result = await client.PostAsync(uri, content);
-
-                    string responseBody = await result.Content.ReadAsStringAsync();
-                    if (result.Content.Headers.GetValues("Content-Type").ToArray()[0].Equals("application/json"))
+                    if (result.Content != null)
                     {
-                        var respjson = JsonSerializer.Deserialize<UiProxyResponseJson>(responseBody);
-                        if (result.IsSuccessStatusCode)
+                        string responseBody = await result.Content.ReadAsStringAsync();
+                        CDPLogger.Verbose(responseBody, context_str);
+                        if (result.Content.Headers.GetValues("Content-Type").ToArray()[0].Equals("application/json"))
                         {
-                            ret_str_a = new string[2];
-                            ret_str_a[0] = respjson.data.ping_data;
-                            ret_str_a[1] = respjson.data.updated_at;
+                            var respjson = JsonSerializer.Deserialize<UiProxyResponseJson>(responseBody);
+                            if (result.IsSuccessStatusCode)
+                            {
+                                ret_str_a = new string[2];
+                                ret_str_a[0] = respjson.data.ping_data;
+                                ret_str_a[1] = respjson.data.updated_at;
+                            }
+                            //else
+                            //{
+                            //    ret_str_a = new string[2];
+                            //    ret_str_a[0] = "error";
+                            //    ret_str_a[1] = "did not recive json response";
+                            //}
                         }
-                        //else
-                        //{
-                        //    ret_str_a = new string[2];
-                        //    ret_str_a[0] = "error";
-                        //    ret_str_a[1] = "did not recive json response";
-                        //}
+                    }
+                    else
+                    {
+                        throw new Exception("Received null content");
                     }
                 }
-                catch (Exception e)
+                else
                 {
-                    CDPLogger.Error(string.Format("GetDeviceData: {0}", e.Message));
-                    ret_str_a = null;
+                    throw new Exception($"Received Unsuccessful status code {result.StatusCode}");
                 }
-                return ret_str_a;
+                //var content = new StringContent(jsonstr, Encoding.UTF8, "application/json");
+                //HttpResponseMessage result = await client.PostAsync(uri, content);
 
             }
+            catch (Exception e)
+            {
+                CDPLogger.Error(string.Format("GetDeviceData: {0}", e.Message), context_str);
+                ret_str_a = null;
+            }
+            return ret_str_a;
         }
 
 
@@ -263,10 +249,11 @@ namespace CryoDeviceProxy.BLL
         /// <param name="service_tag">service_tag of the device whose information is requested</param>
         /// <param name="email">email of the user logged in the user interface for verification</param>
         /// <param name="token">Authentication token of the user logged in the user interface</param>
+        /// <param name="context_str">The context string that contains the calling task information for metrics and tracing.</param>
         /// <returns></returns>
-        public bool VerifyConnectRequest(string service_tag, string email, string token)
+        public static bool VerifyConnectRequest(string service_tag, string email, string token, string context_str)
         {
-            Task<bool> task = Task.Run(() => VerifyConnectRequestAsync(service_tag, email, token));
+            Task<bool> task = Task.Run(() => VerifyConnectRequestAsync(service_tag, email, token, context_str));
             task.Wait();
             return task.Result;
         }
@@ -280,47 +267,60 @@ namespace CryoDeviceProxy.BLL
         /// <param name="email">email of the user logged in the user interface for verification</param>
         /// <param name="token">Authentication token of the user logged in the user interface</param>
         /// <returns></returns>
-        private async Task<bool> VerifyConnectRequestAsync(string service_tag, string email, string token)
+        private static async Task<bool> VerifyConnectRequestAsync(string service_tag, string email, string token, string context_str)
         {
-            using (var client = new HttpClient())
+            Uri uri = new Uri(string.Format("http://{0}{1}", "127.0.0.1:8001", "/api/devices/connect-verify"));
+            CDPLogger.Verbose(uri.ToString(), context_str);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+            var upr = new UiProxyRequestJson
             {
-                Uri uri = new Uri(string.Format("http://{0}{1}", "127.0.0.1:3000", "/api/devices/connect-verify"));
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
-                var upr = new UiProxyRequestJson();
-                upr.email = email;
-                upr.service_tag = service_tag;
-                string jsonstr = JsonSerializer.Serialize(upr);
-                HttpRequestMessage req_msg = new HttpRequestMessage(HttpMethod.Post, uri);
-                req_msg.Content = new StringContent(jsonstr, Encoding.UTF8, "application/json");
+                email = email,
+                service_tag = service_tag
+            };
+            string jsonstr = JsonSerializer.Serialize(upr);
+            HttpRequestMessage req_msg = new HttpRequestMessage(HttpMethod.Post, uri);
+            req_msg.Content = new StringContent(jsonstr, Encoding.UTF8, "application/json");
 
-                bool toret_bool = false;
-                try
+            bool toret_bool = false;
+            try
+            {
+                HttpResponseMessage result = await client.SendAsync(req_msg);
+                if (result.IsSuccessStatusCode)
                 {
-                    HttpResponseMessage result = await client.SendAsync(req_msg);
-
-                    string responseBody = await result.Content.ReadAsStringAsync();
-
-                    if (result.Content.Headers.GetValues("Content-Type").ToArray()[0].Equals("application/json"))
+                    if (result.Content != null)
                     {
-                        var respjson = JsonSerializer.Deserialize<UiProxyResponseJson>(responseBody);
-                        if (result.IsSuccessStatusCode)
+                        string responseBody = await result.Content.ReadAsStringAsync();
+                        CDPLogger.Verbose(responseBody, context_str);
+                        if (result.Content.Headers.GetValues("Content-Type").ToArray()[0].Equals("application/json"))
                         {
-                            if ((respjson.data.response != null) && (respjson.data.response.Equals("true")))
+                            var respjson = JsonSerializer.Deserialize<UiProxyResponseJson>(responseBody);
+                            if (result.IsSuccessStatusCode)
                             {
-                                toret_bool = true;
+                                if ((respjson.data.response != null) && (respjson.data.response.Equals("true")))
+                                {
+                                    toret_bool = true;
+                                }
                             }
                         }
                     }
+                    else
+                    {
+                        throw new Exception("Received null content");
+                    }
                 }
-                catch (Exception e)
+                else
                 {
-                    CDPLogger.Error(e, "VerifyConnect");   //Conxole.WriteLine(string.Format("VerifyConnect: {0}", e.Message));
-                    toret_bool = false;
+                    throw new Exception($"Received Unsuccessful status code {result.StatusCode}");
                 }
-                return toret_bool;
             }
+            catch (Exception e)
+            {
+                CDPLogger.Error(e, "VerifyConnect", context_str);   //Conxole.WriteLine(string.Format("VerifyConnect: {0}", e.Message));
+                toret_bool = false;
+            }
+            return toret_bool;
         }
 
 
@@ -329,10 +329,11 @@ namespace CryoDeviceProxy.BLL
         /// </summary>
         /// <param name="service_tag">The device from which the error list was read</param>
         /// <param name="err_list">Array of error list strings</param>
+        /// <param name="context_str">The context string that contains the calling task information for metrics and tracing.</param>
         /// <returns></returns>
-        public bool UpdateDeviceErrors(string service_tag, string[] err_list)
+        public static bool UpdateDeviceErrors(string service_tag, string[] err_list, string context_str)
         {
-            Task<bool> task = Task.Run(() => UpdateDeviceErrorsAsync(service_tag, err_list));
+            Task<bool> task = Task.Run(() => UpdateDeviceErrorsAsync(service_tag, err_list, context_str));
             task.Wait();
             return task.Result;
         }
@@ -342,62 +343,73 @@ namespace CryoDeviceProxy.BLL
         /// </summary>
         /// <param name="service_tag">The device from which the error list was read</param>
         /// <param name="err_list">Array of error list strings</param>
+        /// <param name="context_str">The context string that contains the calling task information for metrics and tracing.</param>
         /// <returns>true if successfully updated or false otherwise</returns>
-        private static async Task<bool> UpdateDeviceErrorsAsync(string service_tag, string[] err_list)
+        private static async Task<bool> UpdateDeviceErrorsAsync(string service_tag, string[] err_list, string context_str)
         {
-            using (var client = new HttpClient())
+            Uri uri = new Uri(string.Format("http://{0}{1}", "127.0.0.1:8001", "/api/devices/update-device-errors"));
+            CDPLogger.Verbose(uri.ToString(), context_str);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            DeviceError[] dev_err = new DeviceError[err_list.Length];
+            for (int ii = 0; ii < err_list.Length; ii++)
             {
-                Uri uri = new Uri(string.Format("http://{0}{1}", "127.0.0.1:3000", "/api/devices/update-device-errors"));
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                DeviceError[] dev_err = new DeviceError[err_list.Length];
-                for (int ii = 0; ii < err_list.Length; ii++)
+                string[] tmp_comps = err_list[ii].Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                if (tmp_comps.Length >= 3)
                 {
-                    string[] tmp_comps = err_list[ii].Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                    if (tmp_comps.Length >= 3)
+                    DeviceError de = new DeviceError
                     {
-                        DeviceError de = new DeviceError();
-                        de.occured_at = tmp_comps[1].Trim();
-                        de.error_code = tmp_comps[2].Trim();
-                        dev_err[ii] = de;
-                    }
+                        occured_at = tmp_comps[1].Trim(),
+                        error_code = tmp_comps[2].Trim()
+                    };
+                    dev_err[ii] = de;
                 }
-                UpdateErrorListRequestJson uelrj = new UpdateErrorListRequestJson();
-                uelrj.device = service_tag;
-                uelrj.error_list = dev_err;
-                string jsonstr = JsonSerializer.Serialize(uelrj);
+            }
+            UpdateErrorListRequestJson uelrj = new UpdateErrorListRequestJson();
+            uelrj.device = service_tag;
+            uelrj.error_list = dev_err;
+            string jsonstr = JsonSerializer.Serialize(uelrj);
 
-                HttpRequestMessage req_msg = new HttpRequestMessage(HttpMethod.Post, uri);
-                req_msg.Content = new StringContent(jsonstr, Encoding.UTF8, "application/json");
+            HttpRequestMessage req_msg = new HttpRequestMessage(HttpMethod.Post, uri);
+            req_msg.Content = new StringContent(jsonstr, Encoding.UTF8, "application/json");
 
-                bool toret_bool = false;
-                try
+            bool toret_bool = false;
+            try
+            {
+                HttpResponseMessage result = await client.SendAsync(req_msg);
+                if (result.IsSuccessStatusCode)
                 {
-                    HttpResponseMessage result = await client.SendAsync(req_msg);
-
-                    string responseBody = await result.Content.ReadAsStringAsync();
-                    CDPLogger.Verbose(responseBody);
-                    if ((result.IsSuccessStatusCode) &&
-                        (result.Content.Headers.GetValues("Content-Type").ToArray()[0].Equals("application/json"))
-                        )
+                    if (result.Content != null)
                     {
-                        var respjson = JsonSerializer.Deserialize<UiProxyResponseJson>(responseBody);
-                        if ((respjson.data.response != null) && (respjson.data.response.Equals("true")))
+                        string responseBody = await result.Content.ReadAsStringAsync();
+                        CDPLogger.Verbose(responseBody, context_str);
+                        if (result.Content.Headers.GetValues("Content-Type").ToArray()[0].Equals("application/json"))
                         {
-                            toret_bool = true;
+                            var respjson = JsonSerializer.Deserialize<UiProxyResponseJson>(responseBody);
+                            if ((respjson.data.response != null) && (respjson.data.response.Equals("true")))
+                            {
+                                toret_bool = true;
+                            }
                         }
                     }
-
+                    else
+                    {
+                        throw new Exception("Received null content");
+                    }
                 }
-                catch (Exception e)
+                else
                 {
-                    // Debug
-                    CDPLogger.Error(string.Format("UpdateErrList: {0}", e.Message));
-                    toret_bool = false;
+                    throw new Exception($"Received Unsuccessful status code {result.StatusCode}");
                 }
-                return toret_bool;
             }
+            catch (Exception e)
+            {
+                // Debug
+                CDPLogger.Error(string.Format("UpdateErrList: {0}", e.Message), context_str);
+                toret_bool = false;
+            }
+            return toret_bool;
         }
 
 
@@ -406,10 +418,11 @@ namespace CryoDeviceProxy.BLL
         /// </summary>
         /// <param name="service_tag"></param>
         /// <param name="usagestats_list"></param>
+        /// <param name="context_str">The context string that contains the calling task information for metrics and tracing.</param>
         /// <returns>Boolean value returned by the task execution</returns>
-        public bool UpdateUsageStats(string service_tag, string[] usagestats_list)
+        public static bool UpdateUsageStats(string service_tag, string[] usagestats_list, string context_str)
         {
-            Task<bool> task = Task.Run(() => UpdateUsageStatsAsync(service_tag, usagestats_list));
+            Task<bool> task = Task.Run(() => UpdateUsageStatsAsync(service_tag, usagestats_list, context_str));
             task.Wait();
             return task.Result;
         }
@@ -435,8 +448,9 @@ namespace CryoDeviceProxy.BLL
         /// </summary>
         /// <param name="service_tag">service_tag of the device whose information is requested</param>
         /// <param name="usagestats_list">usage statitistics read from the device</param>
+        /// <param name="context_str">The context string that contains the calling task information for metrics and tracing.</param>
         /// <returns>True if usage statistics was successfully uploaded to server, else false</returns>
-        private static async Task<bool> UpdateUsageStatsAsync(string service_tag, string[] usagestats_list)
+        private static async Task<bool> UpdateUsageStatsAsync(string service_tag, string[] usagestats_list, string context_str)
         {
 
             /*
@@ -462,222 +476,150 @@ namespace CryoDeviceProxy.BLL
             //    return false;
             //}
 
-            using (var client = new HttpClient())
+            Uri uri = new Uri(string.Format("http://{0}{1}", "127.0.0.1:8001", "/api/devices/update-device-usagestats"));
+            CDPLogger.Verbose(uri.ToString(), context_str);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            List<DeviceUsageStats> devusage_list = new List<DeviceUsageStats>();
+            //int tmp_len = usagestats_list.Length / 11;
+            //DeviceUsageStats[] dev_usagestats = new DeviceUsageStats[tmp_len];
+            DeviceUsageStats to_add_dus = null;
+            for (int kk = 0; kk < usagestats_list.Length; kk++)
             {
-                Uri uri = new Uri(string.Format("http://{0}{1}", "127.0.0.1:3000", "/api/devices/update-device-usagestats"));
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                List<DeviceUsageStats> devusage_list = new List<DeviceUsageStats>();
-                //int tmp_len = usagestats_list.Length / 11;
-                //DeviceUsageStats[] dev_usagestats = new DeviceUsageStats[tmp_len];
-                DeviceUsageStats to_add_dus = null;
-                for (int kk = 0; kk < usagestats_list.Length; kk++)
+                string[] parsed_strs = Utils.ValuesSplitAtColon(usagestats_list[kk]);
+                // looking for Cartridge:6 line to start a new usage statistics
+                if (parsed_strs[0].ToLower().Equals("ID".ToLower()))
                 {
-                    string[] parsed_strs = Utils.ValuesSplitAtColon(usagestats_list[kk]);
-                    // looking for Cartridge:6 line to start a new usage statistics
-                    if (parsed_strs[0].ToLower().Equals("ID".ToLower()))
+                    if (to_add_dus != null)
                     {
-                        if (to_add_dus != null)
+                        devusage_list.Add(to_add_dus);
+                        to_add_dus = null;
+                    }
+                    to_add_dus = new DeviceUsageStats
+                    {
+                        cartridge_tag_id = parsed_strs[1]
+                    };
+                }
+                else
+                {
+                    if (to_add_dus != null)
+                    {
+                        if (parsed_strs[0].ToLower().Equals("Name".ToLower()))
                         {
-                            devusage_list.Add(to_add_dus);
-                            to_add_dus = null;
+                            to_add_dus.serum_name = parsed_strs[1];
                         }
-                        to_add_dus = new DeviceUsageStats();
-                        to_add_dus.cartridge_tag_id = parsed_strs[1];
+                        else if (parsed_strs[0].ToLower().Equals("PartNumber".ToLower()))
+                        {
+                            to_add_dus.serum_part_number = parsed_strs[1];
+                        }
+                        else if (parsed_strs[0].ToLower().Equals("LotNumber".ToLower()))
+                        {
+                            to_add_dus.serum_lot_number = parsed_strs[1];
+                        }
+                        else if (parsed_strs[0].ToLower().Equals("Treatment Time".ToLower()))
+                        {
+                            to_add_dus.treatment_time = parsed_strs[1];
+                        }
+                        else if (parsed_strs[0].ToLower().Equals("Used on".ToLower()))
+                        {
+                            to_add_dus.datetime_used = parsed_strs[1];
+                        }
+                        else if (parsed_strs[0].ToLower().Equals("Average Board temperature".ToLower()))
+                        {
+                            to_add_dus.board_temperature = parsed_strs[1];
+                        }
+                        else if (parsed_strs[0].ToLower().Equals("Min Exit temperature".ToLower()))
+                        {
+                            to_add_dus.min_co2_temperature = parsed_strs[1];
+                        }
+                        else if (parsed_strs[0].ToLower().Equals("Max Exit temperature".ToLower()))
+                        {
+                            to_add_dus.max_co2_temperature = parsed_strs[1];
+                        }
+                        else if (parsed_strs[0].ToLower().Equals("Average CO2 temperature".ToLower()))
+                        {
+                            to_add_dus.average_co2_temperature = parsed_strs[1];
+                        }
+                        else if (parsed_strs[0].ToLower().Equals("Tank ID".ToLower()))
+                        {
+                            to_add_dus.tank_tag_id = parsed_strs[1];
+                        }
+                        else if (parsed_strs[0].ToLower().Equals("Tank Time Remaining".ToLower()))
+                        {
+                            to_add_dus.tank_time_remaining = parsed_strs[1];
+                        }
+                    }
+                }
+            }
+            if (to_add_dus != null)
+            {
+                devusage_list.Add(to_add_dus);
+            }
+
+            UpdateUsageStatsListRequestJson uuslrj = new UpdateUsageStatsListRequestJson
+            {
+                device = service_tag,
+                usagestats_list = devusage_list.ToArray()
+            };
+            string jsonstr = JsonSerializer.Serialize(uuslrj);
+
+            HttpRequestMessage req_msg = new HttpRequestMessage(HttpMethod.Post, uri);
+            req_msg.Content = new StringContent(jsonstr, Encoding.UTF8, "application/json");
+
+            bool toret_bool = false;
+            try
+            {
+                HttpResponseMessage result = await client.SendAsync(req_msg);
+                if (result.IsSuccessStatusCode)
+                {
+                    if (result.Content != null)
+                    {
+                        string responseBody = await result.Content.ReadAsStringAsync();
+                        CDPLogger.Verbose(responseBody, context_str);
+                        if (result.Content.Headers.GetValues("Content-Type").ToArray()[0].Equals("application/json"))
+                        {
+                            var respjson = JsonSerializer.Deserialize<UiProxyResponseJson>(responseBody);
+                            if ((respjson.data.response != null) && (respjson.data.response.Equals("true")))
+                            {
+                                toret_bool = true;
+                            }
+                            else
+                            {
+                                toret_bool = false;
+                            }
+                        }
                     }
                     else
                     {
-                        if (to_add_dus != null)
-                        {
-                            if (parsed_strs[0].ToLower().Equals("Name".ToLower()))
-                            {
-                                to_add_dus.serum_name = parsed_strs[1];
-                            }
-                            else if (parsed_strs[0].ToLower().Equals("PartNumber".ToLower()))
-                            {
-                                to_add_dus.serum_part_number = parsed_strs[1];
-                            }
-                            else if (parsed_strs[0].ToLower().Equals("LotNumber".ToLower()))
-                            {
-                                to_add_dus.serum_lot_number = parsed_strs[1];
-                            }
-                            else if (parsed_strs[0].ToLower().Equals("Treatment Time".ToLower()))
-                            {
-                                to_add_dus.treatment_time = parsed_strs[1];
-                            }
-                            else if (parsed_strs[0].ToLower().Equals("Used on".ToLower()))
-                            {
-                                to_add_dus.datetime_used = parsed_strs[1];
-                            }
-                            else if (parsed_strs[0].ToLower().Equals("Average Board temperature".ToLower()))
-                            {
-                                to_add_dus.board_temperature = parsed_strs[1];
-                            }
-                            else if (parsed_strs[0].ToLower().Equals("Min Exit temperature".ToLower()))
-                            {
-                                to_add_dus.min_co2_temperature = parsed_strs[1];
-                            }
-                            else if (parsed_strs[0].ToLower().Equals("Max Exit temperature".ToLower()))
-                            {
-                                to_add_dus.max_co2_temperature = parsed_strs[1];
-                            }
-                            else if (parsed_strs[0].ToLower().Equals("Average CO2 temperature".ToLower()))
-                            {
-                                to_add_dus.average_co2_temperature = parsed_strs[1];
-                            }
-                            else if (parsed_strs[0].ToLower().Equals("Tank ID".ToLower()))
-                            {
-                                to_add_dus.tank_tag_id = parsed_strs[1];
-                            }
-                            else if (parsed_strs[0].ToLower().Equals("Tank Time Remaining".ToLower()))
-                            {
-                                to_add_dus.tank_time_remaining = parsed_strs[1];
-                            }
-                        }
+                        throw new Exception("Received null content");
                     }
                 }
-                if (to_add_dus != null)
+                else
                 {
-                    devusage_list.Add(to_add_dus);
+                    throw new Exception($"Received Unsuccessful status code {result.StatusCode}");
                 }
-
-                UpdateUsageStatsListRequestJson uuslrj = new UpdateUsageStatsListRequestJson();
-                uuslrj.device = service_tag;
-                uuslrj.usagestats_list = devusage_list.ToArray();
-                string jsonstr = JsonSerializer.Serialize(uuslrj);
-
-                HttpRequestMessage req_msg = new HttpRequestMessage(HttpMethod.Post, uri);
-                req_msg.Content = new StringContent(jsonstr, Encoding.UTF8, "application/json");
-
-                bool toret_bool = false;
-                try
-                {
-                    HttpResponseMessage result = await client.SendAsync(req_msg);
-
-                    string responseBody = await result.Content.ReadAsStringAsync();
-                    CDPLogger.Verbose(responseBody);
-                    if ((result.IsSuccessStatusCode) &&
-                        (result.Content.Headers.GetValues("Content-Type").ToArray()[0].Equals("application/json"))
-                        )
-                    {
-                        var respjson = JsonSerializer.Deserialize<UiProxyResponseJson>(responseBody);
-                        if ((respjson.data.response != null) && (respjson.data.response.Equals("true")))
-                        {
-                            toret_bool = true;
-                        }
-                        else
-                        {
-                            toret_bool = false;
-                        }
-                    }
-
-                }
-                catch (Exception e)
-                {
-                    // Debug
-                    CDPLogger.Error(string.Format("UpdateUsageStatsList: {0}", e.Message));
-                    toret_bool = false;
-                }
-                return toret_bool;
             }
+            catch (Exception e)
+            {
+                // Debug
+                CDPLogger.Error(string.Format("UpdateUsageStatsList: {0}", e.Message), context_str);
+                toret_bool = false;
+            }
+            return toret_bool;
         }
 
-        //private static async Task<bool> UpdateUsageStatsAsyncOld(string service_tag, string[] usagestats_list)
-        //{
-        //    /*
-        //     *  eleven (11) consecutive elements belong to one usage stats
-        //     *  db column name          ->  data as received from device
-        //        cartridge_tag_id		-> Cartridge: 8
-        //        serum_lot_number		-> ID:E004010802ACDB4D
-        //        serum_name				-> Name:Form1
-        //        treatment_time			-> Treatment Time: 241
-        //        datetime_used			-> Used on:10/08/20/ 03:55
-        //        board_temp  			-> Average Board temperature: 30.60
-        //        min_co2_temp			-> Min Exit temperature: -10.60
-        //        max_co2_temp			-> Max Exit temperature: 29.10
-        //        avg_co2_temp			-> Average CO2 temperature: -2.50
-        //        tank_tag_id				-> Tank ID:E004010801C764C5
-        //        tank_time_remaining		-> Tank Time Remaining: 59213
-        //     * 
-        //     */
-        //    if (usagestats_list.Length % 12 != 0)
-        //    {
-        //        return false;
-        //    }
-        //    using (var client = new HttpClient())
-        //    {
-        //        Uri uri = new Uri(string.Format("http://{0}{1}", "127.0.0.1:3000", "/api/devices/update-device-usagestats"));
-        //        client.DefaultRequestHeaders.Accept.Clear();
-        //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        //        int tmp_len = usagestats_list.Length / 11;
-        //        DeviceUsageStats[] dev_usagestats = new DeviceUsageStats[tmp_len];
-        //        for (int kk = 0; kk < tmp_len; kk++)
-        //        {
-        //            DeviceUsageStats dus = new DeviceUsageStats();
-        //            dus.cartridge_tag_id = Utils.GetValueAfterColon(usagestats_list[11 * kk]);
-        //            dus.serum_part_number = Utils.GetValueAfterColon(usagestats_list[11 * kk + 1]);
-        //            dus.serum_name = Utils.GetValueAfterColon(usagestats_list[11 * kk + 2]);
-        //            dus.treatment_time = Utils.GetValueAfterColon(usagestats_list[11 * kk + 3]);
-        //            dus.datetime_used = Utils.GetValueAfterColon(usagestats_list[11 * kk + 4]);
-        //            dus.board_temperature = Utils.GetValueAfterColon(usagestats_list[11 * kk + 5]);
-        //            dus.min_co2_temperature = Utils.GetValueAfterColon(usagestats_list[11 * kk + 6]);
-        //            dus.max_co2_temperature = Utils.GetValueAfterColon(usagestats_list[11 * kk + 7]);
-        //            dus.average_co2_temperature = Utils.GetValueAfterColon(usagestats_list[11 * kk + 8]);
-        //            dus.tank_tag_id = Utils.GetValueAfterColon(usagestats_list[11 * kk + 9]);
-        //            dus.tank_time_remaining = Utils.GetValueAfterColon(usagestats_list[11 * kk + 10]);
-        //            dev_usagestats[kk] = dus;
-        //        }
-        //        UpdateUsageStatsListRequestJson uuslrj = new UpdateUsageStatsListRequestJson();
-        //        uuslrj.device = service_tag;
-        //        uuslrj.usagestats_list = dev_usagestats;
-        //        string jsonstr = JsonSerializer.Serialize(uuslrj);
-
-        //        HttpRequestMessage req_msg = new HttpRequestMessage(HttpMethod.Post, uri);
-        //        req_msg.Content = new StringContent(jsonstr, Encoding.UTF8, "application/json");
-
-        //        bool toret_bool = false;
-        //        try
-        //        {
-        //            HttpResponseMessage result = await client.SendAsync(req_msg);
-
-        //            string responseBody = await result.Content.ReadAsStringAsync();
-        //            CDPLogger.Verbose(responseBody);
-        //            if ((result.IsSuccessStatusCode) &&
-        //                (result.Content.Headers.GetValues("Content-Type").ToArray()[0].Equals("application/json"))
-        //                )
-        //            {
-        //                var respjson = JsonSerializer.Deserialize<UiProxyResponseJson>(responseBody);
-        //                if ((respjson.data.response != null) && (respjson.data.response.Equals("true")))
-        //                {
-        //                    toret_bool = true;
-        //                }
-        //                else
-        //                {
-        //                    toret_bool = false;
-        //                }
-        //            }
-
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            // Debug
-        //            CDPLogger.Error(string.Format("UpdateUsageStatsList: {0}", e.Message));
-        //            toret_bool = false;
-        //        }
-        //        return toret_bool;
-        //    }
-        //}
 
         /// <summary>
         /// Wrapper function that initiates a separate task to update the Invalid Ping Data received from device. 
         /// Invalid ping data occurs if the data format is incorrect, or the device is not found in the Device table.
         /// </summary>
         /// <param name="recv_pkt_str">The string received from Device which was incorrect.</param>
+        /// <param name="context_str">The context string that contains the calling task information for metrics and tracing.</param>
         /// <returns>String array that is generated in the task code.</returns>
-        public string[] SetInvalidPingData(string recv_pkt_str)
+        public static string[] SetInvalidPingData(string recv_pkt_str, string context_str)
         {
             // send to db
-            Task<string[]> task = Task.Run(() => InvalidPingData(recv_pkt_str));
+            Task<string[]> task = Task.Run(() => InvalidPingData(recv_pkt_str, context_str));
             task.Wait();
             return task.Result;
         }
@@ -693,55 +635,67 @@ namespace CryoDeviceProxy.BLL
         /// </list>
         /// </summary>
         /// <param name="recv_pkt_str">The string received from Device which was incorrect.</param>
+        /// <param name="context_str">The context string that contains the calling task information for metrics and tracing.</param>
         /// <returns>String array</returns>
-        private async Task<string[]> InvalidPingData(string recv_pkt_str)
+        private static async Task<string[]> InvalidPingData(string recv_pkt_str, string context_str)
         {
-            using (var client = new HttpClient())
+            Uri uri = new Uri(string.Format("http://{0}{1}", "127.0.0.1:8001", "/api/devices/invalid-ping"));
+            CDPLogger.Verbose(uri.ToString(), context_str);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            var prj = new InvalidPingJson
             {
-                Uri uri = new Uri(string.Format("http://{0}{1}", "127.0.0.1:3000", "/api/devices/invalid-ping"));
-                CDPLogger.Verbose(uri.ToString());
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var prj = new InvalidPingJson();
-                prj.invalid_ping_data = recv_pkt_str;
-                string jsonstr = JsonSerializer.Serialize(prj);
-                var content = new StringContent(jsonstr, Encoding.UTF8, "application/json");
-                string[] ret_str_a = null;
-                try
+                invalid_ping_data = recv_pkt_str
+            };
+            string jsonstr = JsonSerializer.Serialize(prj);
+            var content = new StringContent(jsonstr, Encoding.UTF8, "application/json");
+            string[] ret_str_a = null;
+            try
+            {
+                HttpResponseMessage result = await client.PostAsync(uri, content);
+                if (result.IsSuccessStatusCode)
                 {
-                    HttpResponseMessage result = await client.PostAsync(uri, content);
-                    string responseBody = await result.Content.ReadAsStringAsync();
-                    CDPLogger.Verbose(responseBody);
-                    if (result.Content.Headers.GetValues("Content-Type").ToArray()[0].Equals("application/json"))
+                    if (result.Content != null)
                     {
-                        var respjson = JsonSerializer.Deserialize<PingResponseJson>(responseBody);
-                        //Console.WriteLine("finished deserializer");
-                        // return service tag, response data 
-                        CDPLogger.Debug("response");
-                        CDPLogger.Debug(string.Format($"response succ: {result.IsSuccessStatusCode}"));
-                        if (result.IsSuccessStatusCode)
+                        string responseBody = await result.Content.ReadAsStringAsync();
+                        CDPLogger.Verbose(responseBody, context_str);
+                        if (result.Content.Headers.GetValues("Content-Type").ToArray()[0].Equals("application/json"))
+                        {
+                            var respjson = JsonSerializer.Deserialize<PingResponseJson>(responseBody);
+                            //Console.WriteLine("finished deserializer");
+                            // return service tag, response data 
+                            CDPLogger.Debug(string.Format($"response succ: {result.IsSuccessStatusCode}"), context_str);
+                            if (result.IsSuccessStatusCode)
+                            {
+                                ret_str_a = new string[2];
+                                ret_str_a[0] = "success";
+                                ret_str_a[1] = respjson.data.response;
+                            }
+                        }
+                        else
                         {
                             ret_str_a = new string[2];
-                            ret_str_a[0] = "success";
-                            ret_str_a[1] = respjson.data.response;
+                            ret_str_a[0] = "failed";
+                            ret_str_a[1] = "did not get json resp from server.";
                         }
                     }
                     else
                     {
-                        ret_str_a = new string[2];
-                        ret_str_a[0] = "failed";
-                        ret_str_a[1] = "did not get json resp from server.";
+                        throw new Exception("Received null content");
                     }
                 }
-                catch (Exception e)
+                else
                 {
-                    CDPLogger.Error(string.Format("InvalidPing: {0}", e.Message));
-                    ret_str_a = null;
+                    throw new Exception($"Received Unsuccessful status code {result.StatusCode}");
                 }
-                return ret_str_a;
             }
+            catch (Exception e)
+            {
+                CDPLogger.Error(string.Format("InvalidPing: {0}", e.Message), context_str);
+                ret_str_a = null;
+            }
+            return ret_str_a;
         }
-
     }
 
 }

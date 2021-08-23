@@ -1,0 +1,136 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats" xml:lang="en-US">
+<title>CryoDeviceProxy.BLL.DeviceUsageStats Class Reference</title>
+<indexterm><primary>CryoDeviceProxy.BLL.DeviceUsageStats</primary></indexterm>
+<para>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats">DeviceUsageStats</link></computeroutput> encapsulates the usage statistics information received from device </para>
+ 
+</para>
+<simplesect>
+    <title>Public Member Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats_1ac8d8bde266893c4e59fc30c9a0b64208">DeviceUsageStats</link> ()</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Properties    </title>
+        <itemizedlist>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats_1ae528e4747f6c6ade1e5614b7fe804ada">cartridge_tag_id</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats_1a529c59fe2f8a97f8d0fde0ee7656258a">serum_name</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats_1a597c820982839db3f8e297e47a7c1a83">serum_part_number</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats_1a2f0fe80a1c5828d044b5bd033941f231">serum_lot_number</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats_1affd2cb8173b976d7757e6d817eb96652">treatment_time</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats_1a4b0a4bf67e94e03563711dabc930bde1">datetime_used</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats_1a4274b6d6afd6ff35181a0a9eb2e4d08b">board_temperature</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats_1a576f00ba2880661b054f28235497c0fc">min_co2_temperature</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats_1a7d9b2b359354134c93ddf71d6d442561">max_co2_temperature</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats_1a70cba8f47b6301be6fbb6524f75037e7">average_co2_temperature</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats_1ad04f52dd7d46ecb15213b023d09cb085">tank_tag_id</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats_1a86968000f3c5550dcfbb65136c80bf6d">tank_time_remaining</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats">DeviceUsageStats</link></computeroutput> encapsulates the usage statistics information received from device </para>
+</section>
+<section>
+<title>Constructor &amp; Destructor Documentation</title>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats_1ac8d8bde266893c4e59fc30c9a0b64208"/><section>
+    <title>DeviceUsageStats()</title>
+<indexterm><primary>DeviceUsageStats</primary><secondary>CryoDeviceProxy.BLL.DeviceUsageStats</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.DeviceUsageStats</primary><secondary>DeviceUsageStats</secondary></indexterm>
+<para><computeroutput>CryoDeviceProxy.BLL.DeviceUsageStats.DeviceUsageStats ( )</computeroutput></para></section>
+</section>
+<section>
+<title>Property Documentation</title>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats_1a70cba8f47b6301be6fbb6524f75037e7"/><section>
+    <title>average_co2_temperature</title>
+<indexterm><primary>average_co2_temperature</primary><secondary>CryoDeviceProxy.BLL.DeviceUsageStats</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.DeviceUsageStats</primary><secondary>average_co2_temperature</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.BLL.DeviceUsageStats.average_co2_temperature<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats_1a4274b6d6afd6ff35181a0a9eb2e4d08b"/><section>
+    <title>board_temperature</title>
+<indexterm><primary>board_temperature</primary><secondary>CryoDeviceProxy.BLL.DeviceUsageStats</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.DeviceUsageStats</primary><secondary>board_temperature</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.BLL.DeviceUsageStats.board_temperature<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats_1ae528e4747f6c6ade1e5614b7fe804ada"/><section>
+    <title>cartridge_tag_id</title>
+<indexterm><primary>cartridge_tag_id</primary><secondary>CryoDeviceProxy.BLL.DeviceUsageStats</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.DeviceUsageStats</primary><secondary>cartridge_tag_id</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.BLL.DeviceUsageStats.cartridge_tag_id<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats_1a4b0a4bf67e94e03563711dabc930bde1"/><section>
+    <title>datetime_used</title>
+<indexterm><primary>datetime_used</primary><secondary>CryoDeviceProxy.BLL.DeviceUsageStats</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.DeviceUsageStats</primary><secondary>datetime_used</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.BLL.DeviceUsageStats.datetime_used<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats_1a7d9b2b359354134c93ddf71d6d442561"/><section>
+    <title>max_co2_temperature</title>
+<indexterm><primary>max_co2_temperature</primary><secondary>CryoDeviceProxy.BLL.DeviceUsageStats</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.DeviceUsageStats</primary><secondary>max_co2_temperature</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.BLL.DeviceUsageStats.max_co2_temperature<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats_1a576f00ba2880661b054f28235497c0fc"/><section>
+    <title>min_co2_temperature</title>
+<indexterm><primary>min_co2_temperature</primary><secondary>CryoDeviceProxy.BLL.DeviceUsageStats</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.DeviceUsageStats</primary><secondary>min_co2_temperature</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.BLL.DeviceUsageStats.min_co2_temperature<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats_1a2f0fe80a1c5828d044b5bd033941f231"/><section>
+    <title>serum_lot_number</title>
+<indexterm><primary>serum_lot_number</primary><secondary>CryoDeviceProxy.BLL.DeviceUsageStats</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.DeviceUsageStats</primary><secondary>serum_lot_number</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.BLL.DeviceUsageStats.serum_lot_number<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats_1a529c59fe2f8a97f8d0fde0ee7656258a"/><section>
+    <title>serum_name</title>
+<indexterm><primary>serum_name</primary><secondary>CryoDeviceProxy.BLL.DeviceUsageStats</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.DeviceUsageStats</primary><secondary>serum_name</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.BLL.DeviceUsageStats.serum_name<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats_1a597c820982839db3f8e297e47a7c1a83"/><section>
+    <title>serum_part_number</title>
+<indexterm><primary>serum_part_number</primary><secondary>CryoDeviceProxy.BLL.DeviceUsageStats</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.DeviceUsageStats</primary><secondary>serum_part_number</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.BLL.DeviceUsageStats.serum_part_number<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats_1ad04f52dd7d46ecb15213b023d09cb085"/><section>
+    <title>tank_tag_id</title>
+<indexterm><primary>tank_tag_id</primary><secondary>CryoDeviceProxy.BLL.DeviceUsageStats</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.DeviceUsageStats</primary><secondary>tank_tag_id</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.BLL.DeviceUsageStats.tank_tag_id<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats_1a86968000f3c5550dcfbb65136c80bf6d"/><section>
+    <title>tank_time_remaining</title>
+<indexterm><primary>tank_time_remaining</primary><secondary>CryoDeviceProxy.BLL.DeviceUsageStats</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.DeviceUsageStats</primary><secondary>tank_time_remaining</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.BLL.DeviceUsageStats.tank_time_remaining<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats_1affd2cb8173b976d7757e6d817eb96652"/><section>
+    <title>treatment_time</title>
+<indexterm><primary>treatment_time</primary><secondary>CryoDeviceProxy.BLL.DeviceUsageStats</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.DeviceUsageStats</primary><secondary>treatment_time</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.BLL.DeviceUsageStats.treatment_time<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<para>
+The documentation for this class was generated from the following file:</para>
+BLL/<link linkend="__device_usage_stats_8cs">DeviceUsageStats.cs</link></section>
+</section>

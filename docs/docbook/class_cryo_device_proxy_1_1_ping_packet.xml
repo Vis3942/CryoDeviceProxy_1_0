@@ -1,0 +1,498 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_class_cryo_device_proxy_1_1_ping_packet" xml:lang="en-US">
+<title>CryoDeviceProxy.PingPacket Class Reference</title>
+<indexterm><primary>CryoDeviceProxy.PingPacket</primary></indexterm>
+<simplesect>
+    <title>Public Member Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_class_cryo_device_proxy_1_1_ping_packet_1a98553c2e6fd1614b50967bd718b38bcf">GetSerialNumber</link> (string recv_ping_str)</para>
+
+<para>Based on the format &quot;imei number;serial number; ...&quot;, this function extracts the serial number from ping packet and returns the serial number as an integer </para>
+</listitem>
+            <listitem><para><link linkend="_class_cryo_device_proxy_1_1_ping_packet_1ac15519963bbfa6532355e1d881cd7670">PingPacket</link> (byte[] recv_data, int start_idx, int recv_len)</para>
+
+<para>This constructor can be used to initialize a new <link linkend="_class_cryo_device_proxy_1_1_ping_packet">PingPacket</link>. Required data are in the parameters. </para>
+</listitem>
+            <listitem><para><link linkend="_class_cryo_device_proxy_1_1_ping_packet_1a70b81fffb5f7b4b536993c5c41128f79">PingPacket</link> (string recv_str)</para>
+
+<para>This constructor is used to instantiate a new <link linkend="_class_cryo_device_proxy_1_1_ping_packet">PingPacket</link> based on the ping packet sent from the device. This constructor delegates parsing and verification to the function <computeroutput>ProcessData</computeroutput> </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Properties    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_class_cryo_device_proxy_1_1_ping_packet_1acf049316652378c064f57918addd4d07">ReceivePacketLength</link><computeroutput> [get]</computeroutput>
+</para>
+
+<para>This property returns the length of ping packet stored in this instance </para>
+</listitem>
+            <listitem><para>byte[] <link linkend="_class_cryo_device_proxy_1_1_ping_packet_1ab6bec9e4dd0b837985d5528b997325c0">ReceivePacket</link><computeroutput> [get]</computeroutput>
+</para>
+
+<para>This property returns the byte array of the ping packet stored in this instance </para>
+</listitem>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_ping_packet_1a0a76f2d7546950cdee3f04b08feb8b3f">ReceivePacketStr</link><computeroutput> [get]</computeroutput>
+</para>
+</listitem>
+            <listitem><para>byte[] <link linkend="_class_cryo_device_proxy_1_1_ping_packet_1ac540751bfbc57f7c6d633253eb43aabf">IMEINumber</link><computeroutput> [get]</computeroutput>
+</para>
+
+<para>This property returns the IMEI number as a utf-8 byte array </para>
+</listitem>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_ping_packet_1a835aef7f5b3b747257872a4cf50dd261">IMEINumberString</link><computeroutput> [get]</computeroutput>
+</para>
+
+<para>This property returns the IMEI number as string extracted from the ping packet stored in this instance </para>
+</listitem>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_ping_packet_1adc9cdda1eeb206f2c0543ae74ddade68">SerialNumber</link><computeroutput> [get]</computeroutput>
+</para>
+
+<para>This property returns the serial number as string extracted from the ping packet stored in this instance </para>
+</listitem>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_ping_packet_1a88ddd05a7371f626ade589825649dda6">FirmwareVersion</link><computeroutput> [get]</computeroutput>
+</para>
+
+<para>This property returns the firmware version string extracted from the ping packet stored in this instance </para>
+</listitem>
+            <listitem><para>ushort <link linkend="_class_cryo_device_proxy_1_1_ping_packet_1a52dd44de46bcd9717cc046626f60fe28">NewUsageStatistics</link><computeroutput> [get]</computeroutput>
+</para>
+
+<para>This property returns the count of usage statistics extracted from the ping packet stored in this instance </para>
+</listitem>
+            <listitem><para>int <link linkend="_class_cryo_device_proxy_1_1_ping_packet_1a4fbd4322af5831500bb5765819054831">NumStoredLanguagePacks</link><computeroutput> [get]</computeroutput>
+</para>
+
+<para>This property returns the number of language packs extracted from the ping packet stored in this instance </para>
+</listitem>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_ping_packet_1a950544ad6b3fe4dfe6c0870c4907346a">DeviceIpAddressStr</link><computeroutput> [get]</computeroutput>
+</para>
+
+<para>This property to return the ip address of device extracted from ping packet stored in this instance. Please note the latest format does not publish the ip address of device. Therefore it is not used in this version. </para>
+</listitem>
+            <listitem><para>bool <link linkend="_class_cryo_device_proxy_1_1_ping_packet_1a8717c3598d70a7e9b3604edcd31ee36d">IsPacketValid</link><computeroutput> [get]</computeroutput>
+</para>
+
+<para>This property indicates whether the ping packet instance is well-formed with the required number of fields. If well formed, it is true, else it is false. </para>
+</listitem>
+            <listitem><para>int <link linkend="_class_cryo_device_proxy_1_1_ping_packet_1a9912d4d6c29fe99d09d7c34a14704c84">ErrorCount</link><computeroutput> [get]</computeroutput>
+</para>
+
+<para>This property returns the number of error statistics extracted from the ping packet stored in this instance </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Private Member Functions    </title>
+        <itemizedlist>
+            <listitem><para>void <link linkend="_class_cryo_device_proxy_1_1_ping_packet_1aa1319e501336d0b5efd7c2d73b3c0a90">ProcessData</link> ()</para>
+
+<para>This function parses the ping packet string to extract the various parameters in the ping packet and assign them to appropriate fields of the class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_ping_packet">PingPacket</link></computeroutput>. After parsing, the function will set the validated flag, which is read by other functions to ascertain the integrity of the ping packet. </para>
+</listitem>
+            <listitem><para>bool <link linkend="_class_cryo_device_proxy_1_1_ping_packet_1a3649e5e8cec3520f65b1e5d128e62e1f">GetUsageCountUshort</link> (string usage_count_str, out ushort usage_count)</para>
+
+<para>The <computeroutput>GetUsageCountUshort</computeroutput> function is a wrapper for ushort conversion which parses the usage count string as a ushort variable, and returns true if successfully converted else false </para>
+</listitem>
+            <listitem><para>bool <link linkend="_class_cryo_device_proxy_1_1_ping_packet_1a08ee55b9f0013f2b6652be965c5e05c8">GetIntValue</link> (string value_str, out int value)</para>
+
+<para>The <computeroutput>GetIntValue</computeroutput> is a wrapper for converting string to integer, and returns true if conversion is successful, else false </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Private Attributes    </title>
+        <itemizedlist>
+            <listitem><para>readonly byte[] <link linkend="_class_cryo_device_proxy_1_1_ping_packet_1a5a6016b62110417d8bebe74f349e8beb">_imei_number</link> = new byte[8]</para>
+</listitem>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_ping_packet_1a79a47796ca75f3788b454fd5fe99b51b">_imei_number_str</link> = string.Empty</para>
+</listitem>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_ping_packet_1a4f72d821692319a111280fe0d741108a">_serial_number_str</link> = &quot;none&quot;</para>
+</listitem>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_ping_packet_1acb93a35bb6c098dbd388a5c348830fce">_firmware_version_str</link> = &quot;0&quot;</para>
+</listitem>
+            <listitem><para>ushort <link linkend="_class_cryo_device_proxy_1_1_ping_packet_1ac72276df2c826d909f36eb5aea95cd08">_new_usage_statistics</link> = 0</para>
+</listitem>
+            <listitem><para>int <link linkend="_class_cryo_device_proxy_1_1_ping_packet_1ad375b2f000f7fac410065d2dcbf6eae2">_num_stored_lang_packs</link> = 0</para>
+</listitem>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_ping_packet_1a7714057f009cf28c40f58c463bc4cc7d">_ip_addr_device</link> = &quot;0.0.0.0&quot;</para>
+</listitem>
+            <listitem><para>readonly byte[] <link linkend="_class_cryo_device_proxy_1_1_ping_packet_1aafb9e7c78f2545a0c1e4a91f632638c9">_recv_str_as_bytes</link> = null</para>
+</listitem>
+            <listitem><para>bool <link linkend="_class_cryo_device_proxy_1_1_ping_packet_1a354d810a35f41265fa792985b09133a9">_valid_pkt</link> = false</para>
+</listitem>
+            <listitem><para>int <link linkend="_class_cryo_device_proxy_1_1_ping_packet_1aa3d476127a5bf37a44f8dbdc5d5ff2d5">_error_count</link> = 0</para>
+</listitem>
+            <listitem><para>readonly string <link linkend="_class_cryo_device_proxy_1_1_ping_packet_1ae2b43cbe3e948f4a48d00e5f37aff59f">_recv_str</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Constructor &amp; Destructor Documentation</title>
+<anchor xml:id="_class_cryo_device_proxy_1_1_ping_packet_1ac15519963bbfa6532355e1d881cd7670"/><section>
+    <title>PingPacket()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>PingPacket</primary><secondary>CryoDeviceProxy.PingPacket</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.PingPacket</primary><secondary>PingPacket</secondary></indexterm>
+<para><computeroutput>CryoDeviceProxy.PingPacket.PingPacket (byte[] recv_data, int start_idx, int recv_len)</computeroutput></para><para>
+
+<para>This constructor can be used to initialize a new <link linkend="_class_cryo_device_proxy_1_1_ping_packet">PingPacket</link>. Required data are in the parameters. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>recv_data</entry><entry>
+<para>Byte array of ping packet string as UTF-8 bytes</para>
+</entry>
+                            </row>
+                            <row>
+<entry>start_idx</entry><entry>
+<para>The start index of the ping packet in the array</para>
+</entry>
+                            </row>
+                            <row>
+<entry>recv_len</entry><entry>
+<para>The length of bytes to process in the array for the ping packet</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_ping_packet_1a70b81fffb5f7b4b536993c5c41128f79"/><section>
+    <title>PingPacket()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>PingPacket</primary><secondary>CryoDeviceProxy.PingPacket</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.PingPacket</primary><secondary>PingPacket</secondary></indexterm>
+<para><computeroutput>CryoDeviceProxy.PingPacket.PingPacket (string recv_str)</computeroutput></para><para>
+
+<para>This constructor is used to instantiate a new <link linkend="_class_cryo_device_proxy_1_1_ping_packet">PingPacket</link> based on the ping packet sent from the device. This constructor delegates parsing and verification to the function <computeroutput>ProcessData</computeroutput> </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>recv_str</entry><entry></entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+</section>
+</section>
+<section>
+<title>Member Function Documentation</title>
+<anchor xml:id="_class_cryo_device_proxy_1_1_ping_packet_1a08ee55b9f0013f2b6652be965c5e05c8"/><section>
+    <title>GetIntValue()</title>
+<indexterm><primary>GetIntValue</primary><secondary>CryoDeviceProxy.PingPacket</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.PingPacket</primary><secondary>GetIntValue</secondary></indexterm>
+<para><computeroutput>bool CryoDeviceProxy.PingPacket.GetIntValue (string value_str, out int value)<computeroutput>[private]</computeroutput></computeroutput></para><para>
+
+<para>The <computeroutput>GetIntValue</computeroutput> is a wrapper for converting string to integer, and returns true if conversion is successful, else false </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>value_str</entry><entry>
+<para>the string to convert to int</para>
+</entry>
+                            </row>
+                            <row>
+<entry>value</entry><entry>
+<para>Out param that contains the converted value on successful conversion</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>True if conversion is successful else returns false</para>
+</formalpara>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_ping_packet_1a98553c2e6fd1614b50967bd718b38bcf"/><section>
+    <title>GetSerialNumber()</title>
+<indexterm><primary>GetSerialNumber</primary><secondary>CryoDeviceProxy.PingPacket</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.PingPacket</primary><secondary>GetSerialNumber</secondary></indexterm>
+<para><computeroutput>int CryoDeviceProxy.PingPacket.GetSerialNumber (string recv_ping_str)</computeroutput></para><para>
+
+<para>Based on the format &quot;imei number;serial number; ...&quot;, this function extracts the serial number from ping packet and returns the serial number as an integer </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>recv_ping_str</entry><entry>
+<para>The ping packet to parse</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>serial number as integer else -1 if error</para>
+</formalpara>
+</para>
+
+<para>returns the serial number in the ping packet assumed format &quot;&lt;imei number&gt;;&lt;ser num&gt;; ....&quot; =&gt; integer between first and second semicolon</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_ping_packet_1a3649e5e8cec3520f65b1e5d128e62e1f"/><section>
+    <title>GetUsageCountUshort()</title>
+<indexterm><primary>GetUsageCountUshort</primary><secondary>CryoDeviceProxy.PingPacket</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.PingPacket</primary><secondary>GetUsageCountUshort</secondary></indexterm>
+<para><computeroutput>bool CryoDeviceProxy.PingPacket.GetUsageCountUshort (string usage_count_str, out ushort usage_count)<computeroutput>[private]</computeroutput></computeroutput></para><para>
+
+<para>The <computeroutput>GetUsageCountUshort</computeroutput> function is a wrapper for ushort conversion which parses the usage count string as a ushort variable, and returns true if successfully converted else false </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>usage_count_str</entry><entry>
+<para>String to convert</para>
+</entry>
+                            </row>
+                            <row>
+<entry>usage_count</entry><entry>
+<para>Out variable that contains the converted value on successfuly conversion</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>true if conversion successful else false</para>
+</formalpara>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_ping_packet_1aa1319e501336d0b5efd7c2d73b3c0a90"/><section>
+    <title>ProcessData()</title>
+<indexterm><primary>ProcessData</primary><secondary>CryoDeviceProxy.PingPacket</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.PingPacket</primary><secondary>ProcessData</secondary></indexterm>
+<para><computeroutput>void CryoDeviceProxy.PingPacket.ProcessData ( )<computeroutput>[private]</computeroutput></computeroutput></para><para>
+
+<para>This function parses the ping packet string to extract the various parameters in the ping packet and assign them to appropriate fields of the class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_ping_packet">PingPacket</link></computeroutput>. After parsing, the function will set the validated flag, which is read by other functions to ascertain the integrity of the ping packet. </para>
+</para>
+</section>
+</section>
+<section>
+<title>Member Data Documentation</title>
+<anchor xml:id="_class_cryo_device_proxy_1_1_ping_packet_1aa3d476127a5bf37a44f8dbdc5d5ff2d5"/><section>
+    <title>_error_count</title>
+<indexterm><primary>_error_count</primary><secondary>CryoDeviceProxy.PingPacket</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.PingPacket</primary><secondary>_error_count</secondary></indexterm>
+<para><computeroutput>int CryoDeviceProxy.PingPacket._error_count = 0<computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_ping_packet_1acb93a35bb6c098dbd388a5c348830fce"/><section>
+    <title>_firmware_version_str</title>
+<indexterm><primary>_firmware_version_str</primary><secondary>CryoDeviceProxy.PingPacket</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.PingPacket</primary><secondary>_firmware_version_str</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.PingPacket._firmware_version_str = &quot;0&quot;<computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_ping_packet_1a5a6016b62110417d8bebe74f349e8beb"/><section>
+    <title>_imei_number</title>
+<indexterm><primary>_imei_number</primary><secondary>CryoDeviceProxy.PingPacket</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.PingPacket</primary><secondary>_imei_number</secondary></indexterm>
+<para><computeroutput>readonly byte [] CryoDeviceProxy.PingPacket._imei_number = new byte[8]<computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_ping_packet_1a79a47796ca75f3788b454fd5fe99b51b"/><section>
+    <title>_imei_number_str</title>
+<indexterm><primary>_imei_number_str</primary><secondary>CryoDeviceProxy.PingPacket</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.PingPacket</primary><secondary>_imei_number_str</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.PingPacket._imei_number_str = string.Empty<computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_ping_packet_1a7714057f009cf28c40f58c463bc4cc7d"/><section>
+    <title>_ip_addr_device</title>
+<indexterm><primary>_ip_addr_device</primary><secondary>CryoDeviceProxy.PingPacket</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.PingPacket</primary><secondary>_ip_addr_device</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.PingPacket._ip_addr_device = &quot;0.0.0.0&quot;<computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_ping_packet_1ac72276df2c826d909f36eb5aea95cd08"/><section>
+    <title>_new_usage_statistics</title>
+<indexterm><primary>_new_usage_statistics</primary><secondary>CryoDeviceProxy.PingPacket</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.PingPacket</primary><secondary>_new_usage_statistics</secondary></indexterm>
+<para><computeroutput>ushort CryoDeviceProxy.PingPacket._new_usage_statistics = 0<computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_ping_packet_1ad375b2f000f7fac410065d2dcbf6eae2"/><section>
+    <title>_num_stored_lang_packs</title>
+<indexterm><primary>_num_stored_lang_packs</primary><secondary>CryoDeviceProxy.PingPacket</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.PingPacket</primary><secondary>_num_stored_lang_packs</secondary></indexterm>
+<para><computeroutput>int CryoDeviceProxy.PingPacket._num_stored_lang_packs = 0<computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_ping_packet_1ae2b43cbe3e948f4a48d00e5f37aff59f"/><section>
+    <title>_recv_str</title>
+<indexterm><primary>_recv_str</primary><secondary>CryoDeviceProxy.PingPacket</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.PingPacket</primary><secondary>_recv_str</secondary></indexterm>
+<para><computeroutput>readonly string CryoDeviceProxy.PingPacket._recv_str<computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_ping_packet_1aafb9e7c78f2545a0c1e4a91f632638c9"/><section>
+    <title>_recv_str_as_bytes</title>
+<indexterm><primary>_recv_str_as_bytes</primary><secondary>CryoDeviceProxy.PingPacket</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.PingPacket</primary><secondary>_recv_str_as_bytes</secondary></indexterm>
+<para><computeroutput>readonly byte [] CryoDeviceProxy.PingPacket._recv_str_as_bytes = null<computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_ping_packet_1a4f72d821692319a111280fe0d741108a"/><section>
+    <title>_serial_number_str</title>
+<indexterm><primary>_serial_number_str</primary><secondary>CryoDeviceProxy.PingPacket</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.PingPacket</primary><secondary>_serial_number_str</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.PingPacket._serial_number_str = &quot;none&quot;<computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_ping_packet_1a354d810a35f41265fa792985b09133a9"/><section>
+    <title>_valid_pkt</title>
+<indexterm><primary>_valid_pkt</primary><secondary>CryoDeviceProxy.PingPacket</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.PingPacket</primary><secondary>_valid_pkt</secondary></indexterm>
+<para><computeroutput>bool CryoDeviceProxy.PingPacket._valid_pkt = false<computeroutput>[private]</computeroutput></computeroutput></para></section>
+</section>
+<section>
+<title>Property Documentation</title>
+<anchor xml:id="_class_cryo_device_proxy_1_1_ping_packet_1a950544ad6b3fe4dfe6c0870c4907346a"/><section>
+    <title>DeviceIpAddressStr</title>
+<indexterm><primary>DeviceIpAddressStr</primary><secondary>CryoDeviceProxy.PingPacket</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.PingPacket</primary><secondary>DeviceIpAddressStr</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.PingPacket.DeviceIpAddressStr<computeroutput>[get]</computeroutput></computeroutput></para><para>
+
+<para>This property to return the ip address of device extracted from ping packet stored in this instance. Please note the latest format does not publish the ip address of device. Therefore it is not used in this version. </para>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_ping_packet_1a9912d4d6c29fe99d09d7c34a14704c84"/><section>
+    <title>ErrorCount</title>
+<indexterm><primary>ErrorCount</primary><secondary>CryoDeviceProxy.PingPacket</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.PingPacket</primary><secondary>ErrorCount</secondary></indexterm>
+<para><computeroutput>int CryoDeviceProxy.PingPacket.ErrorCount<computeroutput>[get]</computeroutput></computeroutput></para><para>
+
+<para>This property returns the number of error statistics extracted from the ping packet stored in this instance </para>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_ping_packet_1a88ddd05a7371f626ade589825649dda6"/><section>
+    <title>FirmwareVersion</title>
+<indexterm><primary>FirmwareVersion</primary><secondary>CryoDeviceProxy.PingPacket</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.PingPacket</primary><secondary>FirmwareVersion</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.PingPacket.FirmwareVersion<computeroutput>[get]</computeroutput></computeroutput></para><para>
+
+<para>This property returns the firmware version string extracted from the ping packet stored in this instance </para>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_ping_packet_1ac540751bfbc57f7c6d633253eb43aabf"/><section>
+    <title>IMEINumber</title>
+<indexterm><primary>IMEINumber</primary><secondary>CryoDeviceProxy.PingPacket</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.PingPacket</primary><secondary>IMEINumber</secondary></indexterm>
+<para><computeroutput>byte [] CryoDeviceProxy.PingPacket.IMEINumber<computeroutput>[get]</computeroutput></computeroutput></para><para>
+
+<para>This property returns the IMEI number as a utf-8 byte array </para>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_ping_packet_1a835aef7f5b3b747257872a4cf50dd261"/><section>
+    <title>IMEINumberString</title>
+<indexterm><primary>IMEINumberString</primary><secondary>CryoDeviceProxy.PingPacket</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.PingPacket</primary><secondary>IMEINumberString</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.PingPacket.IMEINumberString<computeroutput>[get]</computeroutput></computeroutput></para><para>
+
+<para>This property returns the IMEI number as string extracted from the ping packet stored in this instance </para>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_ping_packet_1a8717c3598d70a7e9b3604edcd31ee36d"/><section>
+    <title>IsPacketValid</title>
+<indexterm><primary>IsPacketValid</primary><secondary>CryoDeviceProxy.PingPacket</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.PingPacket</primary><secondary>IsPacketValid</secondary></indexterm>
+<para><computeroutput>bool CryoDeviceProxy.PingPacket.IsPacketValid<computeroutput>[get]</computeroutput></computeroutput></para><para>
+
+<para>This property indicates whether the ping packet instance is well-formed with the required number of fields. If well formed, it is true, else it is false. </para>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_ping_packet_1a52dd44de46bcd9717cc046626f60fe28"/><section>
+    <title>NewUsageStatistics</title>
+<indexterm><primary>NewUsageStatistics</primary><secondary>CryoDeviceProxy.PingPacket</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.PingPacket</primary><secondary>NewUsageStatistics</secondary></indexterm>
+<para><computeroutput>ushort CryoDeviceProxy.PingPacket.NewUsageStatistics<computeroutput>[get]</computeroutput></computeroutput></para><para>
+
+<para>This property returns the count of usage statistics extracted from the ping packet stored in this instance </para>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_ping_packet_1a4fbd4322af5831500bb5765819054831"/><section>
+    <title>NumStoredLanguagePacks</title>
+<indexterm><primary>NumStoredLanguagePacks</primary><secondary>CryoDeviceProxy.PingPacket</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.PingPacket</primary><secondary>NumStoredLanguagePacks</secondary></indexterm>
+<para><computeroutput>int CryoDeviceProxy.PingPacket.NumStoredLanguagePacks<computeroutput>[get]</computeroutput></computeroutput></para><para>
+
+<para>This property returns the number of language packs extracted from the ping packet stored in this instance </para>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_ping_packet_1ab6bec9e4dd0b837985d5528b997325c0"/><section>
+    <title>ReceivePacket</title>
+<indexterm><primary>ReceivePacket</primary><secondary>CryoDeviceProxy.PingPacket</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.PingPacket</primary><secondary>ReceivePacket</secondary></indexterm>
+<para><computeroutput>byte [] CryoDeviceProxy.PingPacket.ReceivePacket<computeroutput>[get]</computeroutput></computeroutput></para><para>
+
+<para>This property returns the byte array of the ping packet stored in this instance </para>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_ping_packet_1acf049316652378c064f57918addd4d07"/><section>
+    <title>ReceivePacketLength</title>
+<indexterm><primary>ReceivePacketLength</primary><secondary>CryoDeviceProxy.PingPacket</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.PingPacket</primary><secondary>ReceivePacketLength</secondary></indexterm>
+<para><computeroutput>int CryoDeviceProxy.PingPacket.ReceivePacketLength<computeroutput>[get]</computeroutput></computeroutput></para><para>
+
+<para>This property returns the length of ping packet stored in this instance </para>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_ping_packet_1a0a76f2d7546950cdee3f04b08feb8b3f"/><section>
+    <title>ReceivePacketStr</title>
+<indexterm><primary>ReceivePacketStr</primary><secondary>CryoDeviceProxy.PingPacket</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.PingPacket</primary><secondary>ReceivePacketStr</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.PingPacket.ReceivePacketStr<computeroutput>[get]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_ping_packet_1adc9cdda1eeb206f2c0543ae74ddade68"/><section>
+    <title>SerialNumber</title>
+<indexterm><primary>SerialNumber</primary><secondary>CryoDeviceProxy.PingPacket</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.PingPacket</primary><secondary>SerialNumber</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.PingPacket.SerialNumber<computeroutput>[get]</computeroutput></computeroutput></para><para>
+
+<para>This property returns the serial number as string extracted from the ping packet stored in this instance </para>
+</para>
+</section>
+<para>
+The documentation for this class was generated from the following file:</para>
+<link linkend="__ping_packet_8cs">PingPacket.cs</link></section>
+</section>

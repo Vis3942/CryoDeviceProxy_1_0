@@ -3,5 +3,7 @@
   "LogLevel": "information",
   "MaxLogFileSizeMB": 1,
   "MaxCountFiles": 5,
-  "LogFileName": "sock_server_log.txt"
+  "LogFileName": "sock_server_log.txt",
+  "DeviceSSLAuthTimeoutSecs": 5,
+  "DeviceReadStreamTimeoutSecs": 15 
 }

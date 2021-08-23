@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_namespace_cryo_device_proxy_1_1_b_l_l" xml:lang="en-US">
+<title>CryoDeviceProxy.BLL Namespace Reference</title>
+<indexterm><primary>CryoDeviceProxy.BLL</primary></indexterm>
+<simplesect>
+    <title>Classes    </title>
+        <itemizedlist>
+            <listitem><para>class <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_data">Data</link></para>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_data">Data</link></computeroutput> encapsulates the response to a ping packet from the server </para>
+</listitem>
+            <listitem><para>class <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_b_l_l">DeviceBLL</link></para>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_b_l_l">DeviceBLL</link></computeroutput> handles all communications with the backend server. </para>
+</listitem>
+            <listitem><para>class <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_error">DeviceError</link></para>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_error">DeviceError</link></computeroutput> encapsulates the error data information received from device </para>
+</listitem>
+            <listitem><para>class <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats">DeviceUsageStats</link></para>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats">DeviceUsageStats</link></computeroutput> encapsulates the usage statistics information received from device </para>
+</listitem>
+            <listitem><para>class <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_invalid_ping_json">InvalidPingJson</link></para>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_invalid_ping_json">InvalidPingJson</link></computeroutput> encapsulates the invalid ping data information received from device </para>
+</listitem>
+            <listitem><para>class <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_meta">Meta</link></para>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_meta">Meta</link></computeroutput> encapsulates the connection status information and additional messages sent from the server </para>
+</listitem>
+            <listitem><para>class <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_ping_request_json">PingRequestJson</link></para>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_ping_request_json">PingRequestJson</link></computeroutput> encapsulates ping data sent to the device if the serial number and imei number are available </para>
+</listitem>
+            <listitem><para>class <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_ping_response_json">PingResponseJson</link></para>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_ping_response_json">PingResponseJson</link></computeroutput> encapsulates the response from the server </para>
+</listitem>
+            <listitem><para>class <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_u_i_data">UIData</link></para>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_u_i_data">UIData</link></computeroutput> encapsulates the response sent from the server for the get-info request from the user interface </para>
+</listitem>
+            <listitem><para>class <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_u_i_meta">UIMeta</link></para>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_u_i_meta">UIMeta</link></computeroutput> encapsulates the additional connection status information from the server </para>
+</listitem>
+            <listitem><para>class <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_ui_proxy_request_json">UiProxyRequestJson</link></para>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_ui_proxy_request_json">UiProxyRequestJson</link></computeroutput> encapsulates request to be sent to the server. Not used in this version. </para>
+</listitem>
+            <listitem><para>class <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_ui_proxy_response_json">UiProxyResponseJson</link></para>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_ui_proxy_response_json">UiProxyResponseJson</link></computeroutput> encapsulates the information received from server </para>
+</listitem>
+            <listitem><para>class <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_update_error_list_request_json">UpdateErrorListRequestJson</link></para>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_update_error_list_request_json">UpdateErrorListRequestJson</link></computeroutput> encapsulates the error list data that needs to be sent to the server </para>
+</listitem>
+            <listitem><para>class <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_update_usage_stats_list_request_json">UpdateUsageStatsListRequestJson</link></para>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_update_usage_stats_list_request_json">UpdateUsageStatsListRequestJson</link></computeroutput> encapsulates the usage statistics list information to be sent to the server </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+</section>

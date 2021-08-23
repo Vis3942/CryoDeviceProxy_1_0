@@ -1,0 +1,20 @@
+var searchData=
+[
+  ['senddevicepingdata_0',['SendDevicePingData',['../class_cryo_device_proxy_1_1_b_l_l_1_1_device_b_l_l.html#aeac0ba565e22b5cd9b746e033dab2bec',1,'CryoDeviceProxy::BLL::DeviceBLL']]],
+  ['sendtoclient_1',['SendToClient',['../class_cryo_device_proxy_1_1_cryo_server.html#ac281c7c27485693e06754897891922b7',1,'CryoDeviceProxy.CryoServer.SendToClient()'],['../class_cryo_device_proxy_1_1_utils.html#ab1b33b04f8f757662207503a31759ce3',1,'CryoDeviceProxy.Utils.SendToClient()']]],
+  ['sendtoclientstring_2',['SendToClientString',['../class_cryo_device_proxy_1_1_cryo_server.html#a249fd1cad82656b708aa4120395882dd',1,'CryoDeviceProxy::CryoServer']]],
+  ['serial_5fnumber_3',['serial_number',['../class_cryo_device_proxy_1_1_b_l_l_1_1_ping_request_json.html#a6183581f1ada79bc7b10a278fb9fe30d',1,'CryoDeviceProxy.BLL.PingRequestJson.serial_number()'],['../class_cryo_device_proxy_1_1_b_l_l_1_1_data.html#a4794f9aee3d8e829b5c6f9ac67aafd78',1,'CryoDeviceProxy.BLL.Data.serial_number()']]],
+  ['serialnumber_4',['SerialNumber',['../class_cryo_device_proxy_1_1_ping_packet.html#adc9cdda1eeb206f2c0543ae74ddade68',1,'CryoDeviceProxy::PingPacket']]],
+  ['serum_5flot_5fnumber_5',['serum_lot_number',['../class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats.html#a2f0fe80a1c5828d044b5bd033941f231',1,'CryoDeviceProxy::BLL::DeviceUsageStats']]],
+  ['serum_5fname_6',['serum_name',['../class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats.html#a529c59fe2f8a97f8d0fde0ee7656258a',1,'CryoDeviceProxy::BLL::DeviceUsageStats']]],
+  ['serum_5fpart_5fnumber_7',['serum_part_number',['../class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats.html#a597c820982839db3f8e297e47a7c1a83',1,'CryoDeviceProxy::BLL::DeviceUsageStats']]],
+  ['servercertificate_8',['serverCertificate',['../class_cryo_device_proxy_1_1_cryo_server.html#a511cffeb0b2791a64913375c9e3db52c',1,'CryoDeviceProxy::CryoServer']]],
+  ['service_5ftag_9',['service_tag',['../class_cryo_device_proxy_1_1_b_l_l_1_1_data.html#a2233a41300136bca71305f4230a6b95d',1,'CryoDeviceProxy.BLL.Data.service_tag()'],['../class_cryo_device_proxy_1_1_b_l_l_1_1_ui_proxy_request_json.html#a9acbc0955dc54d2716f8a3fa1ee7bebc',1,'CryoDeviceProxy.BLL.UiProxyRequestJson.service_tag()']]],
+  ['setinvalidpingdata_10',['SetInvalidPingData',['../class_cryo_device_proxy_1_1_b_l_l_1_1_device_b_l_l.html#a6090b47ea5e538b0bdb1d891eb9941f5',1,'CryoDeviceProxy::BLL::DeviceBLL']]],
+  ['startallservers_11',['StartAllServers',['../class_cryo_device_proxy_1_1_cryo_server.html#a52c44a3fa3f14d9b8d8886dbd2d1102a',1,'CryoDeviceProxy::CryoServer']]],
+  ['startdeviceserverasync_12',['StartDeviceServerAsync',['../class_cryo_device_proxy_1_1_cryo_server.html#a6e3a6f79bd43b36f90b5539bc8307c39',1,'CryoDeviceProxy::CryoServer']]],
+  ['startoptions_13',['startOptions',['../class_cryo_device_proxy_1_1_app_options.html#a5e73634a0b35bcaf582e01b719aa9fe9',1,'CryoDeviceProxy::AppOptions']]],
+  ['startuiserverasync_14',['StartUIServerAsync',['../class_cryo_device_proxy_1_1_cryo_server.html#ae6d1a40664db48be4f695e6c8459d55b',1,'CryoDeviceProxy::CryoServer']]],
+  ['startupoptions_15',['StartupOptions',['../class_cryo_device_proxy_1_1_startup_options.html',1,'CryoDeviceProxy']]],
+  ['startupoptions_2ecs_16',['StartupOptions.cs',['../_startup_options_8cs.html',1,'']]]
+];

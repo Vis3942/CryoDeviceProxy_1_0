@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="__startup_options_8cs" xml:lang="en-US">
+<title>StartupOptions.cs File Reference</title>
+<indexterm><primary>StartupOptions.cs</primary></indexterm>
+<simplesect>
+    <title>Classes    </title>
+        <itemizedlist>
+            <listitem><para>class <link linkend="_class_cryo_device_proxy_1_1_startup_options">CryoDeviceProxy.StartupOptions</link></para>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_startup_options">StartupOptions</link></computeroutput> has all the fields corresponding to the parameters defined in the startup_settings.json file. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Namespaces    </title>
+        <itemizedlist>
+            <listitem><para>namespace <link linkend="_namespace_cryo_device_proxy">CryoDeviceProxy</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+</section>

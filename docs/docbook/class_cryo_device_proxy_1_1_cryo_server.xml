@@ -1,0 +1,1180 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_class_cryo_device_proxy_1_1_cryo_server" xml:lang="en-US">
+<title>CryoDeviceProxy.CryoServer Class Reference</title>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary></indexterm>
+<simplesect>
+    <title>Public Member Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_cryo_device_proxy_1_1_cryo_server_1a8e522c217f8a8ef686f5cc5be412c167">CryoServer</link> ()</para>
+</listitem>
+            <listitem><para><link linkend="_class_cryo_device_proxy_1_1_cryo_server_1ae91db86ebc7c8cbb643a87c9bfeff549">CryoServer</link> (string ipaddr)</para>
+</listitem>
+            <listitem><para>void <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1aa930e1ef8e315c6c161533667baeae9f">LoadConfig</link> ()</para>
+
+<para>Loads the application configuration from file cryodevproxy_params.txt The parameters file contains the following parameters <itemizedlist>
+<listitem>
+
+<para>Line 1: User Interface socket connection port.  </para>
+</listitem>
+<listitem>
+
+<para>Line 2: Device Interface socket connection port  </para>
+</listitem>
+<listitem>
+
+<para>Line 3: Certificate name for server without the &quot;.pfx&quot; extension. App expects the file to be in the same directory as the application executable. If the app does not find the file, the app logs an error and exits.  </para>
+</listitem>
+</itemizedlist>
+
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</listitem>
+            <listitem><para>void <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1a52c44a3fa3f14d9b8d8886dbd2d1102a">StartAllServers</link> ()</para>
+
+<para>This function starts the following 2 servers: <itemizedlist>
+<listitem>
+
+<para>Device Connection Listener: Server listening for connections from devices.  </para>
+</listitem>
+<listitem>
+
+<para>User Interface Connection Listener: Server listening for connections from User Interface.  </para>
+</listitem>
+</itemizedlist>
+
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</listitem>
+            <listitem><para>void <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1ae6d1a40664db48be4f695e6c8459d55b">StartUIServerAsync</link> ()</para>
+
+<para>This function starts the user interface server listening for connections from user interface as a separate task. </para>
+</listitem>
+            <listitem><para>void <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1a6e3a6f79bd43b36f90b5539bc8307c39">StartDeviceServerAsync</link> ()</para>
+
+<para>This function starts the device server listening for connections from devices as a separate task. </para>
+</listitem>
+            <listitem><para>void <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1ac281c7c27485693e06754897891922b7">SendToClient</link> (SslStream net_stream, byte[] data_send)</para>
+
+<para>This function is used to confirm writability and then write bytes to the underlying sslstream </para>
+</listitem>
+            <listitem><para>void <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1a249fd1cad82656b708aa4120395882dd">SendToClientString</link> (SslStream net_stream, string send_str)</para>
+
+<para>This function is used to write string to the underlying sslstream </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Properties    </title>
+        <itemizedlist>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1ab7c0dc60c5f46bebd9dd65eebd6c3891">IpAddressStr</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+            <listitem><para>int <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1a71be3fe609988780e8bd948551bc6ea5">DeviceConnectionPort</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+            <listitem><para>int <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1a1d9c0c7b0769ebc338cfd78373cf6fe4">UIConnectionPort</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+            <listitem><para>int <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1ac46097a994f9a66cb39f4a2c9dd6d8b1">UIMessageWaitInterval</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+            <listitem><para>int <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1a4365a8b1746451fd9127e0b066be3da6">UIMessageMaxWaitTimeSecs</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+            <listitem><para>bool <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1a8873e3d84e4f7129c55c7a7faf7ecd3a">IsProduction</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+            <listitem><para>bool <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1afd807e90cef11a27dbc5decc896c677e">ReadError</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+            <listitem><para>bool <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1a30b5ce8b6b8ce783105d0d7776e913c4">ClearError</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+            <listitem><para>bool <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1ab75e15dd5304e7e749a4b7fe6cb92da4">ReadUsage</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+            <listitem><para>bool <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1aa1d50bcd476cd30acbcb7c613f2f1a59">ClearUsageStats</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Private Member Functions    </title>
+        <itemizedlist>
+            <listitem><para>void <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1a3f0fba6f4d94bf4faf4285f6a5c38997">LoadCertificate</link> (string cert_name)</para>
+
+<para>Loads the X509 Certificate for TLS communications </para>
+</listitem>
+            <listitem><para>async Task <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1ac574d7479dd1d802d3ac80ddd6b34660">AcceptUIClientsAsync</link> (TcpListener uiListener)</para>
+
+<para>This function is the entry point of User Interface connection that is, any connection initiated by the user interface code will trigger an accept connections. This function then launches a separate task to handle the protocol between the socket server and the user interface. </para>
+</listitem>
+            <listitem><para>async Task <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1aeb89861fb5d485d6d1a0bc7072b6c87c">UIProtocolAsync</link> (TcpClient uiClient)</para>
+
+<para>This function normally runs in its own task, and handles all protocols (that is commands and responses) to a single user interface Firstly the tls based communications is initiated with the user interface. If this tls negotiation fails, the connection to the user interface is closed. All connections to this socket server require an authentication token served by the backend server. Supported commands with user interface are: <itemizedlist>
+<listitem>
+
+<para>getinfo
+<literallayout>&#160;&#xa;</literallayout>
+[service tag]
+<literallayout>&#160;&#xa;</literallayout>
+[email]
+<literallayout>&#160;&#xa;</literallayout>
+[token] </para>
+</listitem>
+</itemizedlist>
+</para>
+</listitem>
+            <listitem><para>async Task <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1a0b035bf68691a9db3063fd124f655237">AcceptDeviceClientsAsync</link> (TcpListener deviceListener)</para>
+
+<para>This function is the entry point of device connection that is, any connection initiated by the device will trigger an accept connections. This function then launches a separate task to handle the protocol between the socket server and the device. </para>
+</listitem>
+            <listitem><para>async Task&lt; int &gt; <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1afadb65c123f0fdfc17a7e2ed85499b44">ReadFromStream</link> (SslStream readStream, byte[] readBuf, bool withTimeOut, int timeout_secs=3 *60)</para>
+
+<para>This function performs a single read operation from an sslStream (first parameter), and copies the data to the buffer (second parameter). It allows the calling function to set a timeout, and the function will wait for data within that timeout. </para>
+</listitem>
+            <listitem><para>async Task <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1a16bf0e703dd92455d90cb9ca88ff9529">DoErrorDownload</link> (TcpClient deviceClient, SslStream devSslStream, string servicetag_str, string contextstr)</para>
+
+<para>This function handles the protocol to download errors stored in the device. Once the data is uploaded successfully to the backend server, the error data clear command is sent to the device </para>
+</listitem>
+            <listitem><para>async Task <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1a16ded09a2042ceb095cf90d0c4ff04d2">DoUsageStatsDownload</link> (TcpClient deviceClient, SslStream devSslStream, string servicetag_str, string contextstr)</para>
+
+<para>This function handles the protocol to download usage statistics from the device. Once the data is uploaded successfully to the backend server, the Usage Stat clear command is sent to the device </para>
+</listitem>
+            <listitem><para>async Task&lt; bool &gt; <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1ab8a1a477447d607de1bb6525009dd4bb">ReadAckFromDeviceWithTimeout</link> (SslStream dev_stream, int timeout_secs)</para>
+
+<para>This function reads an ACK from device with timeout. It is mainly used in the cases of clear usage statistics or error data, which do not provide a response, but will generally respond with an ACK. Therefore, this application will knows exacly the when the command is done on the device before closing the connection to the device. </para>
+</listitem>
+            <listitem><para>async Task <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1a57c50cb2860ac6685fe8d009e6704af2">DoUIConnection</link> (TcpClient deviceClient, SslStream devSslStream, string servicetag_str, string contextstr)</para>
+
+<para>This function is responsible for performing the glue code between the user interface and device. This is executed as part of the device protocol. It sets up BufferedBlocks to read from the device and send that data to the user interface (through a buffer block), and another BufferedBlock to receive data from the user interface and then send it to the device. </para>
+</listitem>
+            <listitem><para>async Task <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1af26006ea5c8ced5a4d658856382358b5">DeviceProtocolAsync</link> (TcpClient deviceClient)</para>
+
+<para>This function normally runs in its own task, and handles all protocols (that is commands and responses) to a single device Firstly the tls based communications is initiated with the device. If this tls negotiation fails, the connection to the device is closed. The device periodically sends a ping packet. Two versions of the ping packet are supported in this function </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Static Private Member Functions    </title>
+        <itemizedlist>
+            <listitem><para>static void <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1a8ff1873e95771cd147b596bebbf2223e">AddToRemaining</link> (string add_rem, StringBuilder sb_rem)</para>
+
+<para>This function is used by the function <computeroutput>ProcessRecvByteRegex</computeroutput> to collect data between multiple segments during processing of received packet. It adds data to the StringBuilder that is the second argument to the function. </para>
+</listitem>
+            <listitem><para>static void <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1af0bfb6525ee1113390b93b239d4a473b">ProcessRecvByteRegex</link> (string recvstr, List&lt; string &gt; recvd_msgs, StringBuilder sb_rem)</para>
+
+<para>This function parses received data based on the known basic format. It assumes start of the valid packet in data as an IMEI number which could be 15 digits or 17 digits long. and looks for end of packet as 0x0D or the &quot;\r&quot; character. This function handles partitioned data packets and appends them to provide a valid packet for post processing. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Private Attributes    </title>
+        <itemizedlist>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1a97888e96bd631a6816719d748ee835c9">_ipv4_addr</link> = IPAddress.Any.ToString()</para>
+</listitem>
+            <listitem><para>TcpListener <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1ae2552a237ec63270efcb806b993a62a3">deviceServer</link> = null</para>
+</listitem>
+            <listitem><para>TcpListener <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1a9f41e6e1d3235dc188a57940ef99a707">uiServer</link> = null</para>
+</listitem>
+            <listitem><para>readonly object <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1ab8007b78e51653f087f14b11f081cc58">lock_list</link> = new object()</para>
+</listitem>
+            <listitem><para>int <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1a68df3b967a3f2138c49412edcf535be0">_ui_wait_message_interval_secs</link> = 15</para>
+</listitem>
+            <listitem><para>int <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1a811ac21faf0ec901a7f2da40cd28179b">_ui_connect_wait_max_count</link> = 9</para>
+</listitem>
+            <listitem><para>readonly ConcurrentDictionary&lt; string, TcpClient &gt; <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1a53d4be4473555a018cd48439caa53122">uiClientDict</link> = new ConcurrentDictionary&lt;string, TcpClient&gt;()</para>
+</listitem>
+            <listitem><para>readonly ConcurrentDictionary&lt; string, TcpClient &gt; <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1a5a499084a7876c797029f16b0610282e">devClientDict</link> = new ConcurrentDictionary&lt;string, TcpClient&gt;()</para>
+</listitem>
+            <listitem><para>readonly ConcurrentDictionary&lt; string, BufferBlock&lt; byte[]&gt; &gt; <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1a3ab2c137827417606d0ff6dcd3fe60bb">uiBufBlock</link> = new ConcurrentDictionary&lt;string, BufferBlock&lt;byte[]&gt;&gt;()</para>
+</listitem>
+            <listitem><para>readonly ConcurrentDictionary&lt; string, BufferBlock&lt; byte[]&gt; &gt; <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1a8d8575dd2681773436a028bbe7bea4cc">devBufBlock</link> = new ConcurrentDictionary&lt;string, BufferBlock&lt;byte[]&gt;&gt;()</para>
+</listitem>
+            <listitem><para>readonly ConcurrentDictionary&lt; string, SslStream &gt; <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1a8ac02df717db48af2dd02bfbebd3815f">uiStreamDict</link> = new ConcurrentDictionary&lt;string, SslStream&gt;()</para>
+</listitem>
+            <listitem><para>readonly ConcurrentDictionary&lt; string, SslStream &gt; <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1a8318af935c608edbd46570a095dd2a73">devStreamDict</link> = new ConcurrentDictionary&lt;string, SslStream&gt;()</para>
+</listitem>
+            <listitem><para>readonly byte[] <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1aa8d630cc1facda001733cc2171348847">end_b</link> = System.Text.ASCIIEncoding.ASCII.GetBytes(&quot;end&quot;)</para>
+</listitem>
+            <listitem><para>readonly byte[] <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1ad14e6884de74b5b1e41ca6e93a433419">bol_b</link> = System.Text.ASCIIEncoding.ASCII.GetBytes(&quot;bol\xd&quot;)</para>
+</listitem>
+            <listitem><para>readonly byte[] <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1af1357e0dff44d9b132567aa44fed5ec5">eol_b</link> = System.Text.ASCIIEncoding.ASCII.GetBytes(&quot;eol\xd&quot;)</para>
+</listitem>
+            <listitem><para>readonly byte[] <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1a9ebd871d4fc226390181e182d74e2abd">disconnected_b</link> = System.Text.ASCIIEncoding.ASCII.GetBytes(&quot;disconnected\xd&quot;)</para>
+</listitem>
+            <listitem><para>int <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1a0c297a210d58c915a31679f622693ae6">_ui_connection_port</link> = 0</para>
+</listitem>
+            <listitem><para>int <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1a99b2a59ffc56173fc7698d3b5dc56416">_device_connection_port</link> = 0</para>
+</listitem>
+            <listitem><para>X509Certificate <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1a511cffeb0b2791a64913375c9e3db52c">serverCertificate</link> = null</para>
+</listitem>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1a5fb4122652d6cf6be6c02d9651ca2f9b">_certificate_name</link> = &quot;&quot;</para>
+</listitem>
+            <listitem><para>readonly List&lt; SslStream &gt; <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1a13605efc1aac8070601531328fd2c157">available_sslstreams</link> = new List&lt;SslStream&gt;()</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Static Private Attributes    </title>
+        <itemizedlist>
+            <listitem><para>const string <link linkend="_class_cryo_device_proxy_1_1_cryo_server_1af4d4b41742faf4bc220e80156e4307d9">PARAM_FILE_NAME</link> = &quot;cryodeviceproxy_params.txt&quot;</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Constructor &amp; Destructor Documentation</title>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1a8e522c217f8a8ef686f5cc5be412c167"/><section>
+    <title>CryoServer()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>CryoServer</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>CryoServer</secondary></indexterm>
+<para><computeroutput>CryoDeviceProxy.CryoServer.CryoServer ( )</computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1ae91db86ebc7c8cbb643a87c9bfeff549"/><section>
+    <title>CryoServer()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>CryoServer</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>CryoServer</secondary></indexterm>
+<para><computeroutput>CryoDeviceProxy.CryoServer.CryoServer (string ipaddr)</computeroutput></para></section>
+</section>
+<section>
+<title>Member Function Documentation</title>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1a0b035bf68691a9db3063fd124f655237"/><section>
+    <title>AcceptDeviceClientsAsync()</title>
+<indexterm><primary>AcceptDeviceClientsAsync</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>AcceptDeviceClientsAsync</secondary></indexterm>
+<para><computeroutput>async Task CryoDeviceProxy.CryoServer.AcceptDeviceClientsAsync (TcpListener deviceListener)<computeroutput>[private]</computeroutput></computeroutput></para><para>
+
+<para>This function is the entry point of device connection that is, any connection initiated by the device will trigger an accept connections. This function then launches a separate task to handle the protocol between the socket server and the device. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>deviceListener</entry><entry>
+<para>The server object that listens for connections from device</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para></para>
+</formalpara>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1ac574d7479dd1d802d3ac80ddd6b34660"/><section>
+    <title>AcceptUIClientsAsync()</title>
+<indexterm><primary>AcceptUIClientsAsync</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>AcceptUIClientsAsync</secondary></indexterm>
+<para><computeroutput>async Task CryoDeviceProxy.CryoServer.AcceptUIClientsAsync (TcpListener uiListener)<computeroutput>[private]</computeroutput></computeroutput></para><para>
+
+<para>This function is the entry point of User Interface connection that is, any connection initiated by the user interface code will trigger an accept connections. This function then launches a separate task to handle the protocol between the socket server and the user interface. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>uiListener</entry><entry>
+<para>the server object listening for connections from user interface</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para></para>
+</formalpara>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1a8ff1873e95771cd147b596bebbf2223e"/><section>
+    <title>AddToRemaining()</title>
+<indexterm><primary>AddToRemaining</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>AddToRemaining</secondary></indexterm>
+<para><computeroutput>static void CryoDeviceProxy.CryoServer.AddToRemaining (string add_rem, StringBuilder sb_rem)<computeroutput>[static]</computeroutput>, <computeroutput>[private]</computeroutput></computeroutput></para><para>
+
+<para>This function is used by the function <computeroutput>ProcessRecvByteRegex</computeroutput> to collect data between multiple segments during processing of received packet. It adds data to the StringBuilder that is the second argument to the function. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>add_rem</entry><entry>
+<para>Add this string to the existing data in the StringBuilder instance</para>
+</entry>
+                            </row>
+                            <row>
+<entry>sb_rem</entry><entry>
+<para>The StringBuilder instance that is used to append the data</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1af26006ea5c8ced5a4d658856382358b5"/><section>
+    <title>DeviceProtocolAsync()</title>
+<indexterm><primary>DeviceProtocolAsync</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>DeviceProtocolAsync</secondary></indexterm>
+<para><computeroutput>async Task CryoDeviceProxy.CryoServer.DeviceProtocolAsync (TcpClient deviceClient)<computeroutput>[private]</computeroutput></computeroutput></para><para>
+
+<para>This function normally runs in its own task, and handles all protocols (that is commands and responses) to a single device Firstly the tls based communications is initiated with the device. If this tls negotiation fails, the connection to the device is closed. The device periodically sends a ping packet. Two versions of the ping packet are supported in this function </para>
+</para>
+
+<para>Version 1.0 ping packet format is &quot;A;B;C;D;\r&quot; where <itemizedlist>
+<listitem>
+
+<para>A: IMEI number </para>
+</listitem>
+<listitem>
+
+<para>B: Serial number </para>
+</listitem>
+<listitem>
+
+<para>C: Usage Statistics Count </para>
+</listitem>
+<listitem>
+
+<para>D: Error log count </para>
+</listitem>
+</itemizedlist>
+</para>
+
+<para>Version 1.1 ping packet format is &quot;A;B;C;D;E;F;G;H1;...Hn\r&quot; where <itemizedlist>
+<listitem>
+
+<para>A: IMEI number </para>
+</listitem>
+<listitem>
+
+<para>B: Serial number </para>
+</listitem>
+<listitem>
+
+<para>C: Usage Statistics Count </para>
+</listitem>
+<listitem>
+
+<para>D: Error log count </para>
+</listitem>
+<listitem>
+
+<para>E: Firmware Version </para>
+</listitem>
+<listitem>
+
+<para>F: PPU Grace treatments left </para>
+</listitem>
+<listitem>
+
+<para>G: Number of language packs in device </para>
+</listitem>
+<listitem>
+
+<para>Hi: Each language pack name with version number and values of i are 0...G-1 </para>
+</listitem>
+</itemizedlist>
+</para>
+
+<para>The basic functionality implemented in this function on receiving a ping packet from device is: <orderedlist>
+<listitem>
+
+<para>Establish a TLS connection: if fails or exception, close connection to device </para>
+</listitem>
+<listitem>
+
+<para>Read data from stream: if error or zero bytes read, close connection to device </para>
+</listitem>
+<listitem>
+
+<para>Parse the read data into packets in the above format using Regex, remove duplicates and process each packet in a loop. </para>
+</listitem>
+<listitem>
+
+<para>Create instance of <link linkend="_class_cryo_device_proxy_1_1_ping_packet">PingPacket</link> with packet string received. If packet is not valid, write to InvalidPingData table, and close connection to device </para>
+</listitem>
+<listitem>
+
+<para>Packet Valid Actions: </para>
+
+<para><computeroutput>devbll.SendDevicePingData</computeroutput> function is used to send the ping packet to the backend server. If updated successfully, the function will send a ping response appropriate for the following actions: &quot;Ui Connection&quot;, &quot;Error Data Download&quot;, &quot;Usage Statistics Downlaod&quot;, or a ping response. The ping response packet contains information from the backend server and the connection status. Then this function will check to see if a connection to device is requested from user interface, if yes, establish a channel with the user interface connection object using Buffered blocks and device connection object. This setup for the device is done in the function <computeroutput>DoUIConnection</computeroutput>, and the corresponding setup for the User Interface happens in the function <computeroutput>UIProtocolAsync</computeroutput>. Once the channel exits, connection to device and user interface are closed. If a connection is not pending, the function checks to see if there are any error data available in the device. If yes, all the error logs from the device are downloaded and written to the backend server using the function <computeroutput>DoErrorDownload</computeroutput>. Once the error logs have been downloaded, the connection to device is closed. If there are no error data available in device, this function will check to see if there are any usage statistics in the device. If usage statistics are available, the function will download the usage statistics from device and write it to the backend server using the function <computeroutput>DoUsageStatsDownload</computeroutput>. Once data is downloaded, the connection to the device is closed. If there is no pending usage statistics in the device, ping response is sent to the device and the connection is closed. </para>
+</listitem>
+</orderedlist>
+Packet Invalid Actions: </para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>deviceClient</entry><entry></entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para></para>
+</formalpara>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1a16bf0e703dd92455d90cb9ca88ff9529"/><section>
+    <title>DoErrorDownload()</title>
+<indexterm><primary>DoErrorDownload</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>DoErrorDownload</secondary></indexterm>
+<para><computeroutput>async Task CryoDeviceProxy.CryoServer.DoErrorDownload (TcpClient deviceClient, SslStream devSslStream, string servicetag_str, string contextstr)<computeroutput>[private]</computeroutput></computeroutput></para><para>
+
+<para>This function handles the protocol to download errors stored in the device. Once the data is uploaded successfully to the backend server, the error data clear command is sent to the device </para>
+</para>
+
+<para>The error data download is initiated with Error data download command. The function will read data between &apos;boe&apos; and &apos;eoe&apos; as the error data. </para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>deviceClient</entry><entry>
+<para>Client object representing connection to the device</para>
+</entry>
+                            </row>
+                            <row>
+<entry>devSslStream</entry><entry>
+<para>Secure tls connection for data exchange</para>
+</entry>
+                            </row>
+                            <row>
+<entry>servicetag_str</entry><entry>
+<para>Identification of the device to store the error data related to this device.</para>
+</entry>
+                            </row>
+                            <row>
+<entry>contextstr</entry><entry>
+<para>context for logging in multiple device tasks</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Task</para>
+</formalpara>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1a57c50cb2860ac6685fe8d009e6704af2"/><section>
+    <title>DoUIConnection()</title>
+<indexterm><primary>DoUIConnection</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>DoUIConnection</secondary></indexterm>
+<para><computeroutput>async Task CryoDeviceProxy.CryoServer.DoUIConnection (TcpClient deviceClient, SslStream devSslStream, string servicetag_str, string contextstr)<computeroutput>[private]</computeroutput></computeroutput></para><para>
+
+<para>This function is responsible for performing the glue code between the user interface and device. This is executed as part of the device protocol. It sets up BufferedBlocks to read from the device and send that data to the user interface (through a buffer block), and another BufferedBlock to receive data from the user interface and then send it to the device. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>deviceClient</entry><entry>
+<para>Client object representing connection to the device</para>
+</entry>
+                            </row>
+                            <row>
+<entry>devSslStream</entry><entry>
+<para>Secure tls connection for data exchange&lt;</para>
+</entry>
+                            </row>
+                            <row>
+<entry>servicetag_str</entry><entry>
+<para>Identification to establish the glue logic between user interface connection and device connection.</para>
+</entry>
+                            </row>
+                            <row>
+<entry>contextstr</entry><entry>
+<para>context for logging in multiple device tasks</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para></para>
+</formalpara>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1a16ded09a2042ceb095cf90d0c4ff04d2"/><section>
+    <title>DoUsageStatsDownload()</title>
+<indexterm><primary>DoUsageStatsDownload</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>DoUsageStatsDownload</secondary></indexterm>
+<para><computeroutput>async Task CryoDeviceProxy.CryoServer.DoUsageStatsDownload (TcpClient deviceClient, SslStream devSslStream, string servicetag_str, string contextstr)<computeroutput>[private]</computeroutput></computeroutput></para><para>
+
+<para>This function handles the protocol to download usage statistics from the device. Once the data is uploaded successfully to the backend server, the Usage Stat clear command is sent to the device </para>
+</para>
+
+<para>The usage statistics data download is initiated with Usage Stats download command. The function will read data between &apos;bos&apos; and &apos;eos&apos; as the usage statistics data. </para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>deviceClient</entry><entry>
+<para>Client object representing connection to the device</para>
+</entry>
+                            </row>
+                            <row>
+<entry>devSslStream</entry><entry>
+<para>Secure tls connection for data exchange</para>
+</entry>
+                            </row>
+                            <row>
+<entry>servicetag_str</entry><entry>
+<para>Identification of the device to store the usage statistics data related to this device</para>
+</entry>
+                            </row>
+                            <row>
+<entry>contextstr</entry><entry>
+<para>context for logging in multiple device tasks</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Task</para>
+</formalpara>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1a3f0fba6f4d94bf4faf4285f6a5c38997"/><section>
+    <title>LoadCertificate()</title>
+<indexterm><primary>LoadCertificate</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>LoadCertificate</secondary></indexterm>
+<para><computeroutput>void CryoDeviceProxy.CryoServer.LoadCertificate (string cert_name)<computeroutput>[private]</computeroutput></computeroutput></para><para>
+
+<para>Loads the X509 Certificate for TLS communications </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>cert_name</entry><entry>
+<para>Name of certificate file (extension: .pfx) </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1aa930e1ef8e315c6c161533667baeae9f"/><section>
+    <title>LoadConfig()</title>
+<indexterm><primary>LoadConfig</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>LoadConfig</secondary></indexterm>
+<para><computeroutput>void CryoDeviceProxy.CryoServer.LoadConfig ( )</computeroutput></para><para>
+
+<para>Loads the application configuration from file cryodevproxy_params.txt The parameters file contains the following parameters <itemizedlist>
+<listitem>
+
+<para>Line 1: User Interface socket connection port.  </para>
+</listitem>
+<listitem>
+
+<para>Line 2: Device Interface socket connection port  </para>
+</listitem>
+<listitem>
+
+<para>Line 3: Certificate name for server without the &quot;.pfx&quot; extension. App expects the file to be in the same directory as the application executable. If the app does not find the file, the app logs an error and exits.  </para>
+</listitem>
+</itemizedlist>
+
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1af0bfb6525ee1113390b93b239d4a473b"/><section>
+    <title>ProcessRecvByteRegex()</title>
+<indexterm><primary>ProcessRecvByteRegex</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>ProcessRecvByteRegex</secondary></indexterm>
+<para><computeroutput>static void CryoDeviceProxy.CryoServer.ProcessRecvByteRegex (string recvstr, List&lt; string &gt; recvd_msgs, StringBuilder sb_rem)<computeroutput>[static]</computeroutput>, <computeroutput>[private]</computeroutput></computeroutput></para><para>
+
+<para>This function parses received data based on the known basic format. It assumes start of the valid packet in data as an IMEI number which could be 15 digits or 17 digits long. and looks for end of packet as 0x0D or the &quot;\r&quot; character. This function handles partitioned data packets and appends them to provide a valid packet for post processing. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>recvstr</entry><entry>
+<para>raw string data read from device connection</para>
+</entry>
+                            </row>
+                            <row>
+<entry>recvd_msgs</entry><entry>
+<para>list of parsed string</para>
+</entry>
+                            </row>
+                            <row>
+<entry>sb_rem</entry><entry>
+<para>object that contains data not processed in the current step. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1ab8a1a477447d607de1bb6525009dd4bb"/><section>
+    <title>ReadAckFromDeviceWithTimeout()</title>
+<indexterm><primary>ReadAckFromDeviceWithTimeout</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>ReadAckFromDeviceWithTimeout</secondary></indexterm>
+<para><computeroutput>async Task&lt; bool &gt; CryoDeviceProxy.CryoServer.ReadAckFromDeviceWithTimeout (SslStream dev_stream, int timeout_secs)<computeroutput>[private]</computeroutput></computeroutput></para><para>
+
+<para>This function reads an ACK from device with timeout. It is mainly used in the cases of clear usage statistics or error data, which do not provide a response, but will generally respond with an ACK. Therefore, this application will knows exacly the when the command is done on the device before closing the connection to the device. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>dev_stream</entry><entry>
+<para>The TLS connection to read the ack from</para>
+</entry>
+                            </row>
+                            <row>
+<entry>timeout_secs</entry><entry>
+<para>Timeout in seconds the function needs to wait for receiving an ACK</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1afadb65c123f0fdfc17a7e2ed85499b44"/><section>
+    <title>ReadFromStream()</title>
+<indexterm><primary>ReadFromStream</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>ReadFromStream</secondary></indexterm>
+<para><computeroutput>async Task&lt; int &gt; CryoDeviceProxy.CryoServer.ReadFromStream (SslStream readStream, byte[] readBuf, bool withTimeOut, int timeout_secs = <computeroutput>3 * 60</computeroutput>
+)<computeroutput>[private]</computeroutput></computeroutput></para><para>
+
+<para>This function performs a single read operation from an sslStream (first parameter), and copies the data to the buffer (second parameter). It allows the calling function to set a timeout, and the function will wait for data within that timeout. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>readStream</entry><entry>
+<para>SSlstream to read from</para>
+</entry>
+                            </row>
+                            <row>
+<entry>readBuf</entry><entry>
+<para>buffer to write the bytes read to</para>
+</entry>
+                            </row>
+                            <row>
+<entry>withTimeOut</entry><entry>
+<para>true: apply timeout, false: wait till ssltream read call returns</para>
+</entry>
+                            </row>
+                            <row>
+<entry>timeout_secs</entry><entry>
+<para>The timeout to wait for data if the &quot;withTimeOut&quot; parameter is true</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>0 if error or timeout, else the number of byes read from sslstream before the timeout expired</para>
+</formalpara>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1ac281c7c27485693e06754897891922b7"/><section>
+    <title>SendToClient()</title>
+<indexterm><primary>SendToClient</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>SendToClient</secondary></indexterm>
+<para><computeroutput>void CryoDeviceProxy.CryoServer.SendToClient (SslStream net_stream, byte[] data_send)</computeroutput></para><para>
+
+<para>This function is used to confirm writability and then write bytes to the underlying sslstream </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>net_stream</entry><entry>
+<para>the stream to write to</para>
+</entry>
+                            </row>
+                            <row>
+<entry>data_send</entry><entry>
+<para>data to be written to the stream</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1a249fd1cad82656b708aa4120395882dd"/><section>
+    <title>SendToClientString()</title>
+<indexterm><primary>SendToClientString</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>SendToClientString</secondary></indexterm>
+<para><computeroutput>void CryoDeviceProxy.CryoServer.SendToClientString (SslStream net_stream, string send_str)</computeroutput></para><para>
+
+<para>This function is used to write string to the underlying sslstream </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>net_stream</entry><entry>
+<para>The stream to write to</para>
+</entry>
+                            </row>
+                            <row>
+<entry>send_str</entry><entry>
+<para>The string data to be written to the stream</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1a52c44a3fa3f14d9b8d8886dbd2d1102a"/><section>
+    <title>StartAllServers()</title>
+<indexterm><primary>StartAllServers</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>StartAllServers</secondary></indexterm>
+<para><computeroutput>void CryoDeviceProxy.CryoServer.StartAllServers ( )</computeroutput></para><para>
+
+<para>This function starts the following 2 servers: <itemizedlist>
+<listitem>
+
+<para>Device Connection Listener: Server listening for connections from devices.  </para>
+</listitem>
+<listitem>
+
+<para>User Interface Connection Listener: Server listening for connections from User Interface.  </para>
+</listitem>
+</itemizedlist>
+
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1a6e3a6f79bd43b36f90b5539bc8307c39"/><section>
+    <title>StartDeviceServerAsync()</title>
+<indexterm><primary>StartDeviceServerAsync</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>StartDeviceServerAsync</secondary></indexterm>
+<para><computeroutput>void CryoDeviceProxy.CryoServer.StartDeviceServerAsync ( )</computeroutput></para><para>
+
+<para>This function starts the device server listening for connections from devices as a separate task. </para>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1ae6d1a40664db48be4f695e6c8459d55b"/><section>
+    <title>StartUIServerAsync()</title>
+<indexterm><primary>StartUIServerAsync</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>StartUIServerAsync</secondary></indexterm>
+<para><computeroutput>void CryoDeviceProxy.CryoServer.StartUIServerAsync ( )</computeroutput></para><para>
+
+<para>This function starts the user interface server listening for connections from user interface as a separate task. </para>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1aeb89861fb5d485d6d1a0bc7072b6c87c"/><section>
+    <title>UIProtocolAsync()</title>
+<indexterm><primary>UIProtocolAsync</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>UIProtocolAsync</secondary></indexterm>
+<para><computeroutput>async Task CryoDeviceProxy.CryoServer.UIProtocolAsync (TcpClient uiClient)<computeroutput>[private]</computeroutput></computeroutput></para><para>
+
+<para>This function normally runs in its own task, and handles all protocols (that is commands and responses) to a single user interface Firstly the tls based communications is initiated with the user interface. If this tls negotiation fails, the connection to the user interface is closed. All connections to this socket server require an authentication token served by the backend server. Supported commands with user interface are: <itemizedlist>
+<listitem>
+
+<para>getinfo
+<literallayout>&#160;&#xa;</literallayout>
+[service tag]
+<literallayout>&#160;&#xa;</literallayout>
+[email]
+<literallayout>&#160;&#xa;</literallayout>
+[token] </para>
+</listitem>
+</itemizedlist>
+</para>
+</para>
+
+<para>The socket server queries the backend server and after authenticating the token returns [ping data];[utc time it was received]0x0d</para>
+
+<para>connect
+<literallayout>&#160;&#xa;</literallayout>
+[service tag]
+<literallayout>&#160;&#xa;</literallayout>
+[email]
+<literallayout>&#160;&#xa;</literallayout>
+[token]0x0d </para>
+
+<para>The socket server queries the backend server and after authenticating the token waits for device to ping data and establish a connection. This function on receiving the connect command waits for period of 15*9 seconds for a ping packet from device. If the device has not sent the ping packet, the function will end the connection to the user interface.</para>
+
+<para>If the device pings within the timeout, the function initializes the connected (Y1) command to the device, and setups up BufferedBlocks that enable reading any data received from user interface and sends it to the device (through a buffer block), and conversely any data from device (through a buffer block) is sent to the user interface. If the user interface sends the &quot;end&quot; data or closes the connection, the above bufferblocks are closed and the connection to the user interface ends. This could also be triggered by an end command from the device (received through a BufferBlock) </para>
+
+<para>Advanced Feature </para>
+
+<para>In case of error in the ping data were the packet received is mal-formed the device will never get a response, and remote debuggging will not be possible. To support this special case, advacned connection options are supported. All these functions behave exactly as the connect command above but have different set of data in the command payload. The are <itemizedlist>
+<listitem>
+
+<para>advconnectserial
+<literallayout>&#160;&#xa;</literallayout>
+[serial number]
+<literallayout>&#160;&#xa;</literallayout>
+[email]
+<literallayout>&#160;&#xa;</literallayout>
+[token]0x0d </para>
+</listitem>
+<listitem>
+
+<para>advconnectimei
+<literallayout>&#160;&#xa;</literallayout>
+[imei]
+<literallayout>&#160;&#xa;</literallayout>
+[email]
+<literallayout>&#160;&#xa;</literallayout>
+[token]0x0d </para>
+</listitem>
+<listitem>
+
+<para>advconnectid
+<literallayout>&#160;&#xa;</literallayout>
+[id in InvalidPingPacket table]
+<literallayout>&#160;&#xa;</literallayout>
+[email]
+<literallayout>&#160;&#xa;</literallayout>
+[token]0x0d </para>
+</listitem>
+</itemizedlist>
+</para>
+
+<para>
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>uiClient</entry><entry>
+<para>Object representing connection to the User Interface</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para></para>
+</formalpara>
+</para>
+</section>
+</section>
+<section>
+<title>Member Data Documentation</title>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1a5fb4122652d6cf6be6c02d9651ca2f9b"/><section>
+    <title>_certificate_name</title>
+<indexterm><primary>_certificate_name</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>_certificate_name</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.CryoServer._certificate_name = &quot;&quot;<computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1a99b2a59ffc56173fc7698d3b5dc56416"/><section>
+    <title>_device_connection_port</title>
+<indexterm><primary>_device_connection_port</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>_device_connection_port</secondary></indexterm>
+<para><computeroutput>int CryoDeviceProxy.CryoServer._device_connection_port = 0<computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1a97888e96bd631a6816719d748ee835c9"/><section>
+    <title>_ipv4_addr</title>
+<indexterm><primary>_ipv4_addr</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>_ipv4_addr</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.CryoServer._ipv4_addr = IPAddress.Any.ToString()<computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1a811ac21faf0ec901a7f2da40cd28179b"/><section>
+    <title>_ui_connect_wait_max_count</title>
+<indexterm><primary>_ui_connect_wait_max_count</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>_ui_connect_wait_max_count</secondary></indexterm>
+<para><computeroutput>int CryoDeviceProxy.CryoServer._ui_connect_wait_max_count = 9<computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1a0c297a210d58c915a31679f622693ae6"/><section>
+    <title>_ui_connection_port</title>
+<indexterm><primary>_ui_connection_port</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>_ui_connection_port</secondary></indexterm>
+<para><computeroutput>int CryoDeviceProxy.CryoServer._ui_connection_port = 0<computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1a68df3b967a3f2138c49412edcf535be0"/><section>
+    <title>_ui_wait_message_interval_secs</title>
+<indexterm><primary>_ui_wait_message_interval_secs</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>_ui_wait_message_interval_secs</secondary></indexterm>
+<para><computeroutput>int CryoDeviceProxy.CryoServer._ui_wait_message_interval_secs = 15<computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1a13605efc1aac8070601531328fd2c157"/><section>
+    <title>available_sslstreams</title>
+<indexterm><primary>available_sslstreams</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>available_sslstreams</secondary></indexterm>
+<para><computeroutput>readonly List&lt;SslStream&gt; CryoDeviceProxy.CryoServer.available_sslstreams = new List&lt;SslStream&gt;()<computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1ad14e6884de74b5b1e41ca6e93a433419"/><section>
+    <title>bol_b</title>
+<indexterm><primary>bol_b</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>bol_b</secondary></indexterm>
+<para><computeroutput>readonly byte [] CryoDeviceProxy.CryoServer.bol_b = System.Text.ASCIIEncoding.ASCII.GetBytes(&quot;bol\xd&quot;)<computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1a8d8575dd2681773436a028bbe7bea4cc"/><section>
+    <title>devBufBlock</title>
+<indexterm><primary>devBufBlock</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>devBufBlock</secondary></indexterm>
+<para><computeroutput>readonly ConcurrentDictionary&lt;string, BufferBlock&lt;byte[]&gt; &gt; CryoDeviceProxy.CryoServer.devBufBlock = new ConcurrentDictionary&lt;string, BufferBlock&lt;byte[]&gt;&gt;()<computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1a5a499084a7876c797029f16b0610282e"/><section>
+    <title>devClientDict</title>
+<indexterm><primary>devClientDict</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>devClientDict</secondary></indexterm>
+<para><computeroutput>readonly ConcurrentDictionary&lt;string, TcpClient&gt; CryoDeviceProxy.CryoServer.devClientDict = new ConcurrentDictionary&lt;string, TcpClient&gt;()<computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1ae2552a237ec63270efcb806b993a62a3"/><section>
+    <title>deviceServer</title>
+<indexterm><primary>deviceServer</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>deviceServer</secondary></indexterm>
+<para><computeroutput>TcpListener CryoDeviceProxy.CryoServer.deviceServer = null<computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1a8318af935c608edbd46570a095dd2a73"/><section>
+    <title>devStreamDict</title>
+<indexterm><primary>devStreamDict</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>devStreamDict</secondary></indexterm>
+<para><computeroutput>readonly ConcurrentDictionary&lt;string, SslStream&gt; CryoDeviceProxy.CryoServer.devStreamDict = new ConcurrentDictionary&lt;string, SslStream&gt;()<computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1a9ebd871d4fc226390181e182d74e2abd"/><section>
+    <title>disconnected_b</title>
+<indexterm><primary>disconnected_b</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>disconnected_b</secondary></indexterm>
+<para><computeroutput>readonly byte [] CryoDeviceProxy.CryoServer.disconnected_b = System.Text.ASCIIEncoding.ASCII.GetBytes(&quot;disconnected\xd&quot;)<computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1aa8d630cc1facda001733cc2171348847"/><section>
+    <title>end_b</title>
+<indexterm><primary>end_b</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>end_b</secondary></indexterm>
+<para><computeroutput>readonly byte [] CryoDeviceProxy.CryoServer.end_b = System.Text.ASCIIEncoding.ASCII.GetBytes(&quot;end&quot;)<computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1af1357e0dff44d9b132567aa44fed5ec5"/><section>
+    <title>eol_b</title>
+<indexterm><primary>eol_b</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>eol_b</secondary></indexterm>
+<para><computeroutput>readonly byte [] CryoDeviceProxy.CryoServer.eol_b = System.Text.ASCIIEncoding.ASCII.GetBytes(&quot;eol\xd&quot;)<computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1ab8007b78e51653f087f14b11f081cc58"/><section>
+    <title>lock_list</title>
+<indexterm><primary>lock_list</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>lock_list</secondary></indexterm>
+<para><computeroutput>readonly object CryoDeviceProxy.CryoServer.lock_list = new object()<computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1af4d4b41742faf4bc220e80156e4307d9"/><section>
+    <title>PARAM_FILE_NAME</title>
+<indexterm><primary>PARAM_FILE_NAME</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>PARAM_FILE_NAME</secondary></indexterm>
+<para><computeroutput>const string CryoDeviceProxy.CryoServer.PARAM_FILE_NAME = &quot;cryodeviceproxy_params.txt&quot;<computeroutput>[static]</computeroutput>, <computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1a511cffeb0b2791a64913375c9e3db52c"/><section>
+    <title>serverCertificate</title>
+<indexterm><primary>serverCertificate</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>serverCertificate</secondary></indexterm>
+<para><computeroutput>X509Certificate CryoDeviceProxy.CryoServer.serverCertificate = null<computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1a3ab2c137827417606d0ff6dcd3fe60bb"/><section>
+    <title>uiBufBlock</title>
+<indexterm><primary>uiBufBlock</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>uiBufBlock</secondary></indexterm>
+<para><computeroutput>readonly ConcurrentDictionary&lt;string, BufferBlock&lt;byte[]&gt; &gt; CryoDeviceProxy.CryoServer.uiBufBlock = new ConcurrentDictionary&lt;string, BufferBlock&lt;byte[]&gt;&gt;()<computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1a53d4be4473555a018cd48439caa53122"/><section>
+    <title>uiClientDict</title>
+<indexterm><primary>uiClientDict</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>uiClientDict</secondary></indexterm>
+<para><computeroutput>readonly ConcurrentDictionary&lt;string, TcpClient&gt; CryoDeviceProxy.CryoServer.uiClientDict = new ConcurrentDictionary&lt;string, TcpClient&gt;()<computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1a9f41e6e1d3235dc188a57940ef99a707"/><section>
+    <title>uiServer</title>
+<indexterm><primary>uiServer</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>uiServer</secondary></indexterm>
+<para><computeroutput>TcpListener CryoDeviceProxy.CryoServer.uiServer = null<computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1a8ac02df717db48af2dd02bfbebd3815f"/><section>
+    <title>uiStreamDict</title>
+<indexterm><primary>uiStreamDict</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>uiStreamDict</secondary></indexterm>
+<para><computeroutput>readonly ConcurrentDictionary&lt;string, SslStream&gt; CryoDeviceProxy.CryoServer.uiStreamDict = new ConcurrentDictionary&lt;string, SslStream&gt;()<computeroutput>[private]</computeroutput></computeroutput></para></section>
+</section>
+<section>
+<title>Property Documentation</title>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1a30b5ce8b6b8ce783105d0d7776e913c4"/><section>
+    <title>ClearError</title>
+<indexterm><primary>ClearError</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>ClearError</secondary></indexterm>
+<para><computeroutput>bool CryoDeviceProxy.CryoServer.ClearError<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1aa1d50bcd476cd30acbcb7c613f2f1a59"/><section>
+    <title>ClearUsageStats</title>
+<indexterm><primary>ClearUsageStats</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>ClearUsageStats</secondary></indexterm>
+<para><computeroutput>bool CryoDeviceProxy.CryoServer.ClearUsageStats<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1a71be3fe609988780e8bd948551bc6ea5"/><section>
+    <title>DeviceConnectionPort</title>
+<indexterm><primary>DeviceConnectionPort</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>DeviceConnectionPort</secondary></indexterm>
+<para><computeroutput>int CryoDeviceProxy.CryoServer.DeviceConnectionPort<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1ab7c0dc60c5f46bebd9dd65eebd6c3891"/><section>
+    <title>IpAddressStr</title>
+<indexterm><primary>IpAddressStr</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>IpAddressStr</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.CryoServer.IpAddressStr<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1a8873e3d84e4f7129c55c7a7faf7ecd3a"/><section>
+    <title>IsProduction</title>
+<indexterm><primary>IsProduction</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>IsProduction</secondary></indexterm>
+<para><computeroutput>bool CryoDeviceProxy.CryoServer.IsProduction<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1afd807e90cef11a27dbc5decc896c677e"/><section>
+    <title>ReadError</title>
+<indexterm><primary>ReadError</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>ReadError</secondary></indexterm>
+<para><computeroutput>bool CryoDeviceProxy.CryoServer.ReadError<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1ab75e15dd5304e7e749a4b7fe6cb92da4"/><section>
+    <title>ReadUsage</title>
+<indexterm><primary>ReadUsage</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>ReadUsage</secondary></indexterm>
+<para><computeroutput>bool CryoDeviceProxy.CryoServer.ReadUsage<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1a1d9c0c7b0769ebc338cfd78373cf6fe4"/><section>
+    <title>UIConnectionPort</title>
+<indexterm><primary>UIConnectionPort</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>UIConnectionPort</secondary></indexterm>
+<para><computeroutput>int CryoDeviceProxy.CryoServer.UIConnectionPort<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1a4365a8b1746451fd9127e0b066be3da6"/><section>
+    <title>UIMessageMaxWaitTimeSecs</title>
+<indexterm><primary>UIMessageMaxWaitTimeSecs</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>UIMessageMaxWaitTimeSecs</secondary></indexterm>
+<para><computeroutput>int CryoDeviceProxy.CryoServer.UIMessageMaxWaitTimeSecs<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_cryo_server_1ac46097a994f9a66cb39f4a2c9dd6d8b1"/><section>
+    <title>UIMessageWaitInterval</title>
+<indexterm><primary>UIMessageWaitInterval</primary><secondary>CryoDeviceProxy.CryoServer</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.CryoServer</primary><secondary>UIMessageWaitInterval</secondary></indexterm>
+<para><computeroutput>int CryoDeviceProxy.CryoServer.UIMessageWaitInterval<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<para>
+The documentation for this class was generated from the following file:</para>
+<link linkend="__cryo_server_8cs">CryoServer.cs</link></section>
+</section>

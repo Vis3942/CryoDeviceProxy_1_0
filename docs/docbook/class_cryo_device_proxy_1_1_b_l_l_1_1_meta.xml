@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_meta" xml:lang="en-US">
+<title>CryoDeviceProxy.BLL.Meta Class Reference</title>
+<indexterm><primary>CryoDeviceProxy.BLL.Meta</primary></indexterm>
+<para>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_meta">Meta</link></computeroutput> encapsulates the connection status information and additional messages sent from the server </para>
+ 
+</para>
+<simplesect>
+    <title>Properties    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_meta_1abbc366294a6aafe354e96baf7a42d4ba">code</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_meta_1a2ce2f6c47a4caa50ac44269650e54ad2">message</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_meta">Meta</link></computeroutput> encapsulates the connection status information and additional messages sent from the server </para>
+</section>
+<section>
+<title>Property Documentation</title>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_meta_1abbc366294a6aafe354e96baf7a42d4ba"/><section>
+    <title>code</title>
+<indexterm><primary>code</primary><secondary>CryoDeviceProxy.BLL.Meta</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.Meta</primary><secondary>code</secondary></indexterm>
+<para><computeroutput>int CryoDeviceProxy.BLL.Meta.code<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_meta_1a2ce2f6c47a4caa50ac44269650e54ad2"/><section>
+    <title>message</title>
+<indexterm><primary>message</primary><secondary>CryoDeviceProxy.BLL.Meta</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.Meta</primary><secondary>message</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.BLL.Meta.message<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<para>
+The documentation for this class was generated from the following file:</para>
+BLL/<link linkend="__ping_response_json_8cs">PingResponseJson.cs</link></section>
+</section>

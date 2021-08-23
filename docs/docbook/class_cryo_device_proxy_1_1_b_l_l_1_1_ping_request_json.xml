@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_ping_request_json" xml:lang="en-US">
+<title>CryoDeviceProxy.BLL.PingRequestJson Class Reference</title>
+<indexterm><primary>CryoDeviceProxy.BLL.PingRequestJson</primary></indexterm>
+<para>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_ping_request_json">PingRequestJson</link></computeroutput> encapsulates ping data sent to the device if the serial number and imei number are available </para>
+ 
+</para>
+<simplesect>
+    <title>Properties    </title>
+        <itemizedlist>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_ping_request_json_1a6183581f1ada79bc7b10a278fb9fe30d">serial_number</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_ping_request_json_1a3c6c19807f9417b4cda8c41d581a2943">imei_number</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_ping_request_json_1a98255183cff50479acd1f30888a73cca">ping_data</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_ping_request_json">PingRequestJson</link></computeroutput> encapsulates ping data sent to the device if the serial number and imei number are available </para>
+</section>
+<section>
+<title>Property Documentation</title>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_ping_request_json_1a3c6c19807f9417b4cda8c41d581a2943"/><section>
+    <title>imei_number</title>
+<indexterm><primary>imei_number</primary><secondary>CryoDeviceProxy.BLL.PingRequestJson</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.PingRequestJson</primary><secondary>imei_number</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.BLL.PingRequestJson.imei_number<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_ping_request_json_1a98255183cff50479acd1f30888a73cca"/><section>
+    <title>ping_data</title>
+<indexterm><primary>ping_data</primary><secondary>CryoDeviceProxy.BLL.PingRequestJson</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.PingRequestJson</primary><secondary>ping_data</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.BLL.PingRequestJson.ping_data<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_ping_request_json_1a6183581f1ada79bc7b10a278fb9fe30d"/><section>
+    <title>serial_number</title>
+<indexterm><primary>serial_number</primary><secondary>CryoDeviceProxy.BLL.PingRequestJson</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.PingRequestJson</primary><secondary>serial_number</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.BLL.PingRequestJson.serial_number<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<para>
+The documentation for this class was generated from the following file:</para>
+BLL/<link linkend="__ping_request_json_8cs">PingRequestJson.cs</link></section>
+</section>

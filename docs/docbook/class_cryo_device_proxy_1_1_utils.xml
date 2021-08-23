@@ -1,0 +1,229 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_class_cryo_device_proxy_1_1_utils" xml:lang="en-US">
+<title>CryoDeviceProxy.Utils Class Reference</title>
+<indexterm><primary>CryoDeviceProxy.Utils</primary></indexterm>
+<simplesect>
+    <title>Static Public Member Functions    </title>
+        <itemizedlist>
+            <listitem><para>static bool <link linkend="_class_cryo_device_proxy_1_1_utils_1add15d950d68c466e4230a2d860e85969">BytesEqual</link> (byte[] array1, int arr1_start_index, byte[] array2, int arr2_start_index, int comp_length)</para>
+
+<para>This utility function checks for equality of data in two given arrays </para>
+</listitem>
+            <listitem><para>static async void <link linkend="_class_cryo_device_proxy_1_1_utils_1ab1b33b04f8f757662207503a31759ce3">SendToClient</link> (SslStream net_stream, byte[] data_send)</para>
+
+<para>This utility function can be used asynchronously write byte array data to the sslstream </para>
+</listitem>
+            <listitem><para>static string <link linkend="_class_cryo_device_proxy_1_1_utils_1a4f809dd18af7757583ebcd110fb067ed">Base64Encode</link> (string plainText)</para>
+
+<para>This utility function converts the text into base64encoded string </para>
+</listitem>
+            <listitem><para>static string[] <link linkend="_class_cryo_device_proxy_1_1_utils_1a34af2d7b3462d8ff0af648eadc0a1b1b">ValuesSplitAtColon</link> (string to_parse_str)</para>
+
+<para>This utility function is a wrapper for the split function that splits based on the colon. If there is no colon, it returns a 2 element array with the first element as the actual string and the second element as an empty string (&quot;&quot;) </para>
+</listitem>
+            <listitem><para>static string <link linkend="_class_cryo_device_proxy_1_1_utils_1a2a83bbc3da1419d9c6ca9eb66ab34a5c">GetValueAfterColon</link> (string to_parse_str)</para>
+
+<para>This utility function is used to read the value after the colon if it exists. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Member Function Documentation</title>
+<anchor xml:id="_class_cryo_device_proxy_1_1_utils_1a4f809dd18af7757583ebcd110fb067ed"/><section>
+    <title>Base64Encode()</title>
+<indexterm><primary>Base64Encode</primary><secondary>CryoDeviceProxy.Utils</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.Utils</primary><secondary>Base64Encode</secondary></indexterm>
+<para><computeroutput>static string CryoDeviceProxy.Utils.Base64Encode (string plainText)<computeroutput>[static]</computeroutput></computeroutput></para><para>
+
+<para>This utility function converts the text into base64encoded string </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>plainText</entry><entry></entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para></para>
+</formalpara>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_utils_1add15d950d68c466e4230a2d860e85969"/><section>
+    <title>BytesEqual()</title>
+<indexterm><primary>BytesEqual</primary><secondary>CryoDeviceProxy.Utils</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.Utils</primary><secondary>BytesEqual</secondary></indexterm>
+<para><computeroutput>static bool CryoDeviceProxy.Utils.BytesEqual (byte[] array1, int arr1_start_index, byte[] array2, int arr2_start_index, int comp_length)<computeroutput>[static]</computeroutput></computeroutput></para><para>
+
+<para>This utility function checks for equality of data in two given arrays </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>array1</entry><entry>
+<para>first array for comparison</para>
+</entry>
+                            </row>
+                            <row>
+<entry>arr1_start_index</entry><entry>
+<para>start of data in first array</para>
+</entry>
+                            </row>
+                            <row>
+<entry>array2</entry><entry>
+<para>second array for comparison</para>
+</entry>
+                            </row>
+                            <row>
+<entry>arr2_start_index</entry><entry>
+<para>start of data in the second array</para>
+</entry>
+                            </row>
+                            <row>
+<entry>comp_length</entry><entry>
+<para>length of data to be compared in the 2 arrays</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para></para>
+</formalpara>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_utils_1a2a83bbc3da1419d9c6ca9eb66ab34a5c"/><section>
+    <title>GetValueAfterColon()</title>
+<indexterm><primary>GetValueAfterColon</primary><secondary>CryoDeviceProxy.Utils</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.Utils</primary><secondary>GetValueAfterColon</secondary></indexterm>
+<para><computeroutput>static string CryoDeviceProxy.Utils.GetValueAfterColon (string to_parse_str)<computeroutput>[static]</computeroutput></computeroutput></para><para>
+
+<para>This utility function is used to read the value after the colon if it exists. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>to_parse_str</entry><entry>
+<para>string to parse at the colon</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>The string after the colon if colon exists, else returns the original string</para>
+</formalpara>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_utils_1ab1b33b04f8f757662207503a31759ce3"/><section>
+    <title>SendToClient()</title>
+<indexterm><primary>SendToClient</primary><secondary>CryoDeviceProxy.Utils</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.Utils</primary><secondary>SendToClient</secondary></indexterm>
+<para><computeroutput>static async void CryoDeviceProxy.Utils.SendToClient (SslStream net_stream, byte[] data_send)<computeroutput>[static]</computeroutput></computeroutput></para><para>
+
+<para>This utility function can be used asynchronously write byte array data to the sslstream </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>net_stream</entry><entry>
+<para>stream to write data to</para>
+</entry>
+                            </row>
+                            <row>
+<entry>data_send</entry><entry>
+<para>bytes to write to stream</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_utils_1a34af2d7b3462d8ff0af648eadc0a1b1b"/><section>
+    <title>ValuesSplitAtColon()</title>
+<indexterm><primary>ValuesSplitAtColon</primary><secondary>CryoDeviceProxy.Utils</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.Utils</primary><secondary>ValuesSplitAtColon</secondary></indexterm>
+<para><computeroutput>static string[] CryoDeviceProxy.Utils.ValuesSplitAtColon (string to_parse_str)<computeroutput>[static]</computeroutput></computeroutput></para><para>
+
+<para>This utility function is a wrapper for the split function that splits based on the colon. If there is no colon, it returns a 2 element array with the first element as the actual string and the second element as an empty string (&quot;&quot;) </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>to_parse_str</entry><entry>
+<para>string to parse at colon</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Two element string array</para>
+</formalpara>
+</para>
+</section>
+<para>
+The documentation for this class was generated from the following file:</para>
+<link linkend="__utils_8cs">Utils.cs</link></section>
+</section>

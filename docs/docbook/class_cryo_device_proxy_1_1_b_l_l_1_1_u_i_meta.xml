@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_u_i_meta" xml:lang="en-US">
+<title>CryoDeviceProxy.BLL.UIMeta Class Reference</title>
+<indexterm><primary>CryoDeviceProxy.BLL.UIMeta</primary></indexterm>
+<para>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_u_i_meta">UIMeta</link></computeroutput> encapsulates the additional connection status information from the server </para>
+ 
+</para>
+<simplesect>
+    <title>Properties    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_u_i_meta_1a366f19dc52550626b24ecd5bd1082d3e">code</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_u_i_meta_1ae0bb3f40e5c9f05300417ba022c169cb">message</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_u_i_meta">UIMeta</link></computeroutput> encapsulates the additional connection status information from the server </para>
+</section>
+<section>
+<title>Property Documentation</title>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_u_i_meta_1a366f19dc52550626b24ecd5bd1082d3e"/><section>
+    <title>code</title>
+<indexterm><primary>code</primary><secondary>CryoDeviceProxy.BLL.UIMeta</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.UIMeta</primary><secondary>code</secondary></indexterm>
+<para><computeroutput>int CryoDeviceProxy.BLL.UIMeta.code<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_u_i_meta_1ae0bb3f40e5c9f05300417ba022c169cb"/><section>
+    <title>message</title>
+<indexterm><primary>message</primary><secondary>CryoDeviceProxy.BLL.UIMeta</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.UIMeta</primary><secondary>message</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.BLL.UIMeta.message<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<para>
+The documentation for this class was generated from the following file:</para>
+BLL/<link linkend="__ui_proxy_response_json_8cs">UiProxyResponseJson.cs</link></section>
+</section>

@@ -34,5 +34,15 @@ namespace CryoDeviceProxy
         /// This property sets the default log file name for the application
         /// </summary>
         public string LogFileName { get; set; }
+
+        /// <summary>
+        /// This property sets the timeout in seconds for SSL Authentication after device establishes connection
+        /// </summary>
+        public int DeviceSSLAuthTimeoutSecs { get; set; }
+
+        /// <summary>
+        /// This property sets the read timeout for reading from device stream after authentication
+        /// </summary>
+        public int DeviceReadStreamTimeoutSecs { get; set; }
     }
 }

@@ -1,0 +1,840 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_b_l_l" xml:lang="en-US">
+<title>CryoDeviceProxy.BLL.DeviceBLL Class Reference</title>
+<indexterm><primary>CryoDeviceProxy.BLL.DeviceBLL</primary></indexterm>
+<para>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_b_l_l">DeviceBLL</link></computeroutput> handles all communications with the backend server. </para>
+ 
+</para>
+<simplesect>
+    <title>Static Public Member Functions    </title>
+        <itemizedlist>
+            <listitem><para>static string[] <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_b_l_l_1aeac0ba565e22b5cd9b746e033dab2bec">SendDevicePingData</link> (<link linkend="_class_cryo_device_proxy_1_1_ping_packet">PingPacket</link> pp_recv, string context_str)</para>
+
+<para>Wrapper function that initiates a separate task to post the ping packet received from device to the backend server. </para>
+</listitem>
+            <listitem><para>static string[] <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_b_l_l_1a83f50b0e9e8bd5602878ca8601e942c4">GetDeviceInfo</link> (string service_tag, string email, string token, string context_str)</para>
+
+<para>Wrapper function that initiates a separate task to read specific device information from the backend server. This request is usually sent from the user interface. </para>
+</listitem>
+            <listitem><para>static bool <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_b_l_l_1abe0770e05268b7fd3c07474459261452">VerifyConnectRequest</link> (string service_tag, string email, string token, string context_str)</para>
+
+<para>Wrapper function that initiates a separate task to verify a connection request from user in user interface at the backend server. This is usually executed when the user interface requests a connection to a device. If the user is authenticated correctly the response is true, else it is false </para>
+</listitem>
+            <listitem><para>static bool <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_b_l_l_1a6d783eaf621a32e0d1795d07db7614b1">UpdateDeviceErrors</link> (string service_tag, string[] err_list, string context_str)</para>
+
+<para>Wrapper function that initiates a separate task that update the error list from device. </para>
+</listitem>
+            <listitem><para>static bool <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_b_l_l_1a0616a23caf3b13c749bf3990810b2526">UpdateUsageStats</link> (string service_tag, string[] usagestats_list, string context_str)</para>
+
+<para>Wrapper function that initiates a separate task to update usage statistics read from the device </para>
+</listitem>
+            <listitem><para>static string[] <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_b_l_l_1a6090b47ea5e538b0bdb1d891eb9941f5">SetInvalidPingData</link> (string recv_pkt_str, string context_str)</para>
+
+<para>Wrapper function that initiates a separate task to update the Invalid Ping <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_data">Data</link> received from device. Invalid ping data occurs if the data format is incorrect, or the device is not found in the Device table. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Static Private Member Functions    </title>
+        <itemizedlist>
+            <listitem><para>static async Task&lt; string[]&gt; <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_b_l_l_1a1686184c8383f01d65fbb1e8a7a4e1ee">PingDataAsync</link> (<link linkend="_class_cryo_device_proxy_1_1_ping_packet">PingPacket</link> pp_recv, string context_str)</para>
+
+<para>This function implements an asynchronous call to the backend server with device ping data, and returns the response received in a string array, or a null string array if error or exception. If the device was found in the backend server, the response array returned from this function contains <itemizedlist>
+<listitem>
+
+<para>Index 0: service_tag </para>
+</listitem>
+<listitem>
+
+<para>Index 1: respone string </para>
+</listitem>
+</itemizedlist>
+</para>
+</listitem>
+            <listitem><para>static async Task&lt; string[]&gt; <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_b_l_l_1a99d1ca03cead11bab58d086764532bf0">GetDeviceDataAsync</link> (string service_tag, string email, string token, string context_str)</para>
+
+<para>This function implements an asynchronous call to the backend server to read the device information, and returns the response received in a string array, or a null string array if error or exception. If the device was found in the backend server, the response array returned from this function contains <itemizedlist>
+<listitem>
+
+<para>Index 0: ping data received </para>
+</listitem>
+<listitem>
+
+<para>Index 1: date and time when the ping data was received </para>
+</listitem>
+</itemizedlist>
+</para>
+</listitem>
+            <listitem><para>static async Task&lt; bool &gt; <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_b_l_l_1a10d3d871e1f9fbd502ca64c639dc10e9">VerifyConnectRequestAsync</link> (string service_tag, string email, string token, string context_str)</para>
+
+<para>This function implements an asynchronous call to the backend server to verify the connection request user logged in at the user interface, and returns the response received as a boolean. If authentication is successful, it returns true, else false </para>
+</listitem>
+            <listitem><para>static async Task&lt; bool &gt; <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_b_l_l_1a6602dbdc3dbbed692de8d5d5f9040c3e">UpdateDeviceErrorsAsync</link> (string service_tag, string[] err_list, string context_str)</para>
+
+<para>This function implements an asynchronous call to the backend server with error list </para>
+</listitem>
+            <listitem><para>static async Task&lt; bool &gt; <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_b_l_l_1ad0a50ada7b7f8d87e716be3ac03a3130">UpdateUsageStatsAsync</link> (string service_tag, string[] usagestats_list, string context_str)</para>
+
+<para>This function implements an asynchronous call to the backend server with device usage statistics The database column name and corresponding data in the usage statistics payload is shown below <informaltable frame="all">
+    <tgroup cols="1" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+<tbody>
+      <row >
+<entry>
+<para>DB column name =&gt; data received from device </para>
+</entry></row>
+      <row >
+<entry>
+<para>cartridge_tag_id =&gt; ID:E004010802ACDB4D </para>
+</entry></row>
+      <row >
+<entry>
+<para>serum_name =&gt; Name:Form1 </para>
+</entry></row>
+      <row >
+<entry>
+<para>serum_part_number =&gt; PartNumber: 893215614 </para>
+</entry></row>
+      <row >
+<entry>
+<para>serum_lot_number =&gt; LotNumber: 1234565 </para>
+</entry></row>
+      <row >
+<entry>
+<para>treatment_time =&gt; Treatment Time: 241 </para>
+</entry></row>
+      <row >
+<entry>
+<para>datetime_used =&gt; Used on:10/08/20/ 03:55 </para>
+</entry></row>
+      <row >
+<entry>
+<para>board_temp =&gt; Average Board temperature: 30.60 </para>
+</entry></row>
+      <row >
+<entry>
+<para>min_co2_temp =&gt; Min Exit temperature: -10.60 </para>
+</entry></row>
+      <row >
+<entry>
+<para>max_co2_temp =&gt; Max Exit temperature: 29.10 </para>
+</entry></row>
+      <row >
+<entry>
+<para>avg_co2_temp =&gt; Average CO2 temperature: -2.50 </para>
+</entry></row>
+      <row >
+<entry>
+<para>tank_tag_id =&gt; Tank ID:E004010801C764C5 </para>
+</entry></row>
+      <row >
+<entry>
+<para>tank_time_remaining =&gt; Tank Time Remaining: 59213 </para>
+</entry></row>
+    </tbody>
+    </tgroup>
+</informaltable>
+</para>
+</listitem>
+            <listitem><para>static async Task&lt; string[]&gt; <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_b_l_l_1ad86f46dec9d21365823b696181981ee6">InvalidPingData</link> (string recv_pkt_str, string context_str)</para>
+
+<para>This function implements an asynchronous call to with invalid device ping data, and returns the response received in a string array, or a null string array if error or exception. The response array returned from this function contains <itemizedlist>
+<listitem>
+
+<para>Index 0: &quot;success&quot; or &quot;failure&quot; </para>
+</listitem>
+<listitem>
+
+<para>Index 1: respone string from server </para>
+</listitem>
+</itemizedlist>
+</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Static Private Attributes    </title>
+        <itemizedlist>
+            <listitem><para>static HttpClient <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_b_l_l_1ab6cad9f75c87d1c90907c77daffc0972">client</link> = new HttpClient()</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_b_l_l">DeviceBLL</link></computeroutput> handles all communications with the backend server. </para>
+</section>
+<section>
+<title>Member Function Documentation</title>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_b_l_l_1a99d1ca03cead11bab58d086764532bf0"/><section>
+    <title>GetDeviceDataAsync()</title>
+<indexterm><primary>GetDeviceDataAsync</primary><secondary>CryoDeviceProxy.BLL.DeviceBLL</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.DeviceBLL</primary><secondary>GetDeviceDataAsync</secondary></indexterm>
+<para><computeroutput>static async Task&lt; string[]&gt; CryoDeviceProxy.BLL.DeviceBLL.GetDeviceDataAsync (string service_tag, string email, string token, string context_str)<computeroutput>[static]</computeroutput>, <computeroutput>[private]</computeroutput></computeroutput></para><para>
+
+<para>This function implements an asynchronous call to the backend server to read the device information, and returns the response received in a string array, or a null string array if error or exception. If the device was found in the backend server, the response array returned from this function contains <itemizedlist>
+<listitem>
+
+<para>Index 0: ping data received </para>
+</listitem>
+<listitem>
+
+<para>Index 1: date and time when the ping data was received </para>
+</listitem>
+</itemizedlist>
+</para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>service_tag</entry><entry>
+<para>service_tag of the device whose information is requested</para>
+</entry>
+                            </row>
+                            <row>
+<entry>email</entry><entry>
+<para>email of the user logged in the user interface for verification</para>
+</entry>
+                            </row>
+                            <row>
+<entry>token</entry><entry>
+<para>Authentication token of the user logged in the user interface</para>
+</entry>
+                            </row>
+                            <row>
+<entry>context_str</entry><entry>
+<para>The context string that contains the calling task information for metrics and tracing.</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>String array based on the information received from the backend server or null if error</para>
+</formalpara>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_b_l_l_1a83f50b0e9e8bd5602878ca8601e942c4"/><section>
+    <title>GetDeviceInfo()</title>
+<indexterm><primary>GetDeviceInfo</primary><secondary>CryoDeviceProxy.BLL.DeviceBLL</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.DeviceBLL</primary><secondary>GetDeviceInfo</secondary></indexterm>
+<para><computeroutput>static string[] CryoDeviceProxy.BLL.DeviceBLL.GetDeviceInfo (string service_tag, string email, string token, string context_str)<computeroutput>[static]</computeroutput></computeroutput></para><para>
+
+<para>Wrapper function that initiates a separate task to read specific device information from the backend server. This request is usually sent from the user interface. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>service_tag</entry><entry>
+<para>service_tag of the device whose information is requested</para>
+</entry>
+                            </row>
+                            <row>
+<entry>email</entry><entry>
+<para>email of the user logged in the user interface for verification</para>
+</entry>
+                            </row>
+                            <row>
+<entry>token</entry><entry>
+<para>Authentication token of the user logged in the user interface</para>
+</entry>
+                            </row>
+                            <row>
+<entry>context_str</entry><entry>
+<para>The context string that contains the calling task information for metrics and tracing.</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>String array obtained as a result of task execution</para>
+</formalpara>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_b_l_l_1ad86f46dec9d21365823b696181981ee6"/><section>
+    <title>InvalidPingData()</title>
+<indexterm><primary>InvalidPingData</primary><secondary>CryoDeviceProxy.BLL.DeviceBLL</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.DeviceBLL</primary><secondary>InvalidPingData</secondary></indexterm>
+<para><computeroutput>static async Task&lt; string[]&gt; CryoDeviceProxy.BLL.DeviceBLL.InvalidPingData (string recv_pkt_str, string context_str)<computeroutput>[static]</computeroutput>, <computeroutput>[private]</computeroutput></computeroutput></para><para>
+
+<para>This function implements an asynchronous call to with invalid device ping data, and returns the response received in a string array, or a null string array if error or exception. The response array returned from this function contains <itemizedlist>
+<listitem>
+
+<para>Index 0: &quot;success&quot; or &quot;failure&quot; </para>
+</listitem>
+<listitem>
+
+<para>Index 1: respone string from server </para>
+</listitem>
+</itemizedlist>
+</para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>recv_pkt_str</entry><entry>
+<para>The string received from Device which was incorrect.</para>
+</entry>
+                            </row>
+                            <row>
+<entry>context_str</entry><entry>
+<para>The context string that contains the calling task information for metrics and tracing.</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>String array</para>
+</formalpara>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_b_l_l_1a1686184c8383f01d65fbb1e8a7a4e1ee"/><section>
+    <title>PingDataAsync()</title>
+<indexterm><primary>PingDataAsync</primary><secondary>CryoDeviceProxy.BLL.DeviceBLL</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.DeviceBLL</primary><secondary>PingDataAsync</secondary></indexterm>
+<para><computeroutput>static async Task&lt; string[]&gt; CryoDeviceProxy.BLL.DeviceBLL.PingDataAsync (<link linkend="_class_cryo_device_proxy_1_1_ping_packet">PingPacket</link> pp_recv, string context_str)<computeroutput>[static]</computeroutput>, <computeroutput>[private]</computeroutput></computeroutput></para><para>
+
+<para>This function implements an asynchronous call to the backend server with device ping data, and returns the response received in a string array, or a null string array if error or exception. If the device was found in the backend server, the response array returned from this function contains <itemizedlist>
+<listitem>
+
+<para>Index 0: service_tag </para>
+</listitem>
+<listitem>
+
+<para>Index 1: respone string </para>
+</listitem>
+</itemizedlist>
+</para>
+</para>
+
+<para>Response string obtained from server is a semicolon separated values, &quot;x0;x1;x2;x3;x4;x5;x6;x7&quot; where <computeroutput>x</computeroutput>&apos;s can take values &quot;1&quot; or &quot;0&quot;. The interpretation for the device is: </para>
+
+<para><itemizedlist>
+<listitem>
+
+<para>x0: &quot;0&quot; =&gt; ack for ping data, &quot;1&quot; =&gt; retransmit ping packet  </para>
+</listitem>
+<listitem>
+
+<para>x1: &quot;0&quot; =&gt; no firmware available, &quot;1&quot; =&gt; firmware for device is available  </para>
+</listitem>
+<listitem>
+
+<para>x2: &quot;0&quot; =&gt; no language pack available, &quot;1&quot; =&gt; language pack for device is available  </para>
+</listitem>
+<listitem>
+
+<para>x3: &quot;0&quot; =&gt; not approved for pay-per-use, &quot;1&quot; =&gt; approved as a pay-per-use device  </para>
+</listitem>
+<listitem>
+
+<para>x4: &quot;0&quot; =&gt; unit is free device, &quot;1&quot; =&gt; unit is a pay-per-use device  </para>
+</listitem>
+<listitem>
+
+<para>x5: &quot;0&quot; =&gt; allowed all operations, &quot;1&quot; =&gt; unit is decommissioned  </para>
+</listitem>
+<listitem>
+
+<para>x6: &quot;0&quot; =&gt; no user interface connection request, &quot;1&quot; =&gt; user interface connection pending  </para>
+</listitem>
+<listitem>
+
+<para>x7: reserved, default is always &quot;0&quot; </para>
+</listitem>
+</itemizedlist>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>pp_recv</entry><entry>
+<para>The <computeroutput><link linkend="_class_cryo_device_proxy_1_1_ping_packet">PingPacket</link></computeroutput> object containing the information about the ping data received from the device.</para>
+</entry>
+                            </row>
+                            <row>
+<entry>context_str</entry><entry>
+<para>The context string that contains the calling task information for metrics and tracing.</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>String array based on the response of the server or error or exception</para>
+</formalpara>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_b_l_l_1aeac0ba565e22b5cd9b746e033dab2bec"/><section>
+    <title>SendDevicePingData()</title>
+<indexterm><primary>SendDevicePingData</primary><secondary>CryoDeviceProxy.BLL.DeviceBLL</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.DeviceBLL</primary><secondary>SendDevicePingData</secondary></indexterm>
+<para><computeroutput>static string[] CryoDeviceProxy.BLL.DeviceBLL.SendDevicePingData (<link linkend="_class_cryo_device_proxy_1_1_ping_packet">PingPacket</link> pp_recv, string context_str)<computeroutput>[static]</computeroutput></computeroutput></para><para>
+
+<para>Wrapper function that initiates a separate task to post the ping packet received from device to the backend server. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>pp_recv</entry><entry>
+<para>The <computeroutput><link linkend="_class_cryo_device_proxy_1_1_ping_packet">PingPacket</link></computeroutput> object that contains the details of the ping packet received.</para>
+</entry>
+                            </row>
+                            <row>
+<entry>context_str</entry><entry>
+<para>The context string that contains the calling task information for metrics and tracing.</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>String array obtained as a result of task execution</para>
+</formalpara>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_b_l_l_1a6090b47ea5e538b0bdb1d891eb9941f5"/><section>
+    <title>SetInvalidPingData()</title>
+<indexterm><primary>SetInvalidPingData</primary><secondary>CryoDeviceProxy.BLL.DeviceBLL</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.DeviceBLL</primary><secondary>SetInvalidPingData</secondary></indexterm>
+<para><computeroutput>static string[] CryoDeviceProxy.BLL.DeviceBLL.SetInvalidPingData (string recv_pkt_str, string context_str)<computeroutput>[static]</computeroutput></computeroutput></para><para>
+
+<para>Wrapper function that initiates a separate task to update the Invalid Ping <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_data">Data</link> received from device. Invalid ping data occurs if the data format is incorrect, or the device is not found in the Device table. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>recv_pkt_str</entry><entry>
+<para>The string received from Device which was incorrect.</para>
+</entry>
+                            </row>
+                            <row>
+<entry>context_str</entry><entry>
+<para>The context string that contains the calling task information for metrics and tracing.</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>String array that is generated in the task code.</para>
+</formalpara>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_b_l_l_1a6d783eaf621a32e0d1795d07db7614b1"/><section>
+    <title>UpdateDeviceErrors()</title>
+<indexterm><primary>UpdateDeviceErrors</primary><secondary>CryoDeviceProxy.BLL.DeviceBLL</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.DeviceBLL</primary><secondary>UpdateDeviceErrors</secondary></indexterm>
+<para><computeroutput>static bool CryoDeviceProxy.BLL.DeviceBLL.UpdateDeviceErrors (string service_tag, string[] err_list, string context_str)<computeroutput>[static]</computeroutput></computeroutput></para><para>
+
+<para>Wrapper function that initiates a separate task that update the error list from device. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>service_tag</entry><entry>
+<para>The device from which the error list was read</para>
+</entry>
+                            </row>
+                            <row>
+<entry>err_list</entry><entry>
+<para>Array of error list strings</para>
+</entry>
+                            </row>
+                            <row>
+<entry>context_str</entry><entry>
+<para>The context string that contains the calling task information for metrics and tracing.</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para></para>
+</formalpara>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_b_l_l_1a6602dbdc3dbbed692de8d5d5f9040c3e"/><section>
+    <title>UpdateDeviceErrorsAsync()</title>
+<indexterm><primary>UpdateDeviceErrorsAsync</primary><secondary>CryoDeviceProxy.BLL.DeviceBLL</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.DeviceBLL</primary><secondary>UpdateDeviceErrorsAsync</secondary></indexterm>
+<para><computeroutput>static async Task&lt; bool &gt; CryoDeviceProxy.BLL.DeviceBLL.UpdateDeviceErrorsAsync (string service_tag, string[] err_list, string context_str)<computeroutput>[static]</computeroutput>, <computeroutput>[private]</computeroutput></computeroutput></para><para>
+
+<para>This function implements an asynchronous call to the backend server with error list </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>service_tag</entry><entry>
+<para>The device from which the error list was read</para>
+</entry>
+                            </row>
+                            <row>
+<entry>err_list</entry><entry>
+<para>Array of error list strings</para>
+</entry>
+                            </row>
+                            <row>
+<entry>context_str</entry><entry>
+<para>The context string that contains the calling task information for metrics and tracing.</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>true if successfully updated or false otherwise</para>
+</formalpara>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_b_l_l_1a0616a23caf3b13c749bf3990810b2526"/><section>
+    <title>UpdateUsageStats()</title>
+<indexterm><primary>UpdateUsageStats</primary><secondary>CryoDeviceProxy.BLL.DeviceBLL</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.DeviceBLL</primary><secondary>UpdateUsageStats</secondary></indexterm>
+<para><computeroutput>static bool CryoDeviceProxy.BLL.DeviceBLL.UpdateUsageStats (string service_tag, string[] usagestats_list, string context_str)<computeroutput>[static]</computeroutput></computeroutput></para><para>
+
+<para>Wrapper function that initiates a separate task to update usage statistics read from the device </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>service_tag</entry><entry></entry>
+                            </row>
+                            <row>
+<entry>usagestats_list</entry><entry></entry>
+                            </row>
+                            <row>
+<entry>context_str</entry><entry>
+<para>The context string that contains the calling task information for metrics and tracing.</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Boolean value returned by the task execution</para>
+</formalpara>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_b_l_l_1ad0a50ada7b7f8d87e716be3ac03a3130"/><section>
+    <title>UpdateUsageStatsAsync()</title>
+<indexterm><primary>UpdateUsageStatsAsync</primary><secondary>CryoDeviceProxy.BLL.DeviceBLL</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.DeviceBLL</primary><secondary>UpdateUsageStatsAsync</secondary></indexterm>
+<para><computeroutput>static async Task&lt; bool &gt; CryoDeviceProxy.BLL.DeviceBLL.UpdateUsageStatsAsync (string service_tag, string[] usagestats_list, string context_str)<computeroutput>[static]</computeroutput>, <computeroutput>[private]</computeroutput></computeroutput></para><para>
+
+<para>This function implements an asynchronous call to the backend server with device usage statistics The database column name and corresponding data in the usage statistics payload is shown below <informaltable frame="all">
+    <tgroup cols="1" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+<tbody>
+      <row >
+<entry>
+<para>DB column name =&gt; data received from device </para>
+</entry></row>
+      <row >
+<entry>
+<para>cartridge_tag_id =&gt; ID:E004010802ACDB4D </para>
+</entry></row>
+      <row >
+<entry>
+<para>serum_name =&gt; Name:Form1 </para>
+</entry></row>
+      <row >
+<entry>
+<para>serum_part_number =&gt; PartNumber: 893215614 </para>
+</entry></row>
+      <row >
+<entry>
+<para>serum_lot_number =&gt; LotNumber: 1234565 </para>
+</entry></row>
+      <row >
+<entry>
+<para>treatment_time =&gt; Treatment Time: 241 </para>
+</entry></row>
+      <row >
+<entry>
+<para>datetime_used =&gt; Used on:10/08/20/ 03:55 </para>
+</entry></row>
+      <row >
+<entry>
+<para>board_temp =&gt; Average Board temperature: 30.60 </para>
+</entry></row>
+      <row >
+<entry>
+<para>min_co2_temp =&gt; Min Exit temperature: -10.60 </para>
+</entry></row>
+      <row >
+<entry>
+<para>max_co2_temp =&gt; Max Exit temperature: 29.10 </para>
+</entry></row>
+      <row >
+<entry>
+<para>avg_co2_temp =&gt; Average CO2 temperature: -2.50 </para>
+</entry></row>
+      <row >
+<entry>
+<para>tank_tag_id =&gt; Tank ID:E004010801C764C5 </para>
+</entry></row>
+      <row >
+<entry>
+<para>tank_time_remaining =&gt; Tank Time Remaining: 59213 </para>
+</entry></row>
+    </tbody>
+    </tgroup>
+</informaltable>
+</para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>service_tag</entry><entry>
+<para>service_tag of the device whose information is requested</para>
+</entry>
+                            </row>
+                            <row>
+<entry>usagestats_list</entry><entry>
+<para>usage statitistics read from the device</para>
+</entry>
+                            </row>
+                            <row>
+<entry>context_str</entry><entry>
+<para>The context string that contains the calling task information for metrics and tracing.</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>True if usage statistics was successfully uploaded to server, else false</para>
+</formalpara>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_b_l_l_1abe0770e05268b7fd3c07474459261452"/><section>
+    <title>VerifyConnectRequest()</title>
+<indexterm><primary>VerifyConnectRequest</primary><secondary>CryoDeviceProxy.BLL.DeviceBLL</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.DeviceBLL</primary><secondary>VerifyConnectRequest</secondary></indexterm>
+<para><computeroutput>static bool CryoDeviceProxy.BLL.DeviceBLL.VerifyConnectRequest (string service_tag, string email, string token, string context_str)<computeroutput>[static]</computeroutput></computeroutput></para><para>
+
+<para>Wrapper function that initiates a separate task to verify a connection request from user in user interface at the backend server. This is usually executed when the user interface requests a connection to a device. If the user is authenticated correctly the response is true, else it is false </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>service_tag</entry><entry>
+<para>service_tag of the device whose information is requested</para>
+</entry>
+                            </row>
+                            <row>
+<entry>email</entry><entry>
+<para>email of the user logged in the user interface for verification</para>
+</entry>
+                            </row>
+                            <row>
+<entry>token</entry><entry>
+<para>Authentication token of the user logged in the user interface</para>
+</entry>
+                            </row>
+                            <row>
+<entry>context_str</entry><entry>
+<para>The context string that contains the calling task information for metrics and tracing.</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para></para>
+</formalpara>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_b_l_l_1a10d3d871e1f9fbd502ca64c639dc10e9"/><section>
+    <title>VerifyConnectRequestAsync()</title>
+<indexterm><primary>VerifyConnectRequestAsync</primary><secondary>CryoDeviceProxy.BLL.DeviceBLL</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.DeviceBLL</primary><secondary>VerifyConnectRequestAsync</secondary></indexterm>
+<para><computeroutput>static async Task&lt; bool &gt; CryoDeviceProxy.BLL.DeviceBLL.VerifyConnectRequestAsync (string service_tag, string email, string token, string context_str)<computeroutput>[static]</computeroutput>, <computeroutput>[private]</computeroutput></computeroutput></para><para>
+
+<para>This function implements an asynchronous call to the backend server to verify the connection request user logged in at the user interface, and returns the response received as a boolean. If authentication is successful, it returns true, else false </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>service_tag</entry><entry>
+<para>service_tag of the device whose information is requested</para>
+</entry>
+                            </row>
+                            <row>
+<entry>email</entry><entry>
+<para>email of the user logged in the user interface for verification</para>
+</entry>
+                            </row>
+                            <row>
+<entry>token</entry><entry>
+<para>Authentication token of the user logged in the user interface</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para></para>
+</formalpara>
+</para>
+</section>
+</section>
+<section>
+<title>Member Data Documentation</title>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_b_l_l_1ab6cad9f75c87d1c90907c77daffc0972"/><section>
+    <title>client</title>
+<indexterm><primary>client</primary><secondary>CryoDeviceProxy.BLL.DeviceBLL</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.DeviceBLL</primary><secondary>client</secondary></indexterm>
+<para><computeroutput>HttpClient CryoDeviceProxy.BLL.DeviceBLL.client = new HttpClient()<computeroutput>[static]</computeroutput>, <computeroutput>[private]</computeroutput></computeroutput></para></section>
+<para>
+The documentation for this class was generated from the following file:</para>
+BLL/<link linkend="__device_b_l_l_8cs">DeviceBLL.cs</link></section>
+</section>

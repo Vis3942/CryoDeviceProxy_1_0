@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_namespace_cryo_device_proxy_1_1_logs" xml:lang="en-US">
+<title>CryoDeviceProxy.Logs Namespace Reference</title>
+<indexterm><primary>CryoDeviceProxy.Logs</primary></indexterm>
+<simplesect>
+    <title>Classes    </title>
+        <itemizedlist>
+            <listitem><para>class <link linkend="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger">CDPLogger</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Enumerations    </title>
+        <itemizedlist>
+            <listitem><para>enum <link linkend="_namespace_cryo_device_proxy_1_1_logs_1a246d1ec64eecc280dc3da49a6933dc2f">LogEventLevel</link> { 
+<link linkend="_namespace_cryo_device_proxy_1_1_logs_1a246d1ec64eecc280dc3da49a6933dc2fad4a9fa383ab700c5bdd6f31cf7df0faf">Verbose</link>
+, <link linkend="_namespace_cryo_device_proxy_1_1_logs_1a246d1ec64eecc280dc3da49a6933dc2faa603905470e2a5b8c13e96b579ef0dba">Debug</link>
+, <link linkend="_namespace_cryo_device_proxy_1_1_logs_1a246d1ec64eecc280dc3da49a6933dc2faa82be0f551b8708bc08eb33cd9ded0cf">Information</link>
+, <link linkend="_namespace_cryo_device_proxy_1_1_logs_1a246d1ec64eecc280dc3da49a6933dc2fa0eaadb4fcb48a0a0ed7bc9868be9fbaa">Warning</link>
+, 
+<link linkend="_namespace_cryo_device_proxy_1_1_logs_1a246d1ec64eecc280dc3da49a6933dc2fa902b0d55fddef6f8d651fe1035b7d4bd">Error</link>
+, <link linkend="_namespace_cryo_device_proxy_1_1_logs_1a246d1ec64eecc280dc3da49a6933dc2fa882384ec38ce8d9582b57e70861730e4">Fatal</link>
+ }</para>
+
+<para>Specifies the meaning and relative importance of a log event. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Enumeration Type Documentation</title>
+<anchor xml:id="_namespace_cryo_device_proxy_1_1_logs_1a246d1ec64eecc280dc3da49a6933dc2f"/><section>
+    <title>LogEventLevel</title>
+<indexterm><primary>LogEventLevel</primary><secondary>CryoDeviceProxy.Logs</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.Logs</primary><secondary>LogEventLevel</secondary></indexterm>
+<para><computeroutput>enum <link linkend="_namespace_cryo_device_proxy_1_1_logs_1a246d1ec64eecc280dc3da49a6933dc2f">CryoDeviceProxy.Logs.LogEventLevel</link></computeroutput></para><para>
+
+<para>Specifies the meaning and relative importance of a log event. </para>
+</para>
+<informaltable frame="all">
+<title>Enumerator</title>
+    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+<tbody>
+<row><entry><indexterm><primary>Verbose</primary><secondary>CryoDeviceProxy.Logs</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.Logs</primary><secondary>Verbose</secondary></indexterm>
+<anchor xml:id="_namespace_cryo_device_proxy_1_1_logs_1a246d1ec64eecc280dc3da49a6933dc2fad4a9fa383ab700c5bdd6f31cf7df0faf"/>Verbose</entry><entry>
+<para>Anything and everything you might want to know about a running block of code. </para>
+</entry></row><row><entry><indexterm><primary>Debug</primary><secondary>CryoDeviceProxy.Logs</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.Logs</primary><secondary>Debug</secondary></indexterm>
+<anchor xml:id="_namespace_cryo_device_proxy_1_1_logs_1a246d1ec64eecc280dc3da49a6933dc2faa603905470e2a5b8c13e96b579ef0dba"/>Debug</entry><entry>
+<para>Internal system events that aren&apos;t necessarily observable from the outside. </para>
+</entry></row><row><entry><indexterm><primary>Information</primary><secondary>CryoDeviceProxy.Logs</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.Logs</primary><secondary>Information</secondary></indexterm>
+<anchor xml:id="_namespace_cryo_device_proxy_1_1_logs_1a246d1ec64eecc280dc3da49a6933dc2faa82be0f551b8708bc08eb33cd9ded0cf"/>Information</entry><entry>
+<para>normal information </para>
+</entry></row><row><entry><indexterm><primary>Warning</primary><secondary>CryoDeviceProxy.Logs</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.Logs</primary><secondary>Warning</secondary></indexterm>
+<anchor xml:id="_namespace_cryo_device_proxy_1_1_logs_1a246d1ec64eecc280dc3da49a6933dc2fa0eaadb4fcb48a0a0ed7bc9868be9fbaa"/>Warning</entry><entry>
+<para>Service is degraded or endangered. </para>
+</entry></row><row><entry><indexterm><primary>Error</primary><secondary>CryoDeviceProxy.Logs</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.Logs</primary><secondary>Error</secondary></indexterm>
+<anchor xml:id="_namespace_cryo_device_proxy_1_1_logs_1a246d1ec64eecc280dc3da49a6933dc2fa902b0d55fddef6f8d651fe1035b7d4bd"/>Error</entry><entry>
+<para>Functionality is unavailable, invariants are broken or data is lost. </para>
+</entry></row><row><entry><indexterm><primary>Fatal</primary><secondary>CryoDeviceProxy.Logs</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.Logs</primary><secondary>Fatal</secondary></indexterm>
+<anchor xml:id="_namespace_cryo_device_proxy_1_1_logs_1a246d1ec64eecc280dc3da49a6933dc2fa882384ec38ce8d9582b57e70861730e4"/>Fatal</entry><entry>
+<para>includes notification.. not implemented yet </para>
+</entry></row>    </tbody>
+    </tgroup>
+</informaltable>
+</section>
+</section>
+</section>

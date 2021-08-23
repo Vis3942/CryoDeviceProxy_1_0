@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_data" xml:lang="en-US">
+<title>CryoDeviceProxy.BLL.Data Class Reference</title>
+<indexterm><primary>CryoDeviceProxy.BLL.Data</primary></indexterm>
+<para>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_data">Data</link></computeroutput> encapsulates the response to a ping packet from the server </para>
+ 
+</para>
+<simplesect>
+    <title>Properties    </title>
+        <itemizedlist>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_data_1a4794f9aee3d8e829b5c6f9ac67aafd78">serial_number</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_data_1a9da3654367d387bcebf829c0e34452fc">imei_number</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_data_1a2233a41300136bca71305f4230a6b95d">service_tag</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_data_1ace077bd1ef5e4d1f2c590669e66cc54a">response</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_data">Data</link></computeroutput> encapsulates the response to a ping packet from the server </para>
+</section>
+<section>
+<title>Property Documentation</title>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_data_1a9da3654367d387bcebf829c0e34452fc"/><section>
+    <title>imei_number</title>
+<indexterm><primary>imei_number</primary><secondary>CryoDeviceProxy.BLL.Data</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.Data</primary><secondary>imei_number</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.BLL.Data.imei_number<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_data_1ace077bd1ef5e4d1f2c590669e66cc54a"/><section>
+    <title>response</title>
+<indexterm><primary>response</primary><secondary>CryoDeviceProxy.BLL.Data</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.Data</primary><secondary>response</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.BLL.Data.response<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_data_1a4794f9aee3d8e829b5c6f9ac67aafd78"/><section>
+    <title>serial_number</title>
+<indexterm><primary>serial_number</primary><secondary>CryoDeviceProxy.BLL.Data</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.Data</primary><secondary>serial_number</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.BLL.Data.serial_number<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_data_1a2233a41300136bca71305f4230a6b95d"/><section>
+    <title>service_tag</title>
+<indexterm><primary>service_tag</primary><secondary>CryoDeviceProxy.BLL.Data</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.Data</primary><secondary>service_tag</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.BLL.Data.service_tag<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<para>
+The documentation for this class was generated from the following file:</para>
+BLL/<link linkend="__ping_response_json_8cs">PingResponseJson.cs</link></section>
+</section>

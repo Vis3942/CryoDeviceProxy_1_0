@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="__cryo_server_8cs" xml:lang="en-US">
+<title>CryoServer.cs File Reference</title>
+<indexterm><primary>CryoServer.cs</primary></indexterm>
+<simplesect>
+    <title>Classes    </title>
+        <itemizedlist>
+            <listitem><para>class <link linkend="_class_cryo_device_proxy_1_1_cryo_server">CryoDeviceProxy.CryoServer</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Namespaces    </title>
+        <itemizedlist>
+            <listitem><para>namespace <link linkend="_namespace_cryo_device_proxy">CryoDeviceProxy</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Enumerations    </title>
+        <itemizedlist>
+            <listitem><para>enum <link linkend="_namespace_cryo_device_proxy_1a7b1c0f91096b0a88e3cd3e53e6e7102d">CryoDeviceProxy.DeviceStates</link> { 
+<link linkend="_namespace_cryo_device_proxy_1a7b1c0f91096b0a88e3cd3e53e6e7102da696b031073e74bf2cb98e5ef201d4aa3">CryoDeviceProxy.UNKNOWN</link>
+, <link linkend="_namespace_cryo_device_proxy_1a7b1c0f91096b0a88e3cd3e53e6e7102da1e23852820b9154316c7c06e2b7ba051">CryoDeviceProxy.NORMAL</link>
+, <link linkend="_namespace_cryo_device_proxy_1a7b1c0f91096b0a88e3cd3e53e6e7102dac91de0b16c8c8344120f7f8cdb76e5c0">CryoDeviceProxy.UI_CONNECTED</link>
+, <link linkend="_namespace_cryo_device_proxy_1a7b1c0f91096b0a88e3cd3e53e6e7102da774c4fa32406effbfe14dc7fc2fa3033">CryoDeviceProxy.ERROR_DOWNLOAD</link>
+, 
+<link linkend="_namespace_cryo_device_proxy_1a7b1c0f91096b0a88e3cd3e53e6e7102dac1c19784bdee9504c8f93da740c9c319">CryoDeviceProxy.USAGESTATS_DOWNLOAD</link>
+ }</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+</section>

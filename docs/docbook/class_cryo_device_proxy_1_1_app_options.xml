@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_class_cryo_device_proxy_1_1_app_options" xml:lang="en-US">
+<title>CryoDeviceProxy.AppOptions Class Reference</title>
+<indexterm><primary>CryoDeviceProxy.AppOptions</primary></indexterm>
+<simplesect>
+    <title>Static Public Member Functions    </title>
+        <itemizedlist>
+            <listitem><para>static void <link linkend="_class_cryo_device_proxy_1_1_app_options_1a6d4cfe4707bbf9835b4641d37227df10">LoadOptions</link> ()</para>
+
+<para>This function reads the options file &quot;startup_settings.json&quot;, parses and populates and static instance of <link linkend="_class_cryo_device_proxy_1_1_startup_options">StartupOptions</link>. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Properties    </title>
+        <itemizedlist>
+            <listitem><para>static <link linkend="_class_cryo_device_proxy_1_1_startup_options">StartupOptions</link> <link linkend="_class_cryo_device_proxy_1_1_app_options_1ac883f3fad3c62f4fc1584a7b7dbee439">GetAppOptions</link><computeroutput> [get]</computeroutput>
+</para>
+
+<para>This function provides access to the options for the application through an instance of <computeroutput>StartupOption</computeroutput> class. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Static Private Attributes    </title>
+        <itemizedlist>
+            <listitem><para>static readonly string <link linkend="_class_cryo_device_proxy_1_1_app_options_1a872c7cae5e97ca222760d06293eecd66">OptionsFileName</link> = &quot;startup_settings.json&quot;</para>
+</listitem>
+            <listitem><para>static bool <link linkend="_class_cryo_device_proxy_1_1_app_options_1a270a33f6633fcde2fea5459d61132537">OptionsLoaded</link> = false</para>
+</listitem>
+            <listitem><para>static <link linkend="_class_cryo_device_proxy_1_1_startup_options">StartupOptions</link> <link linkend="_class_cryo_device_proxy_1_1_app_options_1a5e73634a0b35bcaf582e01b719aa9fe9">startOptions</link> = null</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Member Function Documentation</title>
+<anchor xml:id="_class_cryo_device_proxy_1_1_app_options_1a6d4cfe4707bbf9835b4641d37227df10"/><section>
+    <title>LoadOptions()</title>
+<indexterm><primary>LoadOptions</primary><secondary>CryoDeviceProxy.AppOptions</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.AppOptions</primary><secondary>LoadOptions</secondary></indexterm>
+<para><computeroutput>static void CryoDeviceProxy.AppOptions.LoadOptions ( )<computeroutput>[static]</computeroutput></computeroutput></para><para>
+
+<para>This function reads the options file &quot;startup_settings.json&quot;, parses and populates and static instance of <link linkend="_class_cryo_device_proxy_1_1_startup_options">StartupOptions</link>. </para>
+</para>
+</section>
+</section>
+<section>
+<title>Member Data Documentation</title>
+<anchor xml:id="_class_cryo_device_proxy_1_1_app_options_1a872c7cae5e97ca222760d06293eecd66"/><section>
+    <title>OptionsFileName</title>
+<indexterm><primary>OptionsFileName</primary><secondary>CryoDeviceProxy.AppOptions</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.AppOptions</primary><secondary>OptionsFileName</secondary></indexterm>
+<para><computeroutput>readonly string CryoDeviceProxy.AppOptions.OptionsFileName = &quot;startup_settings.json&quot;<computeroutput>[static]</computeroutput>, <computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_app_options_1a270a33f6633fcde2fea5459d61132537"/><section>
+    <title>OptionsLoaded</title>
+<indexterm><primary>OptionsLoaded</primary><secondary>CryoDeviceProxy.AppOptions</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.AppOptions</primary><secondary>OptionsLoaded</secondary></indexterm>
+<para><computeroutput>bool CryoDeviceProxy.AppOptions.OptionsLoaded = false<computeroutput>[static]</computeroutput>, <computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_app_options_1a5e73634a0b35bcaf582e01b719aa9fe9"/><section>
+    <title>startOptions</title>
+<indexterm><primary>startOptions</primary><secondary>CryoDeviceProxy.AppOptions</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.AppOptions</primary><secondary>startOptions</secondary></indexterm>
+<para><computeroutput><link linkend="_class_cryo_device_proxy_1_1_startup_options">StartupOptions</link> CryoDeviceProxy.AppOptions.startOptions = null<computeroutput>[static]</computeroutput>, <computeroutput>[private]</computeroutput></computeroutput></para></section>
+</section>
+<section>
+<title>Property Documentation</title>
+<anchor xml:id="_class_cryo_device_proxy_1_1_app_options_1ac883f3fad3c62f4fc1584a7b7dbee439"/><section>
+    <title>GetAppOptions</title>
+<indexterm><primary>GetAppOptions</primary><secondary>CryoDeviceProxy.AppOptions</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.AppOptions</primary><secondary>GetAppOptions</secondary></indexterm>
+<para><computeroutput><link linkend="_class_cryo_device_proxy_1_1_startup_options">StartupOptions</link> CryoDeviceProxy.AppOptions.GetAppOptions<computeroutput>[static]</computeroutput>, <computeroutput>[get]</computeroutput></computeroutput></para><para>
+
+<para>This function provides access to the options for the application through an instance of <computeroutput>StartupOption</computeroutput> class. </para>
+</para>
+</section>
+<para>
+The documentation for this class was generated from the following file:</para>
+<link linkend="__app_options_8cs">AppOptions.cs</link></section>
+</section>

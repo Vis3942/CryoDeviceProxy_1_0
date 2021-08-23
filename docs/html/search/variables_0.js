@@ -1,0 +1,20 @@
+var searchData=
+[
+  ['_5fcertificate_5fname_0',['_certificate_name',['../class_cryo_device_proxy_1_1_cryo_server.html#a5fb4122652d6cf6be6c02d9651ca2f9b',1,'CryoDeviceProxy::CryoServer']]],
+  ['_5fdevice_5fconnection_5fport_1',['_device_connection_port',['../class_cryo_device_proxy_1_1_cryo_server.html#a99b2a59ffc56173fc7698d3b5dc56416',1,'CryoDeviceProxy::CryoServer']]],
+  ['_5ferror_5fcount_2',['_error_count',['../class_cryo_device_proxy_1_1_ping_packet.html#aa3d476127a5bf37a44f8dbdc5d5ff2d5',1,'CryoDeviceProxy::PingPacket']]],
+  ['_5ffirmware_5fversion_5fstr_3',['_firmware_version_str',['../class_cryo_device_proxy_1_1_ping_packet.html#acb93a35bb6c098dbd388a5c348830fce',1,'CryoDeviceProxy::PingPacket']]],
+  ['_5fimei_5fnumber_4',['_imei_number',['../class_cryo_device_proxy_1_1_ping_packet.html#a5a6016b62110417d8bebe74f349e8beb',1,'CryoDeviceProxy::PingPacket']]],
+  ['_5fimei_5fnumber_5fstr_5',['_imei_number_str',['../class_cryo_device_proxy_1_1_ping_packet.html#a79a47796ca75f3788b454fd5fe99b51b',1,'CryoDeviceProxy::PingPacket']]],
+  ['_5fip_5faddr_5fdevice_6',['_ip_addr_device',['../class_cryo_device_proxy_1_1_ping_packet.html#a7714057f009cf28c40f58c463bc4cc7d',1,'CryoDeviceProxy::PingPacket']]],
+  ['_5fipv4_5faddr_7',['_ipv4_addr',['../class_cryo_device_proxy_1_1_cryo_server.html#a97888e96bd631a6816719d748ee835c9',1,'CryoDeviceProxy::CryoServer']]],
+  ['_5fnew_5fusage_5fstatistics_8',['_new_usage_statistics',['../class_cryo_device_proxy_1_1_ping_packet.html#ac72276df2c826d909f36eb5aea95cd08',1,'CryoDeviceProxy::PingPacket']]],
+  ['_5fnum_5fstored_5flang_5fpacks_9',['_num_stored_lang_packs',['../class_cryo_device_proxy_1_1_ping_packet.html#ad375b2f000f7fac410065d2dcbf6eae2',1,'CryoDeviceProxy::PingPacket']]],
+  ['_5frecv_5fstr_10',['_recv_str',['../class_cryo_device_proxy_1_1_ping_packet.html#ae2b43cbe3e948f4a48d00e5f37aff59f',1,'CryoDeviceProxy::PingPacket']]],
+  ['_5frecv_5fstr_5fas_5fbytes_11',['_recv_str_as_bytes',['../class_cryo_device_proxy_1_1_ping_packet.html#aafb9e7c78f2545a0c1e4a91f632638c9',1,'CryoDeviceProxy::PingPacket']]],
+  ['_5fserial_5fnumber_5fstr_12',['_serial_number_str',['../class_cryo_device_proxy_1_1_ping_packet.html#a4f72d821692319a111280fe0d741108a',1,'CryoDeviceProxy::PingPacket']]],
+  ['_5fui_5fconnect_5fwait_5fmax_5fcount_13',['_ui_connect_wait_max_count',['../class_cryo_device_proxy_1_1_cryo_server.html#a811ac21faf0ec901a7f2da40cd28179b',1,'CryoDeviceProxy::CryoServer']]],
+  ['_5fui_5fconnection_5fport_14',['_ui_connection_port',['../class_cryo_device_proxy_1_1_cryo_server.html#a0c297a210d58c915a31679f622693ae6',1,'CryoDeviceProxy::CryoServer']]],
+  ['_5fui_5fwait_5fmessage_5finterval_5fsecs_15',['_ui_wait_message_interval_secs',['../class_cryo_device_proxy_1_1_cryo_server.html#a68df3b967a3f2138c49412edcf535be0',1,'CryoDeviceProxy::CryoServer']]],
+  ['_5fvalid_5fpkt_16',['_valid_pkt',['../class_cryo_device_proxy_1_1_ping_packet.html#a354d810a35f41265fa792985b09133a9',1,'CryoDeviceProxy::PingPacket']]]
+];

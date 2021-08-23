@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="__ui_proxy_response_json_8cs" xml:lang="en-US">
+<title>BLL/UiProxyResponseJson.cs File Reference</title>
+<indexterm><primary>BLL/UiProxyResponseJson.cs</primary></indexterm>
+<simplesect>
+    <title>Classes    </title>
+        <itemizedlist>
+            <listitem><para>class <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_ui_proxy_response_json">CryoDeviceProxy.BLL.UiProxyResponseJson</link></para>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_ui_proxy_response_json">UiProxyResponseJson</link></computeroutput> encapsulates the information received from server </para>
+</listitem>
+            <listitem><para>class <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_u_i_data">CryoDeviceProxy.BLL.UIData</link></para>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_u_i_data">UIData</link></computeroutput> encapsulates the response sent from the server for the get-info request from the user interface </para>
+</listitem>
+            <listitem><para>class <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_u_i_meta">CryoDeviceProxy.BLL.UIMeta</link></para>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_u_i_meta">UIMeta</link></computeroutput> encapsulates the additional connection status information from the server </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Namespaces    </title>
+        <itemizedlist>
+            <listitem><para>namespace <link linkend="_namespace_cryo_device_proxy">CryoDeviceProxy</link></para>
+</listitem>
+            <listitem><para>namespace <link linkend="_namespace_cryo_device_proxy_1_1_b_l_l">CryoDeviceProxy.BLL</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+</section>

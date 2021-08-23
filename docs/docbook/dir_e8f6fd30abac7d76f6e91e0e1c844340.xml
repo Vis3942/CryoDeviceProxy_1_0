@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_dir_e8f6fd30abac7d76f6e91e0e1c844340" xml:lang="en-US">
+<title>BLL Directory Reference</title>
+<indexterm><primary>BLL Directory Reference</primary></indexterm>
+<simplesect>
+    <title>Files    </title>
+        <itemizedlist>
+            <listitem><para>file <link linkend="__device_b_l_l_8cs">DeviceBLL.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__device_error_8cs">DeviceError.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__device_usage_stats_8cs">DeviceUsageStats.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__invalid_ping_json_8cs">InvalidPingJson.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__ping_request_json_8cs">PingRequestJson.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__ping_response_json_8cs">PingResponseJson.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__ui_proxy_request_json_8cs">UiProxyRequestJson.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__ui_proxy_response_json_8cs">UiProxyResponseJson.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__update_error_list_request_json_8cs">UpdateErrorListRequestJson.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__update_usage_stats_list_request_json_8cs">UpdateUsageStatsListRequestJson.cs</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+</section>

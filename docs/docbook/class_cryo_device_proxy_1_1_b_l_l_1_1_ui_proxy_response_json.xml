@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_ui_proxy_response_json" xml:lang="en-US">
+<title>CryoDeviceProxy.BLL.UiProxyResponseJson Class Reference</title>
+<indexterm><primary>CryoDeviceProxy.BLL.UiProxyResponseJson</primary></indexterm>
+<para>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_ui_proxy_response_json">UiProxyResponseJson</link></computeroutput> encapsulates the information received from server </para>
+ 
+</para>
+<simplesect>
+    <title>Properties    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_u_i_data">UIData</link> <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_ui_proxy_response_json_1a0e851f60fcd0d272593f441d82836899">data</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+            <listitem><para><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_u_i_meta">UIMeta</link> <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_ui_proxy_response_json_1aef701f214ef0ed002bb86d06df56259e">meta</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_ui_proxy_response_json">UiProxyResponseJson</link></computeroutput> encapsulates the information received from server </para>
+</section>
+<section>
+<title>Property Documentation</title>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_ui_proxy_response_json_1a0e851f60fcd0d272593f441d82836899"/><section>
+    <title>data</title>
+<indexterm><primary>data</primary><secondary>CryoDeviceProxy.BLL.UiProxyResponseJson</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.UiProxyResponseJson</primary><secondary>data</secondary></indexterm>
+<para><computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_u_i_data">UIData</link> CryoDeviceProxy.BLL.UiProxyResponseJson.data<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_ui_proxy_response_json_1aef701f214ef0ed002bb86d06df56259e"/><section>
+    <title>meta</title>
+<indexterm><primary>meta</primary><secondary>CryoDeviceProxy.BLL.UiProxyResponseJson</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.UiProxyResponseJson</primary><secondary>meta</secondary></indexterm>
+<para><computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_u_i_meta">UIMeta</link> CryoDeviceProxy.BLL.UiProxyResponseJson.meta<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<para>
+The documentation for this class was generated from the following file:</para>
+BLL/<link linkend="__ui_proxy_response_json_8cs">UiProxyResponseJson.cs</link></section>
+</section>

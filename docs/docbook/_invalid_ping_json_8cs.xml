@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="__invalid_ping_json_8cs" xml:lang="en-US">
+<title>BLL/InvalidPingJson.cs File Reference</title>
+<indexterm><primary>BLL/InvalidPingJson.cs</primary></indexterm>
+<simplesect>
+    <title>Classes    </title>
+        <itemizedlist>
+            <listitem><para>class <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_invalid_ping_json">CryoDeviceProxy.BLL.InvalidPingJson</link></para>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_invalid_ping_json">InvalidPingJson</link></computeroutput> encapsulates the invalid ping data information received from device </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Namespaces    </title>
+        <itemizedlist>
+            <listitem><para>namespace <link linkend="_namespace_cryo_device_proxy">CryoDeviceProxy</link></para>
+</listitem>
+            <listitem><para>namespace <link linkend="_namespace_cryo_device_proxy_1_1_b_l_l">CryoDeviceProxy.BLL</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+</section>

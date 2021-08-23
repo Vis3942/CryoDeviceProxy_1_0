@@ -1,0 +1,123 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_class_cryo_device_proxy_1_1_startup_options" xml:lang="en-US">
+<title>CryoDeviceProxy.StartupOptions Class Reference</title>
+<indexterm><primary>CryoDeviceProxy.StartupOptions</primary></indexterm>
+<para>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_startup_options">StartupOptions</link></computeroutput> has all the fields corresponding to the parameters defined in the startup_settings.json file. </para>
+ 
+</para>
+<simplesect>
+    <title>Properties    </title>
+        <itemizedlist>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_startup_options_1a0adea5c703fcd527f43465309815d779">LogTo</link><computeroutput> [getset]</computeroutput>
+</para>
+
+<para>This property will set the destination of logged data. Supported values are &quot;console&quot;, &quot;file&quot;. </para>
+</listitem>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_startup_options_1a1280d474497aa1f3ca4e257e0ccc6c34">LogLevel</link><computeroutput> [getset]</computeroutput>
+</para>
+
+<para>This property sets the log level which filters the messages that will be logged based on the current log level </para>
+</listitem>
+            <listitem><para>float <link linkend="_class_cryo_device_proxy_1_1_startup_options_1a0ff6bc59108be1c1600c03758b4a7cda">MaxLogFileSizeMB</link><computeroutput> [getset]</computeroutput>
+</para>
+
+<para>This property specifies the maximum size in megabytes of a single log file </para>
+</listitem>
+            <listitem><para>int <link linkend="_class_cryo_device_proxy_1_1_startup_options_1a73b450bae0452975f6117e2e2bacf076">MaxCountFiles</link><computeroutput> [getset]</computeroutput>
+</para>
+
+<para>This property specifies the maximum count of backup log files the logger should store </para>
+</listitem>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_startup_options_1a449b5063c19520e6bdf4b4a8ad6ad9d6">LogFileName</link><computeroutput> [getset]</computeroutput>
+</para>
+
+<para>This property sets the default log file name for the application </para>
+</listitem>
+            <listitem><para>int <link linkend="_class_cryo_device_proxy_1_1_startup_options_1afe78b24507011b5c1033ad009e821a36">DeviceSSLAuthTimeoutSecs</link><computeroutput> [getset]</computeroutput>
+</para>
+
+<para>This property sets the timeout in seconds for SSL Authentication after device establishes connection </para>
+</listitem>
+            <listitem><para>int <link linkend="_class_cryo_device_proxy_1_1_startup_options_1adc2c9e3d75fb2fe2b3ba57afb5bc587c">DeviceReadStreamTimeoutSecs</link><computeroutput> [getset]</computeroutput>
+</para>
+
+<para>This property sets the read timeout for reading from device stream after authentication </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_startup_options">StartupOptions</link></computeroutput> has all the fields corresponding to the parameters defined in the startup_settings.json file. </para>
+</section>
+<section>
+<title>Property Documentation</title>
+<anchor xml:id="_class_cryo_device_proxy_1_1_startup_options_1adc2c9e3d75fb2fe2b3ba57afb5bc587c"/><section>
+    <title>DeviceReadStreamTimeoutSecs</title>
+<indexterm><primary>DeviceReadStreamTimeoutSecs</primary><secondary>CryoDeviceProxy.StartupOptions</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.StartupOptions</primary><secondary>DeviceReadStreamTimeoutSecs</secondary></indexterm>
+<para><computeroutput>int CryoDeviceProxy.StartupOptions.DeviceReadStreamTimeoutSecs<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para><para>
+
+<para>This property sets the read timeout for reading from device stream after authentication </para>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_startup_options_1afe78b24507011b5c1033ad009e821a36"/><section>
+    <title>DeviceSSLAuthTimeoutSecs</title>
+<indexterm><primary>DeviceSSLAuthTimeoutSecs</primary><secondary>CryoDeviceProxy.StartupOptions</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.StartupOptions</primary><secondary>DeviceSSLAuthTimeoutSecs</secondary></indexterm>
+<para><computeroutput>int CryoDeviceProxy.StartupOptions.DeviceSSLAuthTimeoutSecs<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para><para>
+
+<para>This property sets the timeout in seconds for SSL Authentication after device establishes connection </para>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_startup_options_1a449b5063c19520e6bdf4b4a8ad6ad9d6"/><section>
+    <title>LogFileName</title>
+<indexterm><primary>LogFileName</primary><secondary>CryoDeviceProxy.StartupOptions</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.StartupOptions</primary><secondary>LogFileName</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.StartupOptions.LogFileName<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para><para>
+
+<para>This property sets the default log file name for the application </para>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_startup_options_1a1280d474497aa1f3ca4e257e0ccc6c34"/><section>
+    <title>LogLevel</title>
+<indexterm><primary>LogLevel</primary><secondary>CryoDeviceProxy.StartupOptions</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.StartupOptions</primary><secondary>LogLevel</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.StartupOptions.LogLevel<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para><para>
+
+<para>This property sets the log level which filters the messages that will be logged based on the current log level </para>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_startup_options_1a0adea5c703fcd527f43465309815d779"/><section>
+    <title>LogTo</title>
+<indexterm><primary>LogTo</primary><secondary>CryoDeviceProxy.StartupOptions</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.StartupOptions</primary><secondary>LogTo</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.StartupOptions.LogTo<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para><para>
+
+<para>This property will set the destination of logged data. Supported values are &quot;console&quot;, &quot;file&quot;. </para>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_startup_options_1a73b450bae0452975f6117e2e2bacf076"/><section>
+    <title>MaxCountFiles</title>
+<indexterm><primary>MaxCountFiles</primary><secondary>CryoDeviceProxy.StartupOptions</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.StartupOptions</primary><secondary>MaxCountFiles</secondary></indexterm>
+<para><computeroutput>int CryoDeviceProxy.StartupOptions.MaxCountFiles<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para><para>
+
+<para>This property specifies the maximum count of backup log files the logger should store </para>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_startup_options_1a0ff6bc59108be1c1600c03758b4a7cda"/><section>
+    <title>MaxLogFileSizeMB</title>
+<indexterm><primary>MaxLogFileSizeMB</primary><secondary>CryoDeviceProxy.StartupOptions</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.StartupOptions</primary><secondary>MaxLogFileSizeMB</secondary></indexterm>
+<para><computeroutput>float CryoDeviceProxy.StartupOptions.MaxLogFileSizeMB<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para><para>
+
+<para>This property specifies the maximum size in megabytes of a single log file </para>
+</para>
+</section>
+<para>
+The documentation for this class was generated from the following file:</para>
+<link linkend="__startup_options_8cs">StartupOptions.cs</link></section>
+</section>

@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['data_0',['Data',['../class_cryo_device_proxy_1_1_b_l_l_1_1_data.html',1,'CryoDeviceProxy::BLL']]],
+  ['data_1',['data',['../class_cryo_device_proxy_1_1_b_l_l_1_1_ping_response_json.html#a3daf0a31f6e176723c3184dd8bdcfd0b',1,'CryoDeviceProxy.BLL.PingResponseJson.data()'],['../class_cryo_device_proxy_1_1_b_l_l_1_1_ui_proxy_response_json.html#a0e851f60fcd0d272593f441d82836899',1,'CryoDeviceProxy.BLL.UiProxyResponseJson.data()']]],
+  ['datetime_5fused_2',['datetime_used',['../class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats.html#a4b0a4bf67e94e03563711dabc930bde1',1,'CryoDeviceProxy::BLL::DeviceUsageStats']]],
+  ['debug_3',['Debug',['../class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger.html#acf019eec97e71e26af920260ec244835',1,'CryoDeviceProxy.Logs.CDPLogger.Debug()'],['../namespace_cryo_device_proxy_1_1_logs.html#a246d1ec64eecc280dc3da49a6933dc2faa603905470e2a5b8c13e96b579ef0dba',1,'CryoDeviceProxy.Logs.Debug()']]],
+  ['devbufblock_4',['devBufBlock',['../class_cryo_device_proxy_1_1_cryo_server.html#a8d8575dd2681773436a028bbe7bea4cc',1,'CryoDeviceProxy::CryoServer']]],
+  ['devclientdict_5',['devClientDict',['../class_cryo_device_proxy_1_1_cryo_server.html#a5a499084a7876c797029f16b0610282e',1,'CryoDeviceProxy::CryoServer']]],
+  ['device_6',['device',['../class_cryo_device_proxy_1_1_b_l_l_1_1_update_error_list_request_json.html#abf6d510aaba886af211a83edaf12bbc2',1,'CryoDeviceProxy.BLL.UpdateErrorListRequestJson.device()'],['../class_cryo_device_proxy_1_1_b_l_l_1_1_update_usage_stats_list_request_json.html#a04b5d93c45a6bdf34074257a2460958a',1,'CryoDeviceProxy.BLL.UpdateUsageStatsListRequestJson.device()']]],
+  ['devicebll_7',['DeviceBLL',['../class_cryo_device_proxy_1_1_b_l_l_1_1_device_b_l_l.html',1,'CryoDeviceProxy::BLL']]],
+  ['devicebll_2ecs_8',['DeviceBLL.cs',['../_device_b_l_l_8cs.html',1,'']]],
+  ['deviceconnectionport_9',['DeviceConnectionPort',['../class_cryo_device_proxy_1_1_cryo_server.html#a71be3fe609988780e8bd948551bc6ea5',1,'CryoDeviceProxy::CryoServer']]],
+  ['deviceerror_10',['DeviceError',['../class_cryo_device_proxy_1_1_b_l_l_1_1_device_error.html',1,'CryoDeviceProxy::BLL']]],
+  ['deviceerror_2ecs_11',['DeviceError.cs',['../_device_error_8cs.html',1,'']]],
+  ['deviceipaddressstr_12',['DeviceIpAddressStr',['../class_cryo_device_proxy_1_1_ping_packet.html#a950544ad6b3fe4dfe6c0870c4907346a',1,'CryoDeviceProxy::PingPacket']]],
+  ['deviceprotocolasync_13',['DeviceProtocolAsync',['../class_cryo_device_proxy_1_1_cryo_server.html#af26006ea5c8ced5a4d658856382358b5',1,'CryoDeviceProxy::CryoServer']]],
+  ['devicereadstreamtimeoutsecs_14',['DeviceReadStreamTimeoutSecs',['../class_cryo_device_proxy_1_1_startup_options.html#adc2c9e3d75fb2fe2b3ba57afb5bc587c',1,'CryoDeviceProxy::StartupOptions']]],
+  ['deviceserver_15',['deviceServer',['../class_cryo_device_proxy_1_1_cryo_server.html#ae2552a237ec63270efcb806b993a62a3',1,'CryoDeviceProxy::CryoServer']]],
+  ['devicesslauthtimeoutsecs_16',['DeviceSSLAuthTimeoutSecs',['../class_cryo_device_proxy_1_1_startup_options.html#afe78b24507011b5c1033ad009e821a36',1,'CryoDeviceProxy::StartupOptions']]],
+  ['devicestates_17',['DeviceStates',['../namespace_cryo_device_proxy.html#a7b1c0f91096b0a88e3cd3e53e6e7102d',1,'CryoDeviceProxy']]],
+  ['deviceusagestats_18',['DeviceUsageStats',['../class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats.html',1,'CryoDeviceProxy.BLL.DeviceUsageStats'],['../class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats.html#ac8d8bde266893c4e59fc30c9a0b64208',1,'CryoDeviceProxy.BLL.DeviceUsageStats.DeviceUsageStats()']]],
+  ['deviceusagestats_2ecs_19',['DeviceUsageStats.cs',['../_device_usage_stats_8cs.html',1,'']]],
+  ['devstreamdict_20',['devStreamDict',['../class_cryo_device_proxy_1_1_cryo_server.html#a8318af935c608edbd46570a095dd2a73',1,'CryoDeviceProxy::CryoServer']]],
+  ['disconnected_5fb_21',['disconnected_b',['../class_cryo_device_proxy_1_1_cryo_server.html#a9ebd871d4fc226390181e182d74e2abd',1,'CryoDeviceProxy::CryoServer']]],
+  ['doerrordownload_22',['DoErrorDownload',['../class_cryo_device_proxy_1_1_cryo_server.html#a16bf0e703dd92455d90cb9ca88ff9529',1,'CryoDeviceProxy::CryoServer']]],
+  ['douiconnection_23',['DoUIConnection',['../class_cryo_device_proxy_1_1_cryo_server.html#a57c50cb2860ac6685fe8d009e6704af2',1,'CryoDeviceProxy::CryoServer']]],
+  ['dousagestatsdownload_24',['DoUsageStatsDownload',['../class_cryo_device_proxy_1_1_cryo_server.html#a16ded09a2042ceb095cf90d0c4ff04d2',1,'CryoDeviceProxy::CryoServer']]]
+];

@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<book xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_index" xml:lang="en-US">
+    <info>
+    <title>CryoDeviceProxy</title>
+    </info>
+<chapter>
+    <title>Namespace Documentation</title>
+<xi:include href="namespace_cryo_device_proxy.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+<xi:include href="namespace_cryo_device_proxy_1_1_b_l_l.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+<xi:include href="namespace_cryo_device_proxy_1_1_logs.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+</chapter>
+<chapter>
+    <title>Class Documentation</title>
+    <xi:include href="class_cryo_device_proxy_1_1_app_options.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="class_cryo_device_proxy_1_1_cryo_server.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="class_cryo_device_proxy_1_1_b_l_l_1_1_data.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="class_cryo_device_proxy_1_1_b_l_l_1_1_device_b_l_l.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="class_cryo_device_proxy_1_1_b_l_l_1_1_device_error.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="class_cryo_device_proxy_1_1_b_l_l_1_1_invalid_ping_json.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="class_cryo_device_proxy_1_1_b_l_l_1_1_meta.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="class_cryo_device_proxy_1_1_ping_packet.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="class_cryo_device_proxy_1_1_b_l_l_1_1_ping_request_json.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="class_cryo_device_proxy_1_1_b_l_l_1_1_ping_response_json.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="class_cryo_device_proxy_1_1_program.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="class_cryo_device_proxy_1_1_startup_options.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="class_cryo_device_proxy_1_1_b_l_l_1_1_u_i_data.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="class_cryo_device_proxy_1_1_b_l_l_1_1_u_i_meta.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="class_cryo_device_proxy_1_1_b_l_l_1_1_ui_proxy_request_json.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="class_cryo_device_proxy_1_1_b_l_l_1_1_ui_proxy_response_json.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="class_cryo_device_proxy_1_1_b_l_l_1_1_update_error_list_request_json.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="class_cryo_device_proxy_1_1_b_l_l_1_1_update_usage_stats_list_request_json.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="class_cryo_device_proxy_1_1_utils.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+</chapter>
+<chapter>
+    <title>File Documentation</title>
+    <xi:include href="_app_options_8cs.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="_device_b_l_l_8cs.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="_device_error_8cs.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="_device_usage_stats_8cs.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="_invalid_ping_json_8cs.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="_ping_request_json_8cs.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="_ping_response_json_8cs.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="_ui_proxy_request_json_8cs.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="_ui_proxy_response_json_8cs.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="_update_error_list_request_json_8cs.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="_update_usage_stats_list_request_json_8cs.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="_cryo_server_8cs.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="_c_d_p_logger_8cs.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="_ping_packet_8cs.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="_program_8cs.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="_readme_8md.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="_startup_options_8cs.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="_utils_8cs.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+</chapter>
+<index/>
+</book>

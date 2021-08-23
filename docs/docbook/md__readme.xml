@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_md__readme" xml:lang="en-US">
+
+<para>Socket server that allows connections between the device and user interface.</para>
+<section xml:id="_md__readme_1autotoc_md1">
+<title>Deployment</title>
+
+<para>Open a command window and change directory to the foloder containing the solution file. Then run the following command to generate the code for running on an RHEL instance on AWS EC2 instance or equivalent x64 cloud based system.</para>
+
+<para><literallayout><computeroutput>dotnet&#32;publish&#32;-c&#32;release&#32;-f&#32;netcoreapp3.1&#32;-r&#32;linux-x64&#32;--self-contained=false
+</computeroutput></literallayout></para>
+<section xml:id="_md__readme_1autotoc_md2">
+<title>Prerequisites</title>
+
+<para>Requires dotnet core 3.1 </para>
+</section>
+</section>
+</section>

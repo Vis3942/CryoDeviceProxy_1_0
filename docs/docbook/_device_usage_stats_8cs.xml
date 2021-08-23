@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="__device_usage_stats_8cs" xml:lang="en-US">
+<title>BLL/DeviceUsageStats.cs File Reference</title>
+<indexterm><primary>BLL/DeviceUsageStats.cs</primary></indexterm>
+<simplesect>
+    <title>Classes    </title>
+        <itemizedlist>
+            <listitem><para>class <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats">CryoDeviceProxy.BLL.DeviceUsageStats</link></para>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats">DeviceUsageStats</link></computeroutput> encapsulates the usage statistics information received from device </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Namespaces    </title>
+        <itemizedlist>
+            <listitem><para>namespace <link linkend="_namespace_cryo_device_proxy">CryoDeviceProxy</link></para>
+</listitem>
+            <listitem><para>namespace <link linkend="_namespace_cryo_device_proxy_1_1_b_l_l">CryoDeviceProxy.BLL</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+</section>

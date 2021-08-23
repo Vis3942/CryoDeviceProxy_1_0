@@ -1,0 +1,527 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger" xml:lang="en-US">
+<title>CryoDeviceProxy.Logs.CDPLogger Class Reference</title>
+<indexterm><primary>CryoDeviceProxy.Logs.CDPLogger</primary></indexterm>
+<simplesect>
+    <title>Static Public Member Functions    </title>
+        <itemizedlist>
+            <listitem><para>static void <link linkend="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1a3ff09f12f6c5737e30742bf53d45616c">InitLogger</link> (string log_to=&quot;console&quot;, string log_level=&quot;information&quot;, int max_file_count=5, float max_file_size_mb=1.0f, string log_file_name=&quot;app_log.txt&quot;)</para>
+
+<para>Initiates a logging instance. This function must be called before any logging can be performed. It sets up the log output. Supported values are &quot;console&quot; or &quot;file&quot;. Default is &quot;console&quot;. It sets up the log level. Supported values are Fatal, Error, Warning, Information, Debug, Verbose The Logger will rotate log files based on the maximum size specified. So, the oldest file will be deleted after creating a new backup of the current log file. A backup of current log file is created when the maximum file size (in MB) is reached. This function also allows initialization of the actual log name. If log file name is &quot;app_log.txt&quot;, then the backup files are named as app_log.0.txt, app_log.1.txt... </para>
+</listitem>
+            <listitem><para>static void <link linkend="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1acea014a457ab90e4caf0a03720ccfa1c">Fatal</link> (string msg, string contextid=&quot;&quot;)</para>
+
+<para>Writes fatal messages to the logging destination. First checks to see if this level is allowed to write to destination. If yes, writes the logged message to the destination. </para>
+</listitem>
+            <listitem><para>static void <link linkend="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1a23886f9710f1205fd7d192ccf2f98ecb">Fatal</link> (Exception e, string msg, string contextid=&quot;&quot;)</para>
+
+<para>Writes fatal messages to the logging destination. First checks to see if this level is allowed to write to destination. If yes, writes the logged message to the destination. </para>
+</listitem>
+            <listitem><para>static void <link linkend="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1ad22328ca994c14c92fdccb2f074eef86">Error</link> (string msg, string contextid=&quot;&quot;)</para>
+
+<para>Writes error messages to the logging destination. First checks to see if this level is allowed to write to destination. If yes, writes the logged message to the destination. </para>
+</listitem>
+            <listitem><para>static void <link linkend="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1a8094d3534afa117b666d2a851e8549cf">Error</link> (Exception e, string msg, string contextid=&quot;&quot;)</para>
+
+<para>Writes error messages to the logging destination. First checks to see if this level is allowed to write to destination. If yes, writes the logged message to the destination. </para>
+</listitem>
+            <listitem><para>static void <link linkend="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1a65618fad34dbca600c33d21dbe2186c5">Warning</link> (string msg, string contextid=&quot;&quot;)</para>
+
+<para>Writes Warning messages to the logging destination. First checks to see if this level is allowed to write to destination. If yes, writes the logged message to the destination. </para>
+</listitem>
+            <listitem><para>static void <link linkend="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1a6990d5728366bf4e0c810d401a30d076">Information</link> (string msg, string contextid=&quot;&quot;)</para>
+
+<para>Writes information messages to the logging destination. First checks to see if this level is allowed to write to destination. If yes, writes the logged message to the destination. </para>
+</listitem>
+            <listitem><para>static void <link linkend="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1acf019eec97e71e26af920260ec244835">Debug</link> (string msg, string contextid=&quot;&quot;)</para>
+
+<para>Writes debug messages to the logging destination. First checks to see if this level is allowed to write to destination. If yes, writes the logged message to the destination. </para>
+</listitem>
+            <listitem><para>static void <link linkend="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1a0d6bf3f2c96d97bd1f8e185f9eb0ac7b">Verbose</link> (string msg, string contextid=&quot;&quot;)</para>
+
+<para>Writes Verbose messages to the logging destination. First checks to see if this level is allowed to write to destination. If yes, writes the logged message to the destination. </para>
+</listitem>
+            <listitem><para>static void <link linkend="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1ad5b789e266b6b3c83d97ad494ace55d0">Write</link> (string loglevelstr, string msg, string contextid)</para>
+
+<para>This function actually writes data to the destination based on the initial setup </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Static Private Member Functions    </title>
+        <itemizedlist>
+            <listitem><para>static bool <link linkend="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1a04d4a66bec04b0df13944e7ed6a0bad8">IsEnabled</link> (<link linkend="_namespace_cryo_device_proxy_1_1_logs_1a246d1ec64eecc280dc3da49a6933dc2f">LogEventLevel</link> curr_level)</para>
+
+<para>This function controls the actual data that gets written based on the setup log level. If the log level is set to &quot;Information&quot;, any data written to function <computeroutput>Verbose</computeroutput> will not be logged to destination. Thus the log output could be varied without recompiling the application. This is called by each of the log functions before writing data to the destination. If the function log level is greater than the set level, then the function returns enabled as true, or false otherwise. </para>
+</listitem>
+            <listitem><para>static void <link linkend="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1a0faab03a6e2bdcd398889b6874818741">RollLogs</link> ()</para>
+
+<para>This function is responsible for ensuring that the number of log files do not exceed the limit setup, and ensure that the oldest log file is removed and the other files renamed appropriately. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Static Private Attributes    </title>
+        <itemizedlist>
+            <listitem><para>static string <link linkend="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1a1c070f6df5dcfeac55c9b197c8770173">logFileName</link> = @&quot;cm_app_log.txt&quot;</para>
+</listitem>
+            <listitem><para>static int <link linkend="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1ab29502364330646915b5c40a08e585f2">maxRolledLogCount</link> = 5</para>
+</listitem>
+            <listitem><para>static int <link linkend="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1aeff3a5ec713af18093a7e70da88f670f">maxLogSize</link> = 1 * 1024 * 1024</para>
+</listitem>
+            <listitem><para>static string <link linkend="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1a2385248b9542db001a05a5eb03b1b9c2">logTo</link> = &quot;file&quot;</para>
+</listitem>
+            <listitem><para>static <link linkend="_namespace_cryo_device_proxy_1_1_logs_1a246d1ec64eecc280dc3da49a6933dc2f">LogEventLevel</link> <link linkend="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1ac6673f4e78423f76161a7bab572f100b">minimumLevel</link> = <link linkend="_namespace_cryo_device_proxy_1_1_logs_1a246d1ec64eecc280dc3da49a6933dc2faa603905470e2a5b8c13e96b579ef0dba">LogEventLevel.Debug</link></para>
+</listitem>
+            <listitem><para>static string <link linkend="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1ab1a456ce380f7e027a00ba4f10267af0">currentExecDirectory</link> = null</para>
+</listitem>
+            <listitem><para>static string <link linkend="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1aa4445d51256e926276d7dd6925115153">currentFileWithPath</link> = null</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Member Function Documentation</title>
+<anchor xml:id="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1acf019eec97e71e26af920260ec244835"/><section>
+    <title>Debug()</title>
+<indexterm><primary>Debug</primary><secondary>CryoDeviceProxy.Logs.CDPLogger</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.Logs.CDPLogger</primary><secondary>Debug</secondary></indexterm>
+<para><computeroutput>static void CryoDeviceProxy.Logs.CDPLogger.Debug (string msg, string contextid = <computeroutput>&quot;&quot;</computeroutput>
+)<computeroutput>[static]</computeroutput></computeroutput></para><para>
+
+<para>Writes debug messages to the logging destination. First checks to see if this level is allowed to write to destination. If yes, writes the logged message to the destination. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>msg</entry><entry>
+<para>Message to be logged as Debug</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1a8094d3534afa117b666d2a851e8549cf"/><section>
+    <title>Error()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>Error</primary><secondary>CryoDeviceProxy.Logs.CDPLogger</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.Logs.CDPLogger</primary><secondary>Error</secondary></indexterm>
+<para><computeroutput>static void CryoDeviceProxy.Logs.CDPLogger.Error (Exception e, string msg, string contextid = <computeroutput>&quot;&quot;</computeroutput>
+)<computeroutput>[static]</computeroutput></computeroutput></para><para>
+
+<para>Writes error messages to the logging destination. First checks to see if this level is allowed to write to destination. If yes, writes the logged message to the destination. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>e</entry><entry>
+<para>Exceptiont that occured triggering this error log</para>
+</entry>
+                            </row>
+                            <row>
+<entry>msg</entry><entry>
+<para>Message to be logged as Error</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1ad22328ca994c14c92fdccb2f074eef86"/><section>
+    <title>Error()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>Error</primary><secondary>CryoDeviceProxy.Logs.CDPLogger</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.Logs.CDPLogger</primary><secondary>Error</secondary></indexterm>
+<para><computeroutput>static void CryoDeviceProxy.Logs.CDPLogger.Error (string msg, string contextid = <computeroutput>&quot;&quot;</computeroutput>
+)<computeroutput>[static]</computeroutput></computeroutput></para><para>
+
+<para>Writes error messages to the logging destination. First checks to see if this level is allowed to write to destination. If yes, writes the logged message to the destination. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>msg</entry><entry>
+<para>Message to be logged as Error</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1a23886f9710f1205fd7d192ccf2f98ecb"/><section>
+    <title>Fatal()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>Fatal</primary><secondary>CryoDeviceProxy.Logs.CDPLogger</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.Logs.CDPLogger</primary><secondary>Fatal</secondary></indexterm>
+<para><computeroutput>static void CryoDeviceProxy.Logs.CDPLogger.Fatal (Exception e, string msg, string contextid = <computeroutput>&quot;&quot;</computeroutput>
+)<computeroutput>[static]</computeroutput></computeroutput></para><para>
+
+<para>Writes fatal messages to the logging destination. First checks to see if this level is allowed to write to destination. If yes, writes the logged message to the destination. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>e</entry><entry>
+<para>Exception that occured when this data was generated.</para>
+</entry>
+                            </row>
+                            <row>
+<entry>msg</entry><entry>
+<para>Data to be logged as fatal.</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1acea014a457ab90e4caf0a03720ccfa1c"/><section>
+    <title>Fatal()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>Fatal</primary><secondary>CryoDeviceProxy.Logs.CDPLogger</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.Logs.CDPLogger</primary><secondary>Fatal</secondary></indexterm>
+<para><computeroutput>static void CryoDeviceProxy.Logs.CDPLogger.Fatal (string msg, string contextid = <computeroutput>&quot;&quot;</computeroutput>
+)<computeroutput>[static]</computeroutput></computeroutput></para><para>
+
+<para>Writes fatal messages to the logging destination. First checks to see if this level is allowed to write to destination. If yes, writes the logged message to the destination. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>msg</entry><entry>
+<para>Data to be logged as fatal.</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1a6990d5728366bf4e0c810d401a30d076"/><section>
+    <title>Information()</title>
+<indexterm><primary>Information</primary><secondary>CryoDeviceProxy.Logs.CDPLogger</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.Logs.CDPLogger</primary><secondary>Information</secondary></indexterm>
+<para><computeroutput>static void CryoDeviceProxy.Logs.CDPLogger.Information (string msg, string contextid = <computeroutput>&quot;&quot;</computeroutput>
+)<computeroutput>[static]</computeroutput></computeroutput></para><para>
+
+<para>Writes information messages to the logging destination. First checks to see if this level is allowed to write to destination. If yes, writes the logged message to the destination. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>msg</entry><entry>
+<para>Message to be logged as Information.</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1a3ff09f12f6c5737e30742bf53d45616c"/><section>
+    <title>InitLogger()</title>
+<indexterm><primary>InitLogger</primary><secondary>CryoDeviceProxy.Logs.CDPLogger</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.Logs.CDPLogger</primary><secondary>InitLogger</secondary></indexterm>
+<para><computeroutput>static void CryoDeviceProxy.Logs.CDPLogger.InitLogger (string log_to = <computeroutput>&quot;console&quot;</computeroutput>
+, string log_level = <computeroutput>&quot;information&quot;</computeroutput>
+, int max_file_count = <computeroutput>5</computeroutput>
+, float max_file_size_mb = <computeroutput>1.0f</computeroutput>
+, string log_file_name = <computeroutput>&quot;app_log.txt&quot;</computeroutput>
+)<computeroutput>[static]</computeroutput></computeroutput></para><para>
+
+<para>Initiates a logging instance. This function must be called before any logging can be performed. It sets up the log output. Supported values are &quot;console&quot; or &quot;file&quot;. Default is &quot;console&quot;. It sets up the log level. Supported values are Fatal, Error, Warning, Information, Debug, Verbose The Logger will rotate log files based on the maximum size specified. So, the oldest file will be deleted after creating a new backup of the current log file. A backup of current log file is created when the maximum file size (in MB) is reached. This function also allows initialization of the actual log name. If log file name is &quot;app_log.txt&quot;, then the backup files are named as app_log.0.txt, app_log.1.txt... </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>log_to</entry><entry>
+<para>Destination for logged data.</para>
+</entry>
+                            </row>
+                            <row>
+<entry>log_level</entry><entry>
+<para>The log level controlling the amount of logged data.</para>
+</entry>
+                            </row>
+                            <row>
+<entry>max_file_count</entry><entry>
+<para>If logging to file, the maximum number of backup logs maintained.</para>
+</entry>
+                            </row>
+                            <row>
+<entry>max_file_size_mb</entry><entry>
+<para>The maximum size in megabytes of each log file.</para>
+</entry>
+                            </row>
+                            <row>
+<entry>log_file_name</entry><entry>
+<para>The name of the log file to use to store logging data.</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1a04d4a66bec04b0df13944e7ed6a0bad8"/><section>
+    <title>IsEnabled()</title>
+<indexterm><primary>IsEnabled</primary><secondary>CryoDeviceProxy.Logs.CDPLogger</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.Logs.CDPLogger</primary><secondary>IsEnabled</secondary></indexterm>
+<para><computeroutput>static bool CryoDeviceProxy.Logs.CDPLogger.IsEnabled (<link linkend="_namespace_cryo_device_proxy_1_1_logs_1a246d1ec64eecc280dc3da49a6933dc2f">LogEventLevel</link> curr_level)<computeroutput>[static]</computeroutput>, <computeroutput>[private]</computeroutput></computeroutput></para><para>
+
+<para>This function controls the actual data that gets written based on the setup log level. If the log level is set to &quot;Information&quot;, any data written to function <computeroutput>Verbose</computeroutput> will not be logged to destination. Thus the log output could be varied without recompiling the application. This is called by each of the log functions before writing data to the destination. If the function log level is greater than the set level, then the function returns enabled as true, or false otherwise. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>curr_level</entry><entry>
+<para>The </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>true or false</para>
+</formalpara>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1a0faab03a6e2bdcd398889b6874818741"/><section>
+    <title>RollLogs()</title>
+<indexterm><primary>RollLogs</primary><secondary>CryoDeviceProxy.Logs.CDPLogger</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.Logs.CDPLogger</primary><secondary>RollLogs</secondary></indexterm>
+<para><computeroutput>static void CryoDeviceProxy.Logs.CDPLogger.RollLogs ( )<computeroutput>[static]</computeroutput>, <computeroutput>[private]</computeroutput></computeroutput></para><para>
+
+<para>This function is responsible for ensuring that the number of log files do not exceed the limit setup, and ensure that the oldest log file is removed and the other files renamed appropriately. </para>
+</para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1a0d6bf3f2c96d97bd1f8e185f9eb0ac7b"/><section>
+    <title>Verbose()</title>
+<indexterm><primary>Verbose</primary><secondary>CryoDeviceProxy.Logs.CDPLogger</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.Logs.CDPLogger</primary><secondary>Verbose</secondary></indexterm>
+<para><computeroutput>static void CryoDeviceProxy.Logs.CDPLogger.Verbose (string msg, string contextid = <computeroutput>&quot;&quot;</computeroutput>
+)<computeroutput>[static]</computeroutput></computeroutput></para><para>
+
+<para>Writes Verbose messages to the logging destination. First checks to see if this level is allowed to write to destination. If yes, writes the logged message to the destination. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>msg</entry><entry>
+<para>Message to be logged as Verbose</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1a65618fad34dbca600c33d21dbe2186c5"/><section>
+    <title>Warning()</title>
+<indexterm><primary>Warning</primary><secondary>CryoDeviceProxy.Logs.CDPLogger</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.Logs.CDPLogger</primary><secondary>Warning</secondary></indexterm>
+<para><computeroutput>static void CryoDeviceProxy.Logs.CDPLogger.Warning (string msg, string contextid = <computeroutput>&quot;&quot;</computeroutput>
+)<computeroutput>[static]</computeroutput></computeroutput></para><para>
+
+<para>Writes Warning messages to the logging destination. First checks to see if this level is allowed to write to destination. If yes, writes the logged message to the destination. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>msg</entry><entry>
+<para>Message to be logged as Warning</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+</section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1ad5b789e266b6b3c83d97ad494ace55d0"/><section>
+    <title>Write()</title>
+<indexterm><primary>Write</primary><secondary>CryoDeviceProxy.Logs.CDPLogger</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.Logs.CDPLogger</primary><secondary>Write</secondary></indexterm>
+<para><computeroutput>static void CryoDeviceProxy.Logs.CDPLogger.Write (string loglevelstr, string msg, string contextid)<computeroutput>[static]</computeroutput></computeroutput></para><para>
+
+<para>This function actually writes data to the destination based on the initial setup </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>loglevelstr</entry><entry>
+<para>String indicating type of logged message</para>
+</entry>
+                            </row>
+                            <row>
+<entry>msg</entry><entry>
+<para>Message to be logged</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+</section>
+</section>
+<section>
+<title>Member Data Documentation</title>
+<anchor xml:id="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1ab1a456ce380f7e027a00ba4f10267af0"/><section>
+    <title>currentExecDirectory</title>
+<indexterm><primary>currentExecDirectory</primary><secondary>CryoDeviceProxy.Logs.CDPLogger</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.Logs.CDPLogger</primary><secondary>currentExecDirectory</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.Logs.CDPLogger.currentExecDirectory = null<computeroutput>[static]</computeroutput>, <computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1aa4445d51256e926276d7dd6925115153"/><section>
+    <title>currentFileWithPath</title>
+<indexterm><primary>currentFileWithPath</primary><secondary>CryoDeviceProxy.Logs.CDPLogger</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.Logs.CDPLogger</primary><secondary>currentFileWithPath</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.Logs.CDPLogger.currentFileWithPath = null<computeroutput>[static]</computeroutput>, <computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1a1c070f6df5dcfeac55c9b197c8770173"/><section>
+    <title>logFileName</title>
+<indexterm><primary>logFileName</primary><secondary>CryoDeviceProxy.Logs.CDPLogger</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.Logs.CDPLogger</primary><secondary>logFileName</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.Logs.CDPLogger.logFileName = @&quot;cm_app_log.txt&quot;<computeroutput>[static]</computeroutput>, <computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1a2385248b9542db001a05a5eb03b1b9c2"/><section>
+    <title>logTo</title>
+<indexterm><primary>logTo</primary><secondary>CryoDeviceProxy.Logs.CDPLogger</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.Logs.CDPLogger</primary><secondary>logTo</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.Logs.CDPLogger.logTo = &quot;file&quot;<computeroutput>[static]</computeroutput>, <computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1aeff3a5ec713af18093a7e70da88f670f"/><section>
+    <title>maxLogSize</title>
+<indexterm><primary>maxLogSize</primary><secondary>CryoDeviceProxy.Logs.CDPLogger</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.Logs.CDPLogger</primary><secondary>maxLogSize</secondary></indexterm>
+<para><computeroutput>int CryoDeviceProxy.Logs.CDPLogger.maxLogSize = 1 * 1024 * 1024<computeroutput>[static]</computeroutput>, <computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1ab29502364330646915b5c40a08e585f2"/><section>
+    <title>maxRolledLogCount</title>
+<indexterm><primary>maxRolledLogCount</primary><secondary>CryoDeviceProxy.Logs.CDPLogger</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.Logs.CDPLogger</primary><secondary>maxRolledLogCount</secondary></indexterm>
+<para><computeroutput>int CryoDeviceProxy.Logs.CDPLogger.maxRolledLogCount = 5<computeroutput>[static]</computeroutput>, <computeroutput>[private]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_logs_1_1_c_d_p_logger_1ac6673f4e78423f76161a7bab572f100b"/><section>
+    <title>minimumLevel</title>
+<indexterm><primary>minimumLevel</primary><secondary>CryoDeviceProxy.Logs.CDPLogger</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.Logs.CDPLogger</primary><secondary>minimumLevel</secondary></indexterm>
+<para><computeroutput><link linkend="_namespace_cryo_device_proxy_1_1_logs_1a246d1ec64eecc280dc3da49a6933dc2f">LogEventLevel</link> CryoDeviceProxy.Logs.CDPLogger.minimumLevel = <link linkend="_namespace_cryo_device_proxy_1_1_logs_1a246d1ec64eecc280dc3da49a6933dc2faa603905470e2a5b8c13e96b579ef0dba">LogEventLevel.Debug</link><computeroutput>[static]</computeroutput>, <computeroutput>[private]</computeroutput></computeroutput></para></section>
+<para>
+The documentation for this class was generated from the following file:</para>
+Logs/<link linkend="__c_d_p_logger_8cs">CDPLogger.cs</link></section>
+</section>

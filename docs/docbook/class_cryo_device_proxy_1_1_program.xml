@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_class_cryo_device_proxy_1_1_program" xml:lang="en-US">
+<title>CryoDeviceProxy.Program Class Reference</title>
+<indexterm><primary>CryoDeviceProxy.Program</primary></indexterm>
+<simplesect>
+    <title>Static Private Member Functions    </title>
+        <itemizedlist>
+            <listitem><para>static void <link linkend="_class_cryo_device_proxy_1_1_program_1a557a11c1980f930d60788d0020772db8">Main</link> (string[] args)</para>
+
+<para>This is entry point of the application. For debugging, (that is not in production), application can be executed to control specific features, which could be true/false. True allows execution, false prevents execution of feature. They are: <itemizedlist>
+<listitem>
+
+<para>Read Errors from device if available </para>
+</listitem>
+<listitem>
+
+<para>Clear errors on successful read </para>
+</listitem>
+<listitem>
+
+<para>Read Usage Statistics from device if available </para>
+</listitem>
+<listitem>
+
+<para>Clear Usage statistics from device if successfully read from device </para>
+</listitem>
+</itemizedlist>
+This main function also setups the logging framework, and starts the application. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Member Function Documentation</title>
+<anchor xml:id="_class_cryo_device_proxy_1_1_program_1a557a11c1980f930d60788d0020772db8"/><section>
+    <title>Main()</title>
+<indexterm><primary>Main</primary><secondary>CryoDeviceProxy.Program</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.Program</primary><secondary>Main</secondary></indexterm>
+<para><computeroutput>static void CryoDeviceProxy.Program.Main (string[] args)<computeroutput>[static]</computeroutput>, <computeroutput>[private]</computeroutput></computeroutput></para><para>
+
+<para>This is entry point of the application. For debugging, (that is not in production), application can be executed to control specific features, which could be true/false. True allows execution, false prevents execution of feature. They are: <itemizedlist>
+<listitem>
+
+<para>Read Errors from device if available </para>
+</listitem>
+<listitem>
+
+<para>Clear errors on successful read </para>
+</listitem>
+<listitem>
+
+<para>Read Usage Statistics from device if available </para>
+</listitem>
+<listitem>
+
+<para>Clear Usage statistics from device if successfully read from device </para>
+</listitem>
+</itemizedlist>
+This main function also setups the logging framework, and starts the application. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>args</entry><entry></entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+</section>
+<para>
+The documentation for this class was generated from the following file:</para>
+<link linkend="__program_8cs">Program.cs</link></section>
+</section>

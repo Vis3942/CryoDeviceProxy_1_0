@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_error" xml:lang="en-US">
+<title>CryoDeviceProxy.BLL.DeviceError Class Reference</title>
+<indexterm><primary>CryoDeviceProxy.BLL.DeviceError</primary></indexterm>
+<para>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_error">DeviceError</link></computeroutput> encapsulates the error data information received from device </para>
+ 
+</para>
+<simplesect>
+    <title>Properties    </title>
+        <itemizedlist>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_error_1a01de4f95b1e05c741bbe271784f672c0">occured_at</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_error_1a1bea0e3e8808037e2a836dffc8f496fe">error_code</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_error">DeviceError</link></computeroutput> encapsulates the error data information received from device </para>
+</section>
+<section>
+<title>Property Documentation</title>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_error_1a1bea0e3e8808037e2a836dffc8f496fe"/><section>
+    <title>error_code</title>
+<indexterm><primary>error_code</primary><secondary>CryoDeviceProxy.BLL.DeviceError</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.DeviceError</primary><secondary>error_code</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.BLL.DeviceError.error_code<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_error_1a01de4f95b1e05c741bbe271784f672c0"/><section>
+    <title>occured_at</title>
+<indexterm><primary>occured_at</primary><secondary>CryoDeviceProxy.BLL.DeviceError</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.DeviceError</primary><secondary>occured_at</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.BLL.DeviceError.occured_at<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<para>
+The documentation for this class was generated from the following file:</para>
+BLL/<link linkend="__device_error_8cs">DeviceError.cs</link></section>
+</section>

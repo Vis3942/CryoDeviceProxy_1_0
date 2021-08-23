@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_ping_response_json" xml:lang="en-US">
+<title>CryoDeviceProxy.BLL.PingResponseJson Class Reference</title>
+<indexterm><primary>CryoDeviceProxy.BLL.PingResponseJson</primary></indexterm>
+<para>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_ping_response_json">PingResponseJson</link></computeroutput> encapsulates the response from the server </para>
+ 
+</para>
+<simplesect>
+    <title>Properties    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_data">Data</link> <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_ping_response_json_1a3daf0a31f6e176723c3184dd8bdcfd0b">data</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+            <listitem><para><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_meta">Meta</link> <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_ping_response_json_1a837f3460c7190ec0b5715006900512b0">meta</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_ping_response_json">PingResponseJson</link></computeroutput> encapsulates the response from the server </para>
+</section>
+<section>
+<title>Property Documentation</title>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_ping_response_json_1a3daf0a31f6e176723c3184dd8bdcfd0b"/><section>
+    <title>data</title>
+<indexterm><primary>data</primary><secondary>CryoDeviceProxy.BLL.PingResponseJson</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.PingResponseJson</primary><secondary>data</secondary></indexterm>
+<para><computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_data">Data</link> CryoDeviceProxy.BLL.PingResponseJson.data<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_ping_response_json_1a837f3460c7190ec0b5715006900512b0"/><section>
+    <title>meta</title>
+<indexterm><primary>meta</primary><secondary>CryoDeviceProxy.BLL.PingResponseJson</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.PingResponseJson</primary><secondary>meta</secondary></indexterm>
+<para><computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_meta">Meta</link> CryoDeviceProxy.BLL.PingResponseJson.meta<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<para>
+The documentation for this class was generated from the following file:</para>
+BLL/<link linkend="__ping_response_json_8cs">PingResponseJson.cs</link></section>
+</section>

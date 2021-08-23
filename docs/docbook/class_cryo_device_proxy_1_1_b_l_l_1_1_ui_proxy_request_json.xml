@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_ui_proxy_request_json" xml:lang="en-US">
+<title>CryoDeviceProxy.BLL.UiProxyRequestJson Class Reference</title>
+<indexterm><primary>CryoDeviceProxy.BLL.UiProxyRequestJson</primary></indexterm>
+<para>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_ui_proxy_request_json">UiProxyRequestJson</link></computeroutput> encapsulates request to be sent to the server. Not used in this version. </para>
+ 
+</para>
+<simplesect>
+    <title>Properties    </title>
+        <itemizedlist>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_ui_proxy_request_json_1a9acbc0955dc54d2716f8a3fa1ee7bebc">service_tag</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_ui_proxy_request_json_1a3ea19c920ddbcfb5170cd3c572053179">email</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_ui_proxy_request_json">UiProxyRequestJson</link></computeroutput> encapsulates request to be sent to the server. Not used in this version. </para>
+</section>
+<section>
+<title>Property Documentation</title>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_ui_proxy_request_json_1a3ea19c920ddbcfb5170cd3c572053179"/><section>
+    <title>email</title>
+<indexterm><primary>email</primary><secondary>CryoDeviceProxy.BLL.UiProxyRequestJson</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.UiProxyRequestJson</primary><secondary>email</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.BLL.UiProxyRequestJson.email<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_ui_proxy_request_json_1a9acbc0955dc54d2716f8a3fa1ee7bebc"/><section>
+    <title>service_tag</title>
+<indexterm><primary>service_tag</primary><secondary>CryoDeviceProxy.BLL.UiProxyRequestJson</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.UiProxyRequestJson</primary><secondary>service_tag</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.BLL.UiProxyRequestJson.service_tag<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<para>
+The documentation for this class was generated from the following file:</para>
+BLL/<link linkend="__ui_proxy_request_json_8cs">UiProxyRequestJson.cs</link></section>
+</section>

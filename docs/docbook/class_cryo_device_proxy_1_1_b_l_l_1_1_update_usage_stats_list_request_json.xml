@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_update_usage_stats_list_request_json" xml:lang="en-US">
+<title>CryoDeviceProxy.BLL.UpdateUsageStatsListRequestJson Class Reference</title>
+<indexterm><primary>CryoDeviceProxy.BLL.UpdateUsageStatsListRequestJson</primary></indexterm>
+<para>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_update_usage_stats_list_request_json">UpdateUsageStatsListRequestJson</link></computeroutput> encapsulates the usage statistics list information to be sent to the server </para>
+ 
+</para>
+<simplesect>
+    <title>Properties    </title>
+        <itemizedlist>
+            <listitem><para>string <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_update_usage_stats_list_request_json_1a04b5d93c45a6bdf34074257a2460958a">device</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+            <listitem><para><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats">DeviceUsageStats</link>[] <link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_update_usage_stats_list_request_json_1a76ba5f12c776e3f8f991a7b258f5151e">usagestats_list</link><computeroutput> [getset]</computeroutput>
+</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>The class <computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_update_usage_stats_list_request_json">UpdateUsageStatsListRequestJson</link></computeroutput> encapsulates the usage statistics list information to be sent to the server </para>
+</section>
+<section>
+<title>Property Documentation</title>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_update_usage_stats_list_request_json_1a04b5d93c45a6bdf34074257a2460958a"/><section>
+    <title>device</title>
+<indexterm><primary>device</primary><secondary>CryoDeviceProxy.BLL.UpdateUsageStatsListRequestJson</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.UpdateUsageStatsListRequestJson</primary><secondary>device</secondary></indexterm>
+<para><computeroutput>string CryoDeviceProxy.BLL.UpdateUsageStatsListRequestJson.device<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_class_cryo_device_proxy_1_1_b_l_l_1_1_update_usage_stats_list_request_json_1a76ba5f12c776e3f8f991a7b258f5151e"/><section>
+    <title>usagestats_list</title>
+<indexterm><primary>usagestats_list</primary><secondary>CryoDeviceProxy.BLL.UpdateUsageStatsListRequestJson</secondary></indexterm>
+<indexterm><primary>CryoDeviceProxy.BLL.UpdateUsageStatsListRequestJson</primary><secondary>usagestats_list</secondary></indexterm>
+<para><computeroutput><link linkend="_class_cryo_device_proxy_1_1_b_l_l_1_1_device_usage_stats">DeviceUsageStats</link> [] CryoDeviceProxy.BLL.UpdateUsageStatsListRequestJson.usagestats_list<computeroutput>[get]</computeroutput>, <computeroutput>[set]</computeroutput></computeroutput></para></section>
+<para>
+The documentation for this class was generated from the following file:</para>
+BLL/<link linkend="__update_usage_stats_list_request_json_8cs">UpdateUsageStatsListRequestJson.cs</link></section>
+</section>

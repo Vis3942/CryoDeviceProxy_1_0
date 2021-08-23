@@ -7,20 +7,20 @@ namespace CryoDeviceProxy
 {
     class Program
     {
-        private static DeviceBLL devbll = null;
+        //private static DeviceBLL devbll = null;
 
-        /// <summary>
-        /// This static function provides the singleton interface that allows communication to the backend server
-        /// </summary>
-        /// <returns></returns>
-        public static DeviceBLL GetDeviceBLL()
-        {
-            if (devbll == null)
-            {
-                devbll = new DeviceBLL();
-            }
-            return devbll;
-        }
+        ///// <summary>
+        ///// This static function provides the singleton interface that allows communication to the backend server
+        ///// </summary>
+        ///// <returns></returns>
+        //public static DeviceBLL GetDeviceBLL()
+        //{
+        //    if (devbll == null)
+        //    {
+        //        devbll = new DeviceBLL();
+        //    }
+        //    return devbll;
+        //}
 
 
         /// <summary>
